@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.establish.activity.SginInActivity
 import com.photolivebroadcast.ui.mine.fragment.MineFragment
 import com.photolivebroadcast.ui.photoLive.fragment.LiveFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +28,11 @@ class MainActivity : AppCompatActivity() {
         bFragment1 = LiveFragment()
         switchFragment(bFragment1!!)
 
-        rl_bottom.setOnCheckedChangeListener { radioGroup, i -> selectStyle(i) }
+        rl_bottom.setOnCheckedChangeListener { _, i -> selectStyle(i) }
+
+        establish.setOnClickListener { v->
+                MyApplication.openActivity(this,SginInActivity::class.java)
+        }
 
     }
 
@@ -47,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 switchFragment(bFragment2!!)
             }
-
         }
     }
 
