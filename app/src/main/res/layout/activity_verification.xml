@@ -8,12 +8,20 @@
 
     <!--验证码-->
 
+    <View
+        android:id="@+id/view_staus"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:visibility="gone" />
+
+
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/ic_back"
+        app:layout_constraintTop_toBottomOf="@+id/view_staus" />
 
 
     <TextView

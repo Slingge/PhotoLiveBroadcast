@@ -72,7 +72,7 @@
     <color name="bules">#9ACCED</color>
 
     <color name="boy">#AEC7F2</color>
-    <color name="girl">#FEB3C5</color>
+    <color name="girl">#fa82d1</color>
 
     <!-- QRCode scanner color begin -->
     <color name="viewfinder_mask">#60000000</color>
@@ -83,6 +83,7 @@
     <color name="corner_color">#00FF00</color>
 
     <color name="red">#F23030</color>
+    <color name="orange">#fbba5a</color>
 
     <color name="gray2">#efefef</color>
 </resources>

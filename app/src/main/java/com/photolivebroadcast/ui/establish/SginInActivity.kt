@@ -1,4 +1,4 @@
-package com.photolivebroadcast.ui.establish.activity
+package com.photolivebroadcast.ui.establish
 
 import android.os.Bundle
 import android.view.View

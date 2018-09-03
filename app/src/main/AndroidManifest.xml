@@ -18,19 +18,19 @@
 
         <!--获取验证码-->
         <activity
-            android:name=".ui.establish.activity.SginInActivity"
+            android:name=".ui.establish.SginInActivity"
             android:screenOrientation="portrait" />
         <!--获取验证码登录-->
         <activity
-            android:name=".ui.establish.activity.VerificationActivity"
+            android:name=".ui.establish.VerificationActivity"
             android:screenOrientation="portrait" />
         <!--绑定手机号-->
         <activity
-            android:name=".ui.establish.activity.BindPhoneActivity"
+            android:name=".ui.establish.BindPhoneActivity"
             android:screenOrientation="portrait" />
         <!--忘记密码-->
         <activity
-            android:name=".ui.establish.activity.ForgetPassActivity"
+            android:name=".ui.establish.ForgetPassActivity"
             android:screenOrientation="portrait" />
 
     </application>
