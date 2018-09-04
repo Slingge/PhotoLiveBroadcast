@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--编辑用户名-->
+    <include layout="@layout/include_basetop"
+        android:id="@+id/include"/>
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:hint="请输入用户名"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+</android.support.constraint.ConstraintLayout>

@@ -2,6 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.photolivebroadcast">
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera.flash" />
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" /> <!-- 使用照相机权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
+
+
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -32,6 +51,25 @@
         <activity
             android:name=".ui.establish.ForgetPassActivity"
             android:screenOrientation="portrait" />
+
+
+
+        <!--////////////////////////////个人信息\\\\\\\\\\\\\\\\\\\\\\\\\\-->
+        <!--个人信息-->
+        <activity
+            android:name=".ui.mine.activity.PersonalInfoActivity"
+            android:screenOrientation="portrait" />
+        <!--编辑用户名-->
+        <activity
+            android:name=".ui.mine.activity.EditNameActivity"
+            android:screenOrientation="portrait" />
+        <!--编辑性别-->
+        <activity
+            android:name=".ui.mine.activity.EditSexActivity"
+            android:screenOrientation="portrait" />
+
+
+
 
     </application>
 

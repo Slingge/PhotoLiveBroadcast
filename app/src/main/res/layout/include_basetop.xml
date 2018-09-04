@@ -52,8 +52,8 @@
         android:gravity="center_vertical"
         android:padding="10dp"
         android:text="编辑"
+        android:textColor="@color/colorTheme"
         android:textSize="@dimen/main_fant"
-        android:textColor="@color/colorTabText"
         android:visibility="gone" />
 
     <ImageView
