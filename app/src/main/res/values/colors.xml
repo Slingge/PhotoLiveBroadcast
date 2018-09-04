@@ -86,4 +86,7 @@
     <color name="orange">#fbba5a</color>
 
     <color name="gray2">#efefef</color>
+
+    <color name="home_title">#003233</color>
+
 </resources>
