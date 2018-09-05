@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import com.lixin.amuseadjacent.app.ui.base.BaseFragment
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.mine.activity.PersonalInfoActivity
+import com.photolivebroadcast.ui.mine.activity.RealnameAuthenticationActivity
 import com.photolivebroadcast.util.StatusBarBlackWordUtil
 import com.photolivebroadcast.util.StatusBarUtil
-import kotlinx.android.synthetic.main.include_basetop.*
+import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
  * 我的
@@ -37,7 +37,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         }
 
         iv_right.setOnClickListener(this)
-
+        tv_real.setOnClickListener(this)
     }
 
     private fun init() {
@@ -48,6 +48,9 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         when (v!!.id) {
             R.id.iv_right -> {//个人信息
                 MyApplication.openActivity(activity!!, PersonalInfoActivity::class.java)
+            }
+            R.id.tv_real -> {//实名认证
+                MyApplication.openActivity(activity!!, RealnameAuthenticationActivity::class.java)
             }
         }
     }

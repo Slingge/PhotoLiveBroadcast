@@ -35,6 +35,7 @@
             </intent-filter>
         </activity>
 
+
         <!--获取验证码-->
         <activity
             android:name=".ui.establish.SginInActivity"
@@ -68,7 +69,24 @@
             android:name=".ui.mine.activity.EditSexActivity"
             android:screenOrientation="portrait" />
 
+        <!--实名认证-->
+        <activity
+            android:name=".ui.mine.activity.RealnameAuthenticationActivity"
+            android:screenOrientation="portrait" />
 
+        <!--认证个人1-->
+        <activity
+            android:name=".ui.mine.activity.PersonalAuthenticationActivity1"
+            android:screenOrientation="portrait" />
+        <!--认证个人2-->
+        <activity
+            android:name=".ui.mine.activity.PersonalAuthenticationActivity2"
+            android:screenOrientation="portrait" />
+
+        <!--认证审核-->
+        <activity
+            android:name=".ui.mine.activity.CertificationAuditActivity"
+            android:screenOrientation="portrait" />
 
 
     </application>
