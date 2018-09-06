@@ -37,17 +37,28 @@ class RealnameAuthenticationActivity : BaseActivity(), View.OnClickListener {
             R.id.image1 -> {//个人
                 flag = 0
                 tv_next.setBackgroundResource(R.drawable.bg_them5)
+                image1.setImageResource(R.drawable.ic_geren_hl)
+                image2.setImageResource(R.drawable.ic_qiye_nor)
             }
             R.id.image2 -> {
                 flag = 1
                 tv_next.setBackgroundResource(R.drawable.bg_them5)
+                image1.setImageResource(R.drawable.ic_geren_nor)
+                image2.setImageResource(R.drawable.ic_qiye_hl)
             }
             R.id.tv_next -> {
                 if (flag == 0) {
                     MyApplication.openActivity(this, PersonalAuthenticationActivity1::class.java)
+                } else {
+                    MyApplication.openActivity(this, EnterpriseAuthenticationActivity1::class.java)
                 }
             }
         }
+    }
+
+
+    fun destroy() {
+        finish()
     }
 
 

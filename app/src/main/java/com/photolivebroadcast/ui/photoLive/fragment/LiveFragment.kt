@@ -29,7 +29,6 @@ class  LiveFragment:BaseFragment(){
         if (Build.VERSION.SDK_INT > 19) {
             view_staus.visibility = View.VISIBLE
             StatusBarUtil.setStutaViewHeight(activity, view_staus)
-            StatusBarUtil.transparentStatusBar(activity)
             StatusBarBlackWordUtil.StatusBarLightMode(activity)
         }
 

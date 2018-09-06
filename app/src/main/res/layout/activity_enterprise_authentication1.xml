@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--个人、企业认证审核提交-->
-
 
 
     <include
@@ -47,7 +43,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/circular_gray"
+        android:background="@drawable/circular_them"
         android:gravity="center"
         android:text="2"
         android:textColor="@color/white"
@@ -89,7 +85,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/circular_them"
+        android:background="@drawable/circular_gray"
         android:gravity="center"
         android:text="4"
         android:textColor="@color/white"
@@ -149,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="基本资料"
-        android:textColor="@color/colorSubtitle"
+        android:textColor="@color/colorTheme"
         android:textSize="@dimen/sub_fant"
         app:layout_constraintEnd_toStartOf="@+id/line_2"
         app:layout_constraintStart_toStartOf="@+id/tv_2"
@@ -173,68 +169,117 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="提交审核"
-        android:textColor="@color/colorTheme"
+        android:textColor="@color/colorSubtitle"
         android:textSize="@dimen/sub_fant"
         app:layout_constraintEnd_toEndOf="@+id/tv_4"
         app:layout_constraintStart_toStartOf="@+id/tv_4"
         app:layout_constraintTop_toBottomOf="@+id/tv_1" />
 
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="174dp"
-        android:layout_height="228dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_shenhe"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/gray2"
+        android:hint="输入身份证姓名"
+        android:padding="10dp"
+        android:layout_marginRight="12dp"
+        android:singleLine="true"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv2"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/tv3" />
 
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:text="公司名称"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintBottom_toBottomOf="@+id/et_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_name" />
+
+    <EditText
+        android:id="@+id/et_person"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="您提交的认证资料已经上传，"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/sub_fant"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
-
+        android:background="@color/gray2"
+        android:hint="输入法人姓名"
+        android:padding="10dp"
+        android:layout_marginRight="12dp"
+        android:singleLine="true"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <TextView
-        android:id="@+id/text2"
+        android:id="@+id/person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="审核时间为1-2个工作日，请耐心等候"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/sub_fant"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/text1" />
+        android:paddingLeft="12dp"
+        android:text="企业法人"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintBottom_toBottomOf="@+id/et_person"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_person" />
+
+
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/gray2"
+        android:hint="输入公司统一社会信用代码"
+        android:padding="10dp"
+        android:layout_marginRight="12dp"
+        android:singleLine="true"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/et_person" />
+
+    <TextView
+        android:id="@+id/code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="12dp"
+        android:text="统一社会信用代码"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintBottom_toBottomOf="@+id/et_code"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_code" />
 
     <TextView
         android:id="@+id/tv_next"
         android:layout_width="match_parent"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bg_them5"
-        android:gravity="center"
+        android:background="@drawable/bg_gray5"
         android:padding="12dp"
+        android:textSize="17sp"
+        android:gravity="center"
         android:text="下一步"
         android:textColor="@color/white"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text2" />
+        app:layout_constraintTop_toBottomOf="@+id/et_code" />
 
 
 </android.support.constraint.ConstraintLayout>

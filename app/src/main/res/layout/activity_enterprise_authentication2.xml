@@ -6,9 +6,6 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--个人、企业认证审核提交-->
-
-
 
     <include
         android:id="@+id/include2"
@@ -75,7 +72,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/circular_gray"
+        android:background="@drawable/circular_them"
         android:gravity="center"
         android:text="3"
         android:textColor="@color/white"
@@ -89,7 +86,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/circular_them"
+        android:background="@drawable/circular_gray"
         android:gravity="center"
         android:text="4"
         android:textColor="@color/white"
@@ -161,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="证件类型"
-        android:textColor="@color/colorSubtitle"
+        android:textColor="@color/colorTheme"
         android:textSize="@dimen/sub_fant"
         app:layout_constraintEnd_toStartOf="@+id/line_3"
         app:layout_constraintStart_toStartOf="@+id/tv_3"
@@ -173,7 +170,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="提交审核"
-        android:textColor="@color/colorTheme"
+        android:textColor="@color/colorSubtitle"
         android:textSize="@dimen/sub_fant"
         app:layout_constraintEnd_toEndOf="@+id/tv_4"
         app:layout_constraintStart_toStartOf="@+id/tv_4"
@@ -182,59 +179,54 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="174dp"
-        android:layout_height="228dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_shenhe"
+        android:layout_width="247dp"
+        android:layout_height="284dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/ic_zhizhao"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv2"
-        app:layout_constraintVertical_bias="0.208" />
+        app:layout_constraintTop_toBottomOf="@+id/tv3"
+        app:layout_constraintVertical_bias="0.0" />
 
-
-    <TextView
-        android:id="@+id/text1"
+    <ImageView
+        android:id="@+id/image1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="您提交的认证资料已经上传，"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/sub_fant"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
-
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="审核时间为1-2个工作日，请耐心等候"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/sub_fant"
+        android:src="@drawable/ic_up_zhizhao"
+        app:layout_constraintBottom_toBottomOf="@+id/image"
         app:layout_constraintEnd_toEndOf="@+id/image"
         app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/text1" />
+        app:layout_constraintTop_toTopOf="@+id/image" />
+
+
 
     <TextView
         android:id="@+id/tv_next"
         android:layout_width="match_parent"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bg_them5"
-        android:gravity="center"
+        android:background="@drawable/bg_gray5"
         android:padding="12dp"
+        android:textSize="17sp"
+        android:gravity="center"
         android:text="下一步"
         android:textColor="@color/white"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text2" />
+        app:layout_constraintTop_toBottomOf="@+id/image" />
 
 
 </android.support.constraint.ConstraintLayout>

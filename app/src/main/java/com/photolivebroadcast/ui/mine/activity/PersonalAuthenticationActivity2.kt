@@ -1,8 +1,6 @@
 package com.photolivebroadcast.ui.mine.activity
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Path
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -85,7 +83,9 @@ class PersonalAuthenticationActivity2 : BaseActivity(), View.OnClickListener {
                     ToastUtil.showToast("请选择国徽像")
                     return
                 }
-                MyApplication.openActivity(this, CertificationAuditActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt("type", intent.getIntExtra("type", 0))
+                MyApplication.openActivity(this, CertificationAuditActivity::class.java, bundle)
             }
         }
     }
@@ -116,5 +116,7 @@ class PersonalAuthenticationActivity2 : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
+
 
 }
