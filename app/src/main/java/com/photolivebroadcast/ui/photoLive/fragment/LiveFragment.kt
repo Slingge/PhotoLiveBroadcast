@@ -15,11 +15,11 @@ import kotlinx.android.synthetic.main.include_basetop.*
  * 直播
  * Created by Slingge on 2018/8/31.
  */
-class  LiveFragment:BaseFragment(){
+class LiveFragment : BaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val view=inflater.inflate(R.layout.fragment_live,container,false)
+        val view = inflater.inflate(R.layout.fragment_live, container, false)
         return view
     }
 
@@ -29,6 +29,7 @@ class  LiveFragment:BaseFragment(){
         if (Build.VERSION.SDK_INT > 19) {
             view_staus.visibility = View.VISIBLE
             StatusBarUtil.setStutaViewHeight(activity, view_staus)
+            StatusBarUtil.setColorNoTranslucent(activity, resources.getColor(R.color.white))
             StatusBarBlackWordUtil.StatusBarLightMode(activity)
         }
 

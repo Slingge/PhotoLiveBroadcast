@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/include_basetop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="推广收益"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.00"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/money" />
+
+
+    <TextView
+        android:id="@+id/tv_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/icon_zhangdan"
+        android:drawablePadding="3dp"
+        android:gravity="center_vertical"
+        android:text="查看收益记录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+
+
+    <TextView
+        android:id="@+id/unsettled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:background="@color/white"
+        android:paddingTop="24dp"
+        android:text="未结算部分"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/tv_unsettled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableRight="@drawable/ic_right"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="24dp"
+        android:paddingRight="12dp"
+        android:drawablePadding="15dp"
+        android:text="0.00"
+        android:textColor="@color/colorTheme"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_unsettled" />
+
+    <ImageView
+        android:id="@+id/iv_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_chengyuan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unsettled" />
+
+    <TextView
+        android:id="@+id/member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="团队成员"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/iv_member"
+        app:layout_constraintStart_toStartOf="@+id/iv_member"
+        app:layout_constraintTop_toBottomOf="@+id/iv_member" />
+
+    <TextView
+        android:id="@+id/tv_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0个"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/member"
+        app:layout_constraintStart_toStartOf="@+id/member"
+        app:layout_constraintTop_toBottomOf="@+id/member"/>
+
+
+    <ImageView
+        android:id="@+id/iv_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_dingdan"
+        app:layout_constraintEnd_toStartOf="@+id/iv_member"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/unsettled" />
+
+
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推广订单"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/iv_order"
+        app:layout_constraintStart_toStartOf="@+id/iv_order"
+        app:layout_constraintTop_toBottomOf="@+id/iv_member" />
+
+
+    <TextView
+        android:id="@+id/tv_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="（0）"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/order"
+        app:layout_constraintStart_toStartOf="@+id/order"
+        app:layout_constraintTop_toBottomOf="@+id/order"/>
+
+
+    <ImageView
+        android:id="@+id/iv_extension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tuiguang"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_member"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_member"
+        app:layout_constraintTop_toTopOf="@+id/iv_member" />
+
+    <TextView
+        android:id="@+id/extension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="立即推广"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/iv_extension"
+        app:layout_constraintStart_toStartOf="@+id/iv_extension"
+        app:layout_constraintTop_toBottomOf="@+id/iv_extension" />
+
+    <TextView
+        android:id="@+id/tv_extension"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推广二维码"
+        android:textColor="@color/colorTitle"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="@+id/extension"
+        app:layout_constraintStart_toStartOf="@+id/extension"
+        app:layout_constraintTop_toBottomOf="@+id/extension"/>
+
+</android.support.constraint.ConstraintLayout>

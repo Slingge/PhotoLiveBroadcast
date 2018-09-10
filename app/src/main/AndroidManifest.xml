@@ -103,14 +103,65 @@
         <activity
             android:name=".ui.mine.activity.EnterpriseAuthenticationActivity2"
             android:screenOrientation="portrait" />
-
-
-        <!--认证审核-->
+              <!--认证审核-->
         <activity
             android:name=".ui.mine.activity.CertificationAuditActivity"
             android:screenOrientation="portrait" />
 
+        <!--我的账户-->
+        <activity
+            android:name=".ui.mine.activity.MyAccountActivity"
+            android:screenOrientation="portrait" />
 
+        <!--充值-->
+        <activity
+            android:name=".ui.mine.activity.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <!--提现-->
+        <activity
+            android:name=".ui.mine.activity.ForwardActivity"
+            android:screenOrientation="portrait" />
+        <!--明细-->
+        <activity
+            android:name=".ui.mine.activity.AccountDetailedActivity"
+            android:screenOrientation="portrait" />
+
+        <!--我的套餐-->
+        <activity
+            android:name=".ui.mine.activity.MySetMealActivity"
+            android:screenOrientation="portrait" />
+        <!--我发出的-->
+        <activity
+            android:name=".ui.mine.activity.MySendActivity"
+            android:screenOrientation="portrait" />
+        <!--修图服务-->
+        <activity
+            android:name=".ui.mine.activity.MappingServiceActivity1"
+            android:screenOrientation="portrait" />
+        <!--修图服务-->
+        <activity
+            android:name=".ui.mine.activity.MappingServiceActivity2"
+            android:screenOrientation="portrait" />
+
+        <!--推广中心-->
+        <activity
+            android:name=".ui.mine.activity.ExtensionActivity"
+            android:screenOrientation="portrait" />
+
+        <!--立即推广 -->
+        <activity
+            android:name=".ui.mine.activity.ExtensionImmediatelyActivity"
+            android:screenOrientation="portrait" />
+
+
+        <!--推广 -->
+        <activity
+            android:name=".ui.mine.activity.ExtensionOrderActivity"
+            android:screenOrientation="portrait" />
+        <!--推广 -->
+        <activity
+            android:name=".ui.mine.activity.ExtensionTeamActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

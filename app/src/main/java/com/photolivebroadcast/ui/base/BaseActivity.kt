@@ -39,9 +39,8 @@ open class BaseActivity : AppCompatActivity() {
             val view_staus = findViewById<View>(R.id.view_staus)
             view_staus.visibility = View.VISIBLE
             StatusBarUtil.setStutaViewHeight(this, view_staus)
-            StatusBarUtil.transparentStatusBar(this)
-            StatusBarBlackWordUtil.StatusBarLightMode(this)
-        }
+            StatusBarUtil.setColorNoTranslucent(this, resources.getColor(R.color.white))
+            StatusBarBlackWordUtil.StatusBarLightMode(this) }
     }
 
 

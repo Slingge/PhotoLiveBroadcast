@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray2"
+        android:padding="12dp">
+
+
+        <ImageView
+            android:id="@+id/iv_type"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_toucan01" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="照片直播相册一个"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sub_fant"
+            app:layout_constraintStart_toEndOf="@+id/iv_type"
+            app:layout_constraintTop_toTopOf="@+id/iv_type" />
+
+        <TextView
+            android:id="@+id/tv_isPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_orgine_line5"
+            android:padding="3dp"
+            android:text="购买成功"
+            android:textColor="@color/orange"
+            android:textSize="11sp"
+            app:layout_constraintStart_toEndOf="@+id/iv_type"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥0"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="x1"
+            android:textColor="#999999"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</FrameLayout>
