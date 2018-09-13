@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.dialog.NewAlbumDialog
 import com.photolivebroadcast.ui.establish.SginInActivity
 import com.photolivebroadcast.ui.mine.fragment.MineFragment
 import com.photolivebroadcast.ui.photoLive.fragment.LiveFragment
@@ -14,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     private var mFragment = Fragment()
     private var bFragment1: LiveFragment? = null
     private var bFragment2: MineFragment? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         rl_bottom.setOnCheckedChangeListener { _, i -> selectStyle(i) }
 
-        establish.setOnClickListener { v->
-                MyApplication.openActivity(this, SginInActivity::class.java)
+        establish.setOnClickListener { v ->
+            NewAlbumDialog.dialogEducation(this)
         }
 
     }

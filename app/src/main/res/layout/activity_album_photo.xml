@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--上传相册图片-->
+
+    <include
+        android:id="@+id/include8"
+        layout="@layout/include_basetop" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="284dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/imag_02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include8"
+        app:layout_constraintVertical_bias="0.013" />
+
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="广告位"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="@+id/image" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="36dp"
+        android:layout_height="1dp"
+        android:background="#FF8787"
+        app:layout_constraintBottom_toBottomOf="@+id/text1"
+        app:layout_constraintEnd_toStartOf="@+id/text1"
+        app:layout_constraintTop_toTopOf="@+id/text1" />
+
+    <View
+        android:id="@+id/view_c"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="@drawable/circular_reds"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line"
+        app:layout_constraintEnd_toStartOf="@+id/view_line"
+        app:layout_constraintTop_toTopOf="@+id/view_line" />
+
+    <TextView
+        android:id="@+id/tv_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="建议尺寸：900*300px"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintStart_toEndOf="@+id/view_line"
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
+
+    <TextView
+        android:id="@+id/tv_text3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="18dp"
+        android:text="提示:上传后将应用于分享页面；此图可用于宣传活动举办方宣传广告"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sub_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text2" />
+
+    <TextView
+        android:id="@+id/tv_enter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorTheme"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="立即上传"
+        android:textColor="@color/white"
+        android:textSize="@dimen/main_fant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+
+</android.support.constraint.ConstraintLayout>

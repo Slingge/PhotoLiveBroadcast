@@ -8,6 +8,7 @@ import com.photolivebroadcast.ui.mine.adapter.ExtensionTeamAdapter
 import kotlinx.android.synthetic.main.activity_extension_team.*
 
 /**
+ * 推广团队
  * Created by Slingge on 2018/9/9.
  */
 class ExtensionTeamActivity:BaseActivity(){
