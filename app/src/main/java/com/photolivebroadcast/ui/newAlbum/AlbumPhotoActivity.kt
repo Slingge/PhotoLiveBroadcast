@@ -32,11 +32,11 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
             inittitle("上传广告图")
         } else {
             inittitle("上传引导图")
+            image.setImageResource(R.drawable.imag_01)
         }
         StatusBarWhiteColor()
 
         tv_enter.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View?) {

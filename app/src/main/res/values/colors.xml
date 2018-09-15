@@ -13,7 +13,7 @@
 
     <color name="colorWhite">#ffffffff</color>
     <!--分割线-->
-    <color name="colorLine">#EBEBEB</color>
+    <color name="colorLine">#f0f0f0</color>
     <!--首页分割线-->
     <color name="colorHomeLine">#D4D4D4</color>
 

@@ -169,6 +169,19 @@
         <activity
             android:name=".ui.mine.activity.ExtensionTeamActivity"
             android:screenOrientation="portrait" />
+        <!--设置 -->
+        <activity
+            android:name=".ui.mine.activity.SetUpActivity"
+            android:screenOrientation="portrait" />
+        <!--检查版本 -->
+        <activity
+            android:name=".ui.mine.activity.UpdataActivity"
+            android:screenOrientation="portrait" />
+        <!--关于我们 -->
+        <activity
+            android:name=".ui.mine.activity.AboutActivity"
+            android:screenOrientation="portrait" />
+
 
 
         <!--//////////////////////////新建相册\\\\\\\\\\\\\\\\\\\\\\\\\-->

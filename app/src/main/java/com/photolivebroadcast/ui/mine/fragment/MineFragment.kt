@@ -75,7 +75,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 MyApplication.openActivity(activity!!, ExtensionActivity::class.java)
             }
             R.id.tv_setting -> {//设置
-
+                MyApplication.openActivity(activity!!, SetUpActivity::class.java)
             }
         }
     }
