@@ -100,9 +100,9 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
             //照片直播
             case R.id.tv_photo:
                 tvPhoto.setTextColor(getResources().getColor(R.color.white));
-                tvPhoto.setBackgroundResource(R.drawable.bg_them6);
+                tvPhoto.setBackgroundResource(R.drawable.bg_white9);
                 tvVideo.setTextColor(getResources().getColor(R.color.tv_home));
-                tvVideo.setBackgroundResource(R.drawable.bg_white7);
+                tvVideo.setBackgroundResource(R.drawable.bg_them8);
                 break;
             //搜索
             case R.id.iv_search:

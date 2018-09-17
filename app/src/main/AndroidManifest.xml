@@ -73,6 +73,30 @@
             android:name=".ui.photoLive.activity.EditorPhotoActivity"
             android:screenOrientation="portrait" />
         <!--编辑相册-->
+        <activity
+            android:name=".ui.photoLive.activity.WatchSettingActivity"
+            android:screenOrientation="portrait" />
+        <!--观看设置-->
+        <activity
+            android:name=".ui.photoLive.activity.AdminCameramanActivity"
+            android:screenOrientation="portrait" />
+        <!--管理摄影师-->
+        <activity
+            android:name=".ui.photoLive.activity.AdminExamineActivity"
+            android:screenOrientation="portrait" />
+        <!--管理审核员-->
+        <activity
+            android:name=".ui.photoLive.activity.AdminTrimActivity"
+            android:screenOrientation="portrait" />
+        <!--管理修图师-->
+        <activity
+            android:name=".ui.photoLive.activity.ShotImageActivity"
+            android:screenOrientation="portrait" />
+        <!--拍摄活动信息-->
+        <activity
+            android:name=".ui.photoLive.activity.WaterMarkActivity"
+            android:screenOrientation="portrait" />
+        <!--水印设置-->
 
         <!--////////////////////////////个人信息\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <!--个人信息-->

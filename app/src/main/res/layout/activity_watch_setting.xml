@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_basetop" />
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rb_public"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/tab_check"
+            android:drawablePadding="10dp"
+            android:padding="15dp"
+            android:text="公开免费"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/view_line" />
+
+        <RadioButton
+            android:id="@+id/rb_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/tab_check"
+            android:drawablePadding="10dp"
+            android:padding="15dp"
+            android:text="收费观看"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/view_line" />
+
+        <RadioButton
+            android:id="@+id/rb_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/tab_check"
+            android:drawablePadding="10dp"
+            android:padding="15dp"
+            android:text="密码观看"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </RadioGroup>
+
+
+</LinearLayout>
