@@ -8,15 +8,15 @@ import com.photolivebroadcast.R;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by zhf on 2018/9/17.
+ * Created by zhf on 2018/9/18.
  */
 
-public class ShotImageActivity extends BaseActivity {
+public class AddClassifyActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shot_image);
-        inittitle("活动拍摄信息");
+        setContentView(R.layout.activity_add_classify);
         StatusBarWhiteColor();
+        inittitle("新增分栏条");
     }
 }

@@ -29,6 +29,7 @@ public class WatchSettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_setting);
         inittitle("观看设置");
+        StatusBarWhiteColor();
         initView();
         initData();
         initEvent();

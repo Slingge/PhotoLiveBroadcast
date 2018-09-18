@@ -16,6 +16,7 @@ public class AdminTrimActivity extends BaseActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_trim);
+        StatusBarWhiteColor();
         inittitle("管理修图师");
     }
 }

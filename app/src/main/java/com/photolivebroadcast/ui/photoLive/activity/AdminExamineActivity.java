@@ -16,6 +16,7 @@ public class AdminExamineActivity extends BaseActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_examine);
+        StatusBarWhiteColor();
         inittitle("管理审核员");
     }
 }

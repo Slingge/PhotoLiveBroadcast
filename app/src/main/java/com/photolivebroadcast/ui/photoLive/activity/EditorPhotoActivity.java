@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity;
 import com.photolivebroadcast.R;
+import com.photolivebroadcast.ui.photoLive.adapter.ClassifySettingAdapter;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +31,7 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_photo);
+        StatusBarWhiteColor();
         inittitle("编辑相册");
         initView();
         initData();
@@ -79,9 +81,11 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
                 break;
             //相册分类
             case R.id.tv_photo_type:
+                intent = new Intent(this, ClassifySettingActivity.class);
                 break;
             //下方自定义广告
             case R.id.tv_advertise:
+                intent = new Intent(this, CustomAdverActivity.class);
                 break;
             //水印功能
             case R.id.tv_watermark:
@@ -89,6 +93,7 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
                 break;
             //互动设置
             case R.id.tv_interact_setting:
+
                 break;
             //管理摄影师
             case R.id.tv_admin_cameraman:

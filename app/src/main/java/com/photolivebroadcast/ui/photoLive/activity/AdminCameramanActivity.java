@@ -18,10 +18,12 @@ public class AdminCameramanActivity extends BaseActivity {
     private TextView tvCopy;
     private TextView tvCode;
     private Button btnSubmit;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_cameraman);
+        StatusBarWhiteColor();
         inittitle("管理摄影师");
         initView();
         initData();
