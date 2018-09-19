@@ -11,11 +11,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.ImageView
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
+import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
+import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.establish.result.SendMSMrHttp
 import com.photolivebroadcast.util.AbStrUtil
+import com.photolivebroadcast.util.GetCodeUtil
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.util.TimerUtil
 import kotlinx.android.synthetic.main.activity_enterprise_authentication1.*
@@ -70,7 +73,10 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
                     ToastUtil.showToast("请输入手机号")
                     return
                 }
-                val VCode = TimerUtil.getCode()
+
+                ProgressDialog.showDialog(this)
+                val VCode = GetCodeUtil.getCode()
+                abLog.e("验证码",VCode)
                 SendMSMrHttp.regist(phone, VCode, object : SendMSMrHttp.SendMsmCallBack {
                     override fun send() {
                         val bundle = Bundle()

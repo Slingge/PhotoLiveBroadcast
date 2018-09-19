@@ -1,5 +1,6 @@
 package com.photolivebroadcast.ui.establish.result
 
+import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.zhy.http.okhttp.OkHttpUtils
@@ -12,18 +13,19 @@ import org.json.JSONObject
  */
 object SendMSMrHttp {
 
-    interface SendMsmCallBack{
+    interface SendMsmCallBack {
         fun send()
     }
 
 
-    fun regist(phone: String, code: String,sendMsmCallBack: SendMsmCallBack) {
-
+    fun regist(phone: String, code: String, sendMsmCallBack: SendMsmCallBack) {
+        ToastUtil.showToast(code)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/user/user/ajaxsendSMS")
                 .addParams("phone", phone).addParams("code", code).build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
                         super.onResponse(response, id)
                         val obj = JSONObject(response)
+                        abLog.e("发送验证码。。。。。", response)
                         if (obj.getInt("code") == 200) {
                             ToastUtil.showToast("短信已发送，请注意查收")
                             sendMsmCallBack.send()
@@ -32,7 +34,6 @@ object SendMSMrHttp {
                         }
                     }
                 })
-
     }
 
 

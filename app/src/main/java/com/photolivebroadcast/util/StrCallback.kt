@@ -3,6 +3,7 @@ package com.lxkj.huaihuatransit.app.util
 
 import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.zhy.http.okhttp.callback.StringCallback
 import okhttp3.Call
 
@@ -15,10 +16,12 @@ abstract class StrCallback : StringCallback() {
     override fun onError(call: Call, e: Exception, id: Int) {
         abLog.e2(e.toString())
         ToastUtil.showToast("网络错误")
+        ProgressDialog.dissDialog()
     }
 
     override fun onResponse(response: String, id: Int) {
         abLog.e2(response)
+        ProgressDialog.dissDialog()
     }
 
 }

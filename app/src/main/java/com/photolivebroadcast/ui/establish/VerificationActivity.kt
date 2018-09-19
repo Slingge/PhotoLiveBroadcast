@@ -12,9 +12,12 @@ import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MainActivity
 import com.photolivebroadcast.ui.MyApplication
+import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.establish.result.SendMSMrHttp
 import com.photolivebroadcast.ui.establish.result.SginHttp
 import com.photolivebroadcast.util.AbStrUtil
-import kotlinx.android.synthetic.main.activity_sginin.*
+import com.photolivebroadcast.util.GetCodeUtil
+import com.photolivebroadcast.util.TimerUtil
 import kotlinx.android.synthetic.main.activity_verification.*
 
 /**
@@ -24,6 +27,8 @@ class VerificationActivity : BaseActivity() {
 
     private var Vcode = ""
     private var phone = ""
+
+    private var timerUtil: TimerUtil? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +40,21 @@ class VerificationActivity : BaseActivity() {
     private fun init() {
         StatusBarWhiteColor()
 
+        timerUtil = TimerUtil(tv_verification)
+        timerUtil!!.timersStart()
+
         Vcode = intent.getStringExtra("code")
         phone = intent.getStringExtra("phone")
+
+        tv_verification.setOnClickListener { v ->
+            Vcode = GetCodeUtil.getCode()
+            timerUtil!!.timersStart()
+            SendMSMrHttp.regist(phone, Vcode, object : SendMSMrHttp.SendMsmCallBack {
+                override fun send() {
+
+                }
+            })
+        }
 
         tv_sgin.setOnClickListener { v ->
             val code = AbStrUtil.etTostr(et_verification)
@@ -48,15 +66,15 @@ class VerificationActivity : BaseActivity() {
                 ToastUtil.showToast("验证码错误")
                 return@setOnClickListener
             }
+            ProgressDialog.showDialog(this)
             SginHttp.sgin(phone, code, object : SginHttp.SginCallBack {
                 override fun send() {
                     MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
                 }
             })
-
         }
 
-        et_phone.addTextChangedListener(
+        et_verification.addTextChangedListener(
                 object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -67,8 +85,11 @@ class VerificationActivity : BaseActivity() {
 
                     override fun afterTextChanged(s: Editable?) {
                         val str = s.toString()
+                        if (TextUtils.isEmpty(str)) {
+                            return
+                        }
                         val m = Message()
-                        if (str.length == 11) {
+                        if (str.length == 4) {
                             m.what = 1
                         } else {
                             m.what = 0
