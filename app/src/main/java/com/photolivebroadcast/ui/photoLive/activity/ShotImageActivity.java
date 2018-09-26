@@ -12,6 +12,8 @@ import org.jetbrains.annotations.Nullable;
  */
 
 public class ShotImageActivity extends BaseActivity {
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,4 +21,6 @@ public class ShotImageActivity extends BaseActivity {
         inittitle("活动拍摄信息");
         StatusBarWhiteColor();
     }
+
+
 }

@@ -75,12 +75,10 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
                 }
 
                 ProgressDialog.showDialog(this)
-                val VCode = GetCodeUtil.getCode()
-                abLog.e("验证码",VCode)
-                SendMSMrHttp.regist(phone, VCode, object : SendMSMrHttp.SendMsmCallBack {
-                    override fun send() {
+                SendMSMrHttp.regist(phone, "", object : SendMSMrHttp.SendMsmCallBack {
+                    override fun send(code:String) {
                         val bundle = Bundle()
-                        bundle.putString("code", VCode)
+                        bundle.putString("code", code)
                         bundle.putString("phone", phone)
                         MyApplication.openActivity(this@SginInActivity, VerificationActivity::class.java, bundle)
                     }

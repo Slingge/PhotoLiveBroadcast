@@ -47,11 +47,10 @@ class VerificationActivity : BaseActivity() {
         phone = intent.getStringExtra("phone")
 
         tv_verification.setOnClickListener { v ->
-            Vcode = GetCodeUtil.getCode()
             timerUtil!!.timersStart()
-            SendMSMrHttp.regist(phone, Vcode, object : SendMSMrHttp.SendMsmCallBack {
-                override fun send() {
-
+            SendMSMrHttp.regist(phone, "", object : SendMSMrHttp.SendMsmCallBack {
+                override fun send(code:String) {
+                    Vcode=code
                 }
             })
         }
@@ -62,16 +61,18 @@ class VerificationActivity : BaseActivity() {
                 ToastUtil.showToast("请输验证码")
                 return@setOnClickListener
             }
+
             if (Vcode != code) {
                 ToastUtil.showToast("验证码错误")
                 return@setOnClickListener
             }
-            ProgressDialog.showDialog(this)
+            MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
+           /* ProgressDialog.showDialog(this)
             SginHttp.sgin(phone, code, object : SginHttp.SginCallBack {
                 override fun send() {
                     MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
                 }
-            })
+            })*/
         }
 
         et_verification.addTextChangedListener(

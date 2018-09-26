@@ -14,12 +14,11 @@ import org.json.JSONObject
 object SendMSMrHttp {
 
     interface SendMsmCallBack {
-        fun send()
+        fun send(code: String)
     }
 
 
     fun regist(phone: String, code: String, sendMsmCallBack: SendMsmCallBack) {
-        ToastUtil.showToast(code)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/user/user/ajaxsendSMS")
                 .addParams("phone", phone).addParams("code", code).build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
@@ -28,7 +27,7 @@ object SendMSMrHttp {
                         abLog.e("发送验证码。。。。。", response)
                         if (obj.getInt("code") == 200) {
                             ToastUtil.showToast("短信已发送，请注意查收")
-                            sendMsmCallBack.send()
+                            sendMsmCallBack.send(obj.getString("data"))
                         } else {
                             ToastUtil.showToast(obj.getString("msg"))
                         }

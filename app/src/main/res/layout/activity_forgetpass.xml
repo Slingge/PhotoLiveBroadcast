@@ -202,7 +202,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="36dp"
-        android:background="@drawable/bg_thems5"
+        android:background="@drawable/bg_them5"
         android:gravity="center"
         android:padding="10dp"
         android:text="修改密码"

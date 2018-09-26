@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icon_faqi" />
 
 
 </RelativeLayout>

@@ -44,7 +44,6 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         tv_trimming.setOnClickListener(this)
         tv_invitation.setOnClickListener(this)
         tv_setting.setOnClickListener(this)
-
     }
 
     private fun init() {
