@@ -1,16 +1,15 @@
 package com.photolivebroadcast.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.dialog.NewAlbumDialog
-import com.photolivebroadcast.ui.establish.SginInActivity
 import com.photolivebroadcast.ui.mine.fragment.MineFragment
 import com.photolivebroadcast.ui.photoLive.fragment.LiveFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private var mFragment = Fragment()
     private var bFragment1: LiveFragment? = null

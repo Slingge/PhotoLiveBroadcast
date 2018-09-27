@@ -1,17 +1,25 @@
 package com.photolivebroadcast.ui.mine.fragment
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lixin.amuseadjacent.app.ui.base.BaseFragment
+import com.nostra13.universalimageloader.core.ImageLoader
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.mine.activity.*
+import com.photolivebroadcast.util.StatickUtil
 import com.photolivebroadcast.util.StatusBarBlackWordUtil
 import com.photolivebroadcast.util.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_mine.*
+import com.photolivebroadcast.util.AbStrUtil.setText
+import android.content.Context.CLIPBOARD_SERVICE
+import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+
 
 /**
  * 我的
@@ -44,9 +52,24 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         tv_trimming.setOnClickListener(this)
         tv_invitation.setOnClickListener(this)
         tv_setting.setOnClickListener(this)
+        tv_copy.setOnClickListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        ImageLoader.getInstance().displayImage(StatickUtil.userModel.imgurl, iv_header)
+        tv_name.text = StatickUtil.userModel.nickname
+        tv_id.text = StatickUtil.uid
+        if (StatickUtil.userModel.iscompany == "N") {
+            tv_authentication.text = "未认证"
+        } else {
+            tv_authentication.text = "已认证"
+        }
     }
 
     private fun init() {
+
+
     }
 
 
@@ -75,6 +98,12 @@ class MineFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_setting -> {//设置
                 MyApplication.openActivity(activity!!, SetUpActivity::class.java)
+            }
+            R.id.tv_copy -> {//复制id
+                val cm = activity!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                // 将文本内容放到系统剪贴板里。
+                cm.text = StatickUtil.uid
+                ToastUtil.showToast("已复制")
             }
         }
     }

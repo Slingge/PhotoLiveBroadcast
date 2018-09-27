@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/touch_bg"
         android:padding="12dp"
-        android:text="关于速享"
+        android:text="清理缓存"
         android:textColor="@color/black"
         android:textSize="@dimen/main_fant"
         app:layout_constraintStart_toStartOf="parent"

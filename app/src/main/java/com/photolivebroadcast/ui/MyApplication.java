@@ -12,6 +12,8 @@ import android.view.View;
 
 import com.lixin.amuseadjacent.app.util.abLog;
 import com.photolivebroadcast.util.ImageLoaderUtil;
+import com.photolivebroadcast.util.SharedPreferencesUtil;
+import com.photolivebroadcast.util.StatickUtil;
 
 
 /**
@@ -22,8 +24,6 @@ public class MyApplication extends MultiDexApplication {
     public static Context CONTEXT;
 
     private static MyApplication myApplication;
-
-    public static String uid;//
 
 
 //String json = "{\"cmd\":\"getMsg\"" + "}";
@@ -49,6 +49,9 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
         CONTEXT = getApplicationContext();
         myApplication = this;
+
+        StatickUtil.INSTANCE.setUid(SharedPreferencesUtil.getSharePreStr(CONTEXT, "uid"));
+        StatickUtil.INSTANCE.setPass(SharedPreferencesUtil.getSharePreStr(CONTEXT, "phone"));
 
         abLog.INSTANCE.setE(true);
 
@@ -124,7 +127,6 @@ public class MyApplication extends MultiDexApplication {
         }
         return null;
     }
-
 
 
 }

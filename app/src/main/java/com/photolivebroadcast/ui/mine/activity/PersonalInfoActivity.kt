@@ -3,21 +3,33 @@ package com.photolivebroadcast.ui.mine.activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
+import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import com.nostra13.universalimageloader.core.ImageLoader
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
+import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.mine.result.EditUserHttp
+import com.photolivebroadcast.ui.mine.result.Upphoto
 import com.photolivebroadcast.util.ImageFileUtil
+import com.photolivebroadcast.util.StatickUtil
 import kotlinx.android.synthetic.main.activity_personal_info.*
+import kotlinx.android.synthetic.main.include_basetop.*
 
 /**
  * Created by Slingge on 2018/9/4.
  */
 class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
 
+    private var name = ""
+    private var sex = ""
+    private var headerUrl = ""
+    private var headerPath = ""//头像路径
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +41,18 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
     private fun init() {
         inittitle("编辑个人信息")
         StatusBarWhiteColor()
+
+        tv_right.text = "保存"
+        tv_right.visibility = View.VISIBLE
+        tv_right.setOnClickListener(this)
+
+        tv_id.text = StatickUtil.uid
+
+        name = StatickUtil.userModel.nickname
+        sex = StatickUtil.userModel.sex
+        headerUrl = StatickUtil.userModel.imgurl
+
+        ImageLoader.getInstance().displayImage(headerUrl, iv_header)
 
         iv_header.setOnClickListener(this)
         tv_name.setOnClickListener(this)
@@ -42,12 +66,42 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
                 SelectPictureUtil.selectPicture(this, 1, 0, true)
             }
             R.id.tv_name -> {
-               MyApplication.openActivity(this,EditNameActivity::class.java)
+                MyApplication.openActivityForResult(this, EditNameActivity::class.java, 1)
             }
             R.id.tv_sex -> {
-                MyApplication.openActivity(this,EditSexActivity::class.java)
+                MyApplication.openActivityForResult(this, EditSexActivity::class.java, 2)
+            }
+            R.id.tv_right -> {
+                if (TextUtils.isEmpty(headerUrl) && TextUtils.isEmpty(headerPath)) {
+                    ToastUtil.showToast("请选择头像")
+                    return
+                }
+                if (TextUtils.isEmpty(name)) {
+                    ToastUtil.showToast("请输入昵称")
+                    return
+                }
+                if (TextUtils.isEmpty(sex)) {
+                    ToastUtil.showToast("请选择性别")
+                    return
+                }
+                if (!TextUtils.isEmpty(headerPath)) {
+                    ProgressDialog.showDialog(this)
+                    val list = ArrayList<String>()
+                    Upphoto.upPhoto(list, object : Upphoto.UpPhotoCallBack {
+                        override fun upHeaderUrl(url: String) {
+                            EditUser(name, sex)
+                        }
+                    })
+                } else {
+                    EditUser(name, sex)
+                }
             }
         }
+    }
+
+
+    private fun EditUser(name: String, sex: String) {
+        EditUserHttp.edit(this, name, sex)
     }
 
 
@@ -70,8 +124,15 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
         }
         if (requestCode == 0) {
             // 图片、视频、音频选择结果回调
-            val bitmap = ImageFileUtil.getBitmapFromPath(PictureSelector.obtainMultipleResult(data)[0].compressPath)//压缩的路径
+            headerPath = PictureSelector.obtainMultipleResult(data)[0].cutPath
+            val bitmap = ImageFileUtil.getBitmapFromPath(headerPath)//压缩的路径
             iv_header.setImageBitmap(bitmap)
+        } else if (requestCode == 1) {//昵称
+            name = data.getStringExtra("name")
+            tv_name.text = name
+        } else if (requestCode == 2) {//性别
+            sex = data.getStringExtra("sex")
+            tv_sex.text = sex
         }
     }
 

@@ -16,6 +16,7 @@ import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.establish.result.SendMSMrHttp
 import com.photolivebroadcast.ui.establish.result.SginHttp
 import com.photolivebroadcast.util.AbStrUtil
+import com.photolivebroadcast.util.AppManager
 import com.photolivebroadcast.util.GetCodeUtil
 import com.photolivebroadcast.util.TimerUtil
 import kotlinx.android.synthetic.main.activity_verification.*
@@ -49,8 +50,8 @@ class VerificationActivity : BaseActivity() {
         tv_verification.setOnClickListener { v ->
             timerUtil!!.timersStart()
             SendMSMrHttp.regist(phone, "", object : SendMSMrHttp.SendMsmCallBack {
-                override fun send(code:String) {
-                    Vcode=code
+                override fun send(code: String) {
+                    Vcode = code
                 }
             })
         }
@@ -66,13 +67,14 @@ class VerificationActivity : BaseActivity() {
                 ToastUtil.showToast("验证码错误")
                 return@setOnClickListener
             }
-            MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
-           /* ProgressDialog.showDialog(this)
-            SginHttp.sgin(phone, code, object : SginHttp.SginCallBack {
+
+            ProgressDialog.showDialog(this)
+            SginHttp.sgin(this, phone, code, object : SginHttp.SginCallBack {
                 override fun send() {
+                    AppManager.finishAllActivity()
                     MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
                 }
-            })*/
+            })
         }
 
         et_verification.addTextChangedListener(

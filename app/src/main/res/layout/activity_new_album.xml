@@ -78,8 +78,8 @@
         android:layout_marginLeft="8dp"
         android:background="@drawable/touch_bg"
         android:drawablePadding="10dp"
-        android:gravity="right|center_vertical"
         android:drawableRight="@drawable/ic_right"
+        android:gravity="right|center_vertical"
         android:paddingRight="12dp"
         android:textColor="@color/black"
         android:textSize="@dimen/main_fant"
@@ -110,6 +110,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
+    <TextView
+        android:id="@+id/tv_bootstrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:text="已选择"
+        android:textColor="@color/colorTabText"
+        android:textSize="@dimen/sub_fant"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/line3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
     <include
         android:id="@+id/line3"
         layout="@layout/include_line"
@@ -129,6 +142,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line3" />
 
+    <TextView
+        android:id="@+id/tv_advertisement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:text="已选择"
+        android:textColor="@color/colorTabText"
+        android:textSize="@dimen/sub_fant"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/line4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line3" />
+
     <include
         android:id="@+id/line4"
         layout="@layout/include_line"
@@ -146,6 +172,19 @@
         android:textColor="@color/black"
         android:textSize="@dimen/main_fant"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line4" />
+
+    <TextView
+        android:id="@+id/tv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:text="已选择"
+        android:textColor="@color/colorTabText"
+        android:textSize="@dimen/sub_fant"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/line5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line4" />
 
     <View

@@ -30,9 +30,9 @@ class AlbumTitleActivity : BaseActivity() {
 
     private fun init() {
 
-        flag = intent.getIntExtra("flag", -1)
+        flag = intent.getIntExtra("flag", -3)
 
-        if (flag == 0) {
+        if (flag == 303) {
             inittitle("相册标题")
         } else if (flag == 1) {
             inittitle("相册副标题")
@@ -57,10 +57,10 @@ class AlbumTitleActivity : BaseActivity() {
             bundle.putString("title", title)
             val intent = Intent()
             intent.putExtras(bundle)
-            if (flag == 0) {
+            if (flag == 303) {
                 setResult(0, intent)
             } else {
-                setResult(1, intent)
+                setResult(0, intent)
             }
             finish()
         }

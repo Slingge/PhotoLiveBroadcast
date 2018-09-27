@@ -29,10 +29,16 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
     private fun init() {
         flag = intent.getIntExtra("flag", -1)
         if (flag == 2) {
-            inittitle("上传广告图")
-        } else {
             inittitle("上传引导图")
-            image.setImageResource(R.drawable.imag_01)
+            text1.text="引导图"
+            tv_text2.text="建议尺寸：720*1280"
+            tv_text3.text="提示：上传后将应用于分享页面。"
+        } else {
+            inittitle("上传广告图")
+            text1.text="广告图"
+            tv_text2.text="建议尺寸：9000*300"
+            tv_text3.text="提示：上传后将应用于分享页面；此图片可用于宣传活动举办方宣传广告。"
+            image.setImageResource(R.drawable.imag_02)
         }
         StatusBarWhiteColor()
 
@@ -55,7 +61,7 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
         }
         if (requestCode == 0) {
             // 图片、视频、音频选择结果回调
-            val path = PictureSelector.obtainMultipleResult(data)[0].path//压缩的路径
+            val path = PictureSelector.obtainMultipleResult(data)[0].path//
             val bundle = Bundle()
             bundle.putString("path", path)
             val intent = Intent()
@@ -65,6 +71,7 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
             } else {
                 setResult(3, intent)
             }
+            finish()
         }
     }
 

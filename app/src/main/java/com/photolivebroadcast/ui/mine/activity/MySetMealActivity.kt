@@ -3,6 +3,8 @@ package com.photolivebroadcast.ui.mine.activity
 import android.os.Bundle
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.mine.result.MyMealHttp
 
 /**
  * 我的套餐
@@ -19,9 +21,12 @@ class MySetMealActivity : BaseActivity() {
 
 
     private fun init() {
-        inittitle("")
+        inittitle("我的套餐")
         StatusBarWhiteColor()
 
+
+        ProgressDialog.showDialog(this)
+        MyMealHttp.meal()
     }
 
 
