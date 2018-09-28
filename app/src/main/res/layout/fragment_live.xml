@@ -33,26 +33,26 @@
                 android:id="@+id/tv_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_them6"
+                android:background="@drawable/bg_them8"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:text="视频直播"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_white7"
+                android:background="@drawable/bg_white9"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
                 android:text="照片直播"
-                android:textColor="@color/home_title"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -85,8 +85,6 @@
     <com.example.xrecyclerview.XRecyclerView
         android:id="@+id/rv_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.example.xrecyclerview.XRecyclerView>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

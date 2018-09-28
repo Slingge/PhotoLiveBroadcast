@@ -1,9 +1,11 @@
 package com.photolivebroadcast.ui.mine.model
 
+import java.io.Serializable
+
 /**
  * Created by Slingge on 2018/9/27.
  */
-class MySendModel {
+class MySendModel : Serializable {
 
 
     var code = 0
@@ -13,9 +15,12 @@ class MySendModel {
 
     class dataModel {
         var listalbums = ArrayList<listalbumsModel>()
+
+        val album=listalbumsModel()
     }
 
-    class listalbumsModel {
+
+    class listalbumsModel : Serializable {
         var id = ""
         var title = ""
         var country = ""

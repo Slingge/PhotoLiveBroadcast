@@ -7,8 +7,13 @@ import android.widget.TextView;
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity;
 import com.photolivebroadcast.R;
+import com.photolivebroadcast.ui.dialog.ProgressDialog;
+import com.photolivebroadcast.ui.mine.model.MySendModel;
 import com.photolivebroadcast.ui.photoLive.adapter.ClassifySettingAdapter;
+import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -16,6 +21,10 @@ import org.jetbrains.annotations.Nullable;
  */
 
 public class EditorPhotoActivity extends BaseActivity implements View.OnClickListener {
+
+    private MySendModel.listalbumsModel model;
+    private String pid;
+
     private TextView tvInformation;
     private TextView tvShot;
     private TextView tvPhotoType;
@@ -31,6 +40,7 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_photo);
+        EventBus.getDefault().register(this);
         StatusBarWhiteColor();
         inittitle("编辑相册");
         initView();
@@ -49,6 +59,19 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
         tvAdminExamine = (TextView) findViewById(R.id.tv_admin_examine);
         tvAdminTrim = (TextView) findViewById(R.id.tv_admin_trim);
         tvWatchSetting = (TextView) findViewById(R.id.tv_watch_setting);
+        pid = getIntent().getStringExtra("id");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ProgressDialog.INSTANCE.showDialog(this);
+        AlbumInfoHttp.INSTANCE.albumInfo(pid);
+    }
+
+    @Subscribe
+    public void onEvent(MySendModel.listalbumsModel model) {
+        this.model = model;
     }
 
     private void initData() {
@@ -74,6 +97,8 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             //基本信息
             case R.id.tv_information:
+                intent.putExtra("id",pid);
+                intent = new Intent(this, AlbumJiBenInfoActivity.class);
                 break;
             //拍摄活动信息
             case R.id.tv_shot:
@@ -115,5 +140,12 @@ public class EditorPhotoActivity extends BaseActivity implements View.OnClickLis
         if (intent != null) {
             startActivity(intent);
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -110,6 +110,11 @@
             android:screenOrientation="portrait" />
         <!--自定义广告设置-->
 
+        <!--相册基本信息-->
+        <activity
+            android:name=".ui.photoLive.activity.AlbumJiBenInfoActivity"
+            android:screenOrientation="portrait" />
+
 
         <!--////////////////////////////个人信息\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <!--个人信息-->

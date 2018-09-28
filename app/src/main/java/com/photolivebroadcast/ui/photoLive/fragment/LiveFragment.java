@@ -14,9 +14,19 @@ import android.widget.TextView;
 import com.example.xrecyclerview.XRecyclerView;
 import com.lixin.amuseadjacent.app.ui.base.BaseFragment;
 import com.photolivebroadcast.R;
+import com.photolivebroadcast.ui.Activity;
+import com.photolivebroadcast.ui.dialog.ProgressDialog;
+import com.photolivebroadcast.ui.establish.result.SendMSMrHttp;
+import com.photolivebroadcast.ui.mine.model.MySendModel;
+import com.photolivebroadcast.ui.mine.result.MySendHttp;
 import com.photolivebroadcast.ui.photoLive.adapter.HomePhotoAdapter;
 import com.photolivebroadcast.util.StatusBarBlackWordUtil;
 import com.photolivebroadcast.util.StatusBarUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 /**
  * Created by zhf on 2018/9/11.
@@ -27,6 +37,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     private View viewStatue;
     private XRecyclerView rvHome;
     private HomePhotoAdapter adapter;
+    private ArrayList list = new ArrayList<MySendModel.listalbumsModel>();
     private TextView tvVideo;
     private TextView tvPhoto;
     private ImageView ivMessage;
@@ -36,6 +47,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_live, null);
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -59,9 +71,10 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         rvHome = view.findViewById(R.id.rv_home);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvHome.setLayoutManager(linearLayoutManager);
 
-        adapter = new HomePhotoAdapter(getActivity());
+        adapter = new HomePhotoAdapter(getActivity(), list);
         rvHome.setAdapter(adapter);
 
 
@@ -78,14 +91,22 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     private void initEvent() {
         ivMessage.setOnClickListener(this);
         tvPhoto.setOnClickListener(this);
-        tvVideo.setOnClickListener(this);
+//        tvVideo.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
     }
 
     @Override
     public void loadData() {
-
+        ProgressDialog.INSTANCE.showDialog(getActivity());
+        MySendHttp.INSTANCE.mySend();
     }
+
+    @Subscribe
+    public void onEvent(MySendModel.dataModel moddel) {
+        list.addAll(moddel.getListalbums());
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -112,4 +133,12 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 break;
         }
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

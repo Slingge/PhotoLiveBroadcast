@@ -1,70 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <include
         android:id="@+id/include"
         layout="@layout/include_basetop" />
 
-    <ImageView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="@color/colorTheme" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:background="@color/colorTheme" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="12dp">
+
+                    <com.photolivebroadcast.view.CircleImageView
+                        android:id="@+id/image1"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintEnd_toStartOf="@+id/image0"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.photolivebroadcast.view.CircleImageView
+                        android:id="@+id/image0"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.photolivebroadcast.view.CircleImageView
+                        android:id="@+id/image2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher"
+                        app:layout_constraintStart_toEndOf="@+id/image0"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="shijian "
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/image0" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="地址 "
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+                </android.support.constraint.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="活动概况"
-            android:textColor="@color/tv_home"
-            android:textSize="13sp" />
 
-        <view
-            android:layout_width="0.5dp"
-            android:layout_height="20dp"
-            android:background="@color/view_line" />
+            </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_activity2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="梅子酒"
-            android:textColor="@color/tv_home"
-            android:textSize="13sp" />
 
-        <view
-            android:layout_width="0.5dp"
-            android:layout_height="20dp"
-            android:background="@color/view_line" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp">
 
-        <TextView
-            android:id="@+id/tv_activity3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="进口葡萄酒"
-            android:textColor="@color/tv_home"
-            android:textSize="13sp" />
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="12dp">
 
-    </LinearLayout>
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:background="@color/colorTheme"
+                        app:layout_constraintBottom_toBottomOf="@+id/details"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/details" />
+
+                    <TextView
+                        android:id="@+id/details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="活动详情"
+                        android:textColor="@color/colorTheme"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tv_details"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="活动详情"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/details" />
+
+                </android.support.constraint.ConstraintLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="12dp">
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:background="@color/colorTheme"
+                        app:layout_constraintBottom_toBottomOf="@+id/process"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/process" />
+
+                    <TextView
+                        android:id="@+id/process"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:text="活动流程"
+                        android:textColor="@color/colorTheme"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/tv_process"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="活动流程"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/process" />
+
+                </android.support.constraint.ConstraintLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
 
 </LinearLayout>
