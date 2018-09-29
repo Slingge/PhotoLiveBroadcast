@@ -117,7 +117,9 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener {
                 MyApplication.openActivity(this,ColumnActivity::class.java,bundle)
             }
             R.id.iv_phoneAlbum -> {
-
+                val bundle=Bundle()
+                bundle.putString("id",pid)
+                MyApplication.openActivity(this,ColumnActivity::class.java,bundle)
             }
         }
     }
