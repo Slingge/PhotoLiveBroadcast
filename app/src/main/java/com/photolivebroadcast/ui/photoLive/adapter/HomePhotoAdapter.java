@@ -43,30 +43,30 @@ public class HomePhotoAdapter extends RecyclerView.Adapter<HomePhotoAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        MySendModel.listalbumsModel model = (MySendModel.listalbumsModel) list.get(position);
-//
-//        ImageLoader.getInstance().displayImage(model.getBgimage(), holder.ivBg);
-//        holder.tvTitle.setText(model.getTitle());
+        MySendModel.listalbumsModel model = (MySendModel.listalbumsModel) list.get(position);
+
+        ImageLoader.getInstance().displayImage(model.getBgimage(), holder.ivBg);
+        holder.tvTitle.setText(model.getTitle());
 //        holder.tvName.setText(model.g());
 
         holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-//            bundle.putSerializable("model", model);
+            bundle.putSerializable("model", model);
             MyApplication.openActivity(context, LiveDetailActivity.class, bundle);
         });
 
 
         holder.tvEditor.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditorPhotoActivity.class);
-//            intent.putExtra("id", model.getId());
+            intent.putExtra("id", model.getId());
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-//        return list.size();
-        return 2;
+        return list.size();
+//        return 2;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
