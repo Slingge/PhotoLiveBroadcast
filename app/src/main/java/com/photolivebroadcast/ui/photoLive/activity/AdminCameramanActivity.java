@@ -10,6 +10,7 @@ import com.photolivebroadcast.R;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * 管理摄影师
  * Created by zhf on 2018/9/17.
  */
 

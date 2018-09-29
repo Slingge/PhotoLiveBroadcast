@@ -14,12 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/bg_view"
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
                 android:background="@color/colorTheme" />
@@ -27,11 +28,14 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_menu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bg_view" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_menu"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="2dp">
@@ -109,8 +113,10 @@
 
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_1"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="2dp">
@@ -165,8 +171,10 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/cv_2"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="2dp">
@@ -220,7 +228,29 @@
 
             </android.support.v7.widget.CardView>
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_fenlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="16dp"
+                android:visibility="gone"
+                android:layout_below="@+id/rv_menu"
+                android:src="@drawable/icon_fenlan" />
+
+            <ImageView
+                android:id="@+id/iv_phoneAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_below="@+id/iv_fenlan"
+                android:src="@drawable/icon_fenlan" />
+
+        </RelativeLayout>
 
 
     </android.support.v4.widget.NestedScrollView>

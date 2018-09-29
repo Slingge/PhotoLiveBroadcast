@@ -46,7 +46,7 @@ public class StatusBarBlackWordUtil {
      * @param activity
      * @param colorId
      */
-   /* public static void setStatusBarColor(Activity activity,int colorId) {
+   /* public static void setStatusBarColor(TempActivity activity,int colorId) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();

@@ -102,7 +102,7 @@
             android:screenOrientation="portrait" />
         <!--设置相册分类-->
         <activity
-            android:name=".ui.photoLive.activity.AddClassifyActivity"
+            android:name=".ui.photoLive.activity.AddColumnActivity"
             android:screenOrientation="portrait" />
         <!--新增分栏条-->
         <activity
@@ -114,7 +114,22 @@
         <activity
             android:name=".ui.photoLive.activity.AlbumJiBenInfoActivity"
             android:screenOrientation="portrait" />
-
+        <!--编辑拍摄活动信息-->
+        <activity
+            android:name=".ui.photoLive.activity.EditShotImageActivity"
+            android:screenOrientation="portrait" />
+        <!--玉兰水印-->
+        <activity
+            android:name=".ui.photoLive.activity.WaterMarkActivity2"
+            android:screenOrientation="portrait" />
+        <!--分栏条-->
+        <activity
+            android:name=".ui.photoLive.activity.ColumnActivity"
+            android:screenOrientation="portrait" />
+        <!--新增分栏条-->
+        <activity
+            android:name=".ui.photoLive.activity.ColumnAddActivity"
+            android:screenOrientation="portrait" />
 
         <!--////////////////////////////个人信息\\\\\\\\\\\\\\\\\\\\\\\\\\-->
         <!--个人信息-->

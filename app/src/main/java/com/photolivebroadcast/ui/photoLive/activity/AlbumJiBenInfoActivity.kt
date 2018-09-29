@@ -16,6 +16,7 @@ import com.photolivebroadcast.ui.newAlbum.AlbumPhotoActivity
 import com.photolivebroadcast.ui.newAlbum.AlbumTitleActivity
 import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp
 import kotlinx.android.synthetic.main.activity_albumjibeninfo.*
+import kotlinx.android.synthetic.main.include_basetop.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -47,13 +48,19 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
         inittitle("新建相册")
         StatusBarWhiteColor()
 
+        tv_enter.visibility = View.GONE
+
+        tv_right.visibility = View.VISIBLE
+        tv_right.text = "完成"
+        tv_right.setTextColor(resources.getColor(R.color.colorTheme))
+        tv_right.setOnClickListener(this)
+
         tv_titlemain.setOnClickListener(this)
         tv_subtitle.setOnClickListener(this)
 
         bootstrap.setOnClickListener(this)
         advertisement.setOnClickListener(this)
         logo.setOnClickListener(this)
-        tv_enter.setOnClickListener(this)
 
         radio.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rb_y) {
@@ -102,7 +109,7 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
             R.id.logo -> {
                 SelectPictureUtil.selectPicture(this, 1, 0, false)
             }
-            R.id.tv_enter -> {
+            R.id.tv_right -> {
                 if (TextUtils.isEmpty(title)) {
                     ToastUtil.showToast("请输入相册标题")
                     return

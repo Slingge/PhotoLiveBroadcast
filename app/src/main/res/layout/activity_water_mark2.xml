@@ -26,54 +26,24 @@
                 android:src="@drawable/bg032" />
 
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
-
-            <ImageView
-                android:id="@+id/iv_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_shangchuanshuiyin"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
-
-            <ImageView
-                android:id="@+id/iv_eshi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/cesdhi"
-                app:layout_constraintStart_toEndOf="@+id/iv_add"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
-
-
             <TextView
                 android:id="@+id/note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:text="备注:"
+                android:text="操作提示:"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sub_fant"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
 
             <TextView
                 android:id="@+id/note1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:text="1、图片上传尺寸最好小于2M；"
+                android:text="1、拖拽移动位置，两手滑动可以调整大小，点击“×”可删除水印；"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sub_fant"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:paddingRight="10dp"
-                android:text="2、点击选择水印，拖拽移动位置，两手滑动可以调整大小，点击“×”可删除水印；"
+                android:text="2、双击可更换水印；"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sub_fant"
                 app:layout_constraintStart_toStartOf="parent"
