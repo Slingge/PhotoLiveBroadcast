@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,7 +9,22 @@
         android:id="@+id/include"
         layout="@layout/include_basetop" />
 
-    <android.support.v4.widget.NestedScrollView
+    <ImageView
+        android:id="@+id/bg_view"
+        android:layout_below="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@color/colorTheme" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bg_view"
+        android:nestedScrollingEnabled="false" />
+
+    <ScrollView
+        android:layout_below="@+id/rv_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,23 +33,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/bg_view"
-                android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:background="@color/colorTheme" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/bg_view" />
-
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_menu"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="2dp">
@@ -228,40 +229,42 @@
 
             </android.support.v7.widget.CardView>
 
-            <ImageView
-                android:id="@+id/iv_fenlan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/rv_menu"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/icon_fenlan"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_phoneAlbum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/iv_fenlan"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/icon_shangchuan"
-                android:visibility="gone" />
-
-
-            <com.example.xrecyclerview.XRecyclerView
-                android:id="@+id/rv_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_menu" />
 
 
         </RelativeLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
+    <com.example.xrecyclerview.XRecyclerView
+        android:id="@+id/rv_photo"
 
-</LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rv_menu"
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_fenlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rv_menu"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/icon_fenlan"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_phoneAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/iv_fenlan"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon_shangchuan"
+        android:visibility="gone" />
+
+</RelativeLayout>

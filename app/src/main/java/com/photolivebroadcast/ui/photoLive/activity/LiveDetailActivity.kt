@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -46,7 +47,7 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
     private var albumMenuAdapter: AlbumMenuAdapter? = null
     private var menuList = ArrayList<AlbumsClassificationModel.dataModel>()
 
-    private var menuPhoto: ClassificationPhotoAdapter? = null
+    private var menuPhotoAdapter: ClassificationPhotoAdapter? = null
     private var menuPhotoList = ArrayList<ClassificationPhotoModel.recordsModel>()
     private var totalPage = 1//某分类总页数
     private var nowPage = 1//分类当前页数
@@ -106,28 +107,29 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
                     cv_1.visibility = View.GONE
                     cv_2.visibility = View.GONE
                     cv_3.visibility = View.GONE
+                    rv_photo.visibility=View.VISIBLE
                     iv_fenlan.visibility = View.VISIBLE
                     iv_phoneAlbum.visibility = View.VISIBLE
                 } else {
                     cv_1.visibility = View.VISIBLE
                     cv_2.visibility = View.VISIBLE
                     cv_3.visibility = View.VISIBLE
+                    rv_photo.visibility=View.GONE
                     iv_fenlan.visibility = View.GONE
                     iv_phoneAlbum.visibility = View.GONE
                 }
             }
         })
 
-        val linearLayoutManager2 = LinearLayoutManager(this)
-        linearLayoutManager2.orientation = LinearLayoutManager.HORIZONTAL
+        val linearLayoutManager2 = GridLayoutManager(this,3)
         rv_photo.layoutManager = linearLayoutManager2
-        menuPhoto = ClassificationPhotoAdapter(this, menuPhotoList)
-        rv_photo.adapter = albumMenuAdapter
+        menuPhotoAdapter = ClassificationPhotoAdapter(this, menuPhotoList)
+        rv_photo.adapter = menuPhotoAdapter
         rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
             override fun onRefresh() {
                 if (menuPhotoList.isNotEmpty()) {
                     menuPhotoList.clear()
-                    albumMenuAdapter!!.notifyDataSetChanged()
+                    menuPhotoAdapter!!.notifyDataSetChanged()
                 }
                 nowPage = 1
                 onRefresh = 1
@@ -135,8 +137,8 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
             }
 
             override fun onLoadMore() {
-                nowPage++
-                if (totalPage >= nowPage) {
+                 nowPage++
+                if (totalPage >= menuPhotoList.size) {
                     rv_photo.noMoreLoading()
                     return
                 }
@@ -180,7 +182,13 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         } else if (onRefresh == 2) {
             rv_photo.loadMoreComplete()
         }
-        rv_photo.noMoreLoading()
+
+        if (totalPage >= menuPhotoList.size) {
+            rv_photo.noMoreLoading()
+            return
+        }
+
+        menuPhotoAdapter!!.notifyDataSetChanged()
     }
 
     override fun onClick(p0: View?) {
@@ -213,8 +221,13 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         }
     }
 
-    override fun result(result: Boolean) {
-        if (result) {
+    //上传相册图片
+    override fun result(url: String) {
+        if (!TextUtils.isEmpty(url)) {
+            val model=ClassificationPhotoModel.recordsModel()
+            model.imgurl=url
+            menuPhotoList.add(model)
+
             upNow++
             val message = Message()
             message.what = 0

@@ -19,6 +19,7 @@ import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
 import com.photolivebroadcast.ui.photoLive.adapter.PhoneAlbumAdapter
 import com.photolivebroadcast.ui.photoLive.http.AlbumsClassificationHttp
 import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
+import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.MTPService
 import com.photolivebroadcast.util.PermissionUtil
 import kotlinx.android.synthetic.main.activity_phone_album.*
@@ -27,10 +28,11 @@ import io.reactivex.functions.Consumer
 /**
  * Created by Slingge on 2018/9/29.
  */
-class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp.UpResultCallBack {
+class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp.UpResultCallBack
+,View.OnClickListener{
 
     private var phoneAlbumAdapter: PhoneAlbumAdapter? = null
-    private var phoneList = ArrayList<String>()
+    private var phoneList = ArrayList<UpAlbunmModel>()
 
     var mService: MTPService? = null
 
@@ -42,7 +44,12 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     private var classificationId = ""//相册分类id
     private var classificationList = ArrayList<AlbumsClassificationModel.dataModel>()
 
+    private var upType = ""//上传方式
+    private var upSize = ""//上传大小
+
     private var isUp = false//是否在上传
+
+    private var adoptNum=0//设置通过、不通过的照片下标
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,23 +105,54 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
 
         //上传方式
-        sp_upType
-        val strList1 = ArrayList<String>()
+        val upTypeLIst = ArrayList<String>()
+        upTypeLIst.add("手动上传")
+        upTypeLIst.add("边拍边传")
+        val typeAdapter = ArrayAdapter<String>(this@CloudSeedingActivity,
+                R.layout.item_spinner_text, upTypeLIst)
+        sp_upType.adapter = typeAdapter
+        sp_upType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
 
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                upType = upTypeLIst[position]
+            }
+        }
+        //图片大小
+        val upSizeLIst = ArrayList<String>()
+        upSizeLIst.add("原图")
+        upSizeLIst.add("3-5M")
+        upSizeLIst.add("1M")
+        val sizeAdapter = ArrayAdapter<String>(this@CloudSeedingActivity,
+                R.layout.item_spinner_text, upSizeLIst)
+        sp_size.adapter = sizeAdapter
+        sp_size.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                upSize = upSizeLIst[position]
+            }
+        }
+
+        tv_adopt.setOnClickListener(this)
+        tv_through.setOnClickListener(this)
     }
 
 
     @Throws(Exception::class)
     override fun accept(list: List<*>) {
+        imageView4.visibility = View.VISIBLE
         for (i in 0 until list.size) {
             if (!phoneList.contains(list[i])) {
-                phoneList.add(list[i] as String)
+                val album = UpAlbunmModel(list[i] as String, -1)
+                phoneList.add(album)
             }
         }
         phoneAlbumAdapter!!.notifyDataSetChanged()
         tv_upSpeed.text = upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = upfailNum.toString() + "/" + phoneList.size
-
 
         val message = Message()
         message.what = 0
@@ -140,15 +178,15 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                 }
                 if (phoneList.isNotEmpty()) {
                     ProgressDialog.showDialog(this@CloudSeedingActivity)
-                    UpAlbumPhotoHttp.upPhoto(pid, classificationId, phoneList[subscript], this@CloudSeedingActivity)
+                    UpAlbumPhotoHttp.upPhoto(pid, classificationId, phoneList[subscript].path, this@CloudSeedingActivity)
                 }
             }
         }
     }
 
 
-    override fun result(result: Boolean) {
-        if (result) {
+    override fun result(url: String) {
+        if (!TextUtils.isEmpty(url)) {
             upSuccessNum++
         } else {
             upfailNum++
@@ -162,6 +200,12 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         message.what = 0
         hander.sendMessage(message)
     }
+
+
+    override fun onClick(v: View?) {
+
+    }
+
 
 
     /**

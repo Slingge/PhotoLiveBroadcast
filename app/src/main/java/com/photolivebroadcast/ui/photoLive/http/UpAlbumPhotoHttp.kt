@@ -3,6 +3,7 @@ package com.photolivebroadcast.ui.photoLive.http
 import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.zhy.http.okhttp.OkHttpUtils
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
@@ -12,7 +13,7 @@ import java.io.File
 object UpAlbumPhotoHttp {
 
     interface UpResultCallBack {
-        fun result(result: Boolean)
+        fun result(url: String)
     }
 
     fun upPhoto(pid: String, mid: String, path: String, upResultCallBack: UpResultCallBack) {
@@ -24,12 +25,13 @@ object UpAlbumPhotoHttp {
                 .build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
                         super.onResponse(response, id)
-                        abLog.e("上传相册图片",response)
+                        abLog.e("上传相册图片", response)
                         val obj = JSONObject(response)
                         if (obj.getInt("code") == 200) {
-                            upResultCallBack.result(true)
+                            val array = JSONArray(obj.getString("data"))
+                            upResultCallBack.result(array[0].toString())
                         } else {
-                            upResultCallBack.result(false)
+                            upResultCallBack.result("")
                         }
                     }
                 })
