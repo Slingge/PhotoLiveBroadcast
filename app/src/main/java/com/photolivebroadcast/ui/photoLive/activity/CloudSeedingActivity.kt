@@ -29,12 +29,10 @@ import io.reactivex.functions.Consumer
  */
 class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp.UpResultCallBack {
 
-
     private var phoneAlbumAdapter: PhoneAlbumAdapter? = null
     private var phoneList = ArrayList<String>()
 
     var mService: MTPService? = null
-
 
     private var upSuccessNum = 0//上传成功数量
     private var upfailNum = 0//上传失败数量
@@ -71,10 +69,8 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 classificationId = classificationList[position].id
                 if (!isUp) {
-                    if (message == null) {
-                        message = Message()
-                    }
-                    message!!.what = 0
+                    val message = Message()
+                    message.what = 0
                     hander.sendMessage(message)
                 }
             }
@@ -99,6 +95,12 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                 classificationId = classificationList[0].id
             }
         })
+
+
+        //上传方式
+        sp_upType
+        val strList1 = ArrayList<String>()
+
     }
 
 
@@ -113,10 +115,9 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         tv_upSpeed.text = upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = upfailNum.toString() + "/" + phoneList.size
 
-        if (message == null) {
-            message = Message()
-        }
-        message!!.what = 0
+
+        val message = Message()
+        message.what = 0
         hander.sendMessage(message)
     }
 
@@ -146,7 +147,6 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     }
 
 
-    private var message: Message? = null
     override fun result(result: Boolean) {
         if (result) {
             upSuccessNum++
@@ -158,10 +158,8 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         tv_upSpeed.text = upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = upfailNum.toString() + "/" + phoneList.size
 
-        if (message == null) {
-            message = Message()
-        }
-        message!!.what = 0
+        val message = Message()
+        message.what = 0
         hander.sendMessage(message)
     }
 

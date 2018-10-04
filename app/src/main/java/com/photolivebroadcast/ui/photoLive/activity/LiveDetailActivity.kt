@@ -206,39 +206,37 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
             for (i in 0 until PictureSelector.obtainMultipleResult(data).size) {
                 upimageList.add((PictureSelector.obtainMultipleResult(data)[i].path))
             }
-            if (message == null) {
-                message = Message()
-            }
-            message!!.what = 0
+
+            val message = Message()
+            message.what = 0
             hander.sendMessage(message)
         }
     }
 
     override fun result(result: Boolean) {
         if (result) {
-            if (message == null) {
-                message = Message()
-            }
-            message!!.what = 0
+            upNow++
+            val message = Message()
+            message.what = 0
             hander.sendMessage(message)
         }
     }
 
-    private var message: Message? = null
     private var upNow = 0//上传到哪张图片
     private val hander = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
             if (msg!!.what == 0) {//上传开始
-                if(upNow>=upimageList.size){
+                if (upNow >= upimageList.size) {
                     ToastUtil.showToast("上传完成")
                     return
                 }
-                if (upimageList.isNotEmpty()) {
-                    ProgressDialog.showDialog(this@LiveDetailActivity)
-                    UpAlbumPhotoHttp.upPhoto(pid, menuId, upimageList[upNow], this@LiveDetailActivity)
+                if (upNow >= upimageList.size) {
+                    return
                 }
+                ProgressDialog.showDialog(this@LiveDetailActivity)
+                UpAlbumPhotoHttp.upPhoto(pid, menuId, upimageList[upNow], this@LiveDetailActivity)
             }
         }
     }

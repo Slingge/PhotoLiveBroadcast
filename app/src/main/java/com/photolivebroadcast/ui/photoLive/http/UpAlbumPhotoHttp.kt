@@ -17,8 +17,10 @@ object UpAlbumPhotoHttp {
 
     fun upPhoto(pid: String, mid: String, path: String, upResultCallBack: UpResultCallBack) {
         val file = File(path)
-        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/file/ajaxaddimgapp")
-                .addFile("file", file.name, file).addParams("pid", pid).addParams("mid", mid)
+        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/file/ajaxaddimgappmore")
+                .addFile("file", file.name, file)
+                .addParams("pid", pid)
+                .addParams("mid", mid)
                 .build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
                         super.onResponse(response, id)

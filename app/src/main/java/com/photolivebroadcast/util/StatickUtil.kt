@@ -16,6 +16,6 @@ object StatickUtil {
 
     var userModel = SginModel.dataModel()
 
-    val ShareUrl = "http://112.74.169.87/videoCloud/phone/index/"//分享地址
+    val ShareUrl = "http://www.suxianglive.com/videoCloud/phone/index/"//分享地址
 
 }

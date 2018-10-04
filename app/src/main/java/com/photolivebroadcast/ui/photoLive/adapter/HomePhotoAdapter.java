@@ -38,6 +38,8 @@ public class HomePhotoAdapter extends RecyclerView.Adapter<HomePhotoAdapter.View
     private ArrayList list = new ArrayList<MySendModel.listalbumsModel>();
 
     private int pid;
+    private String title;
+    private String subTitile;
 
     public HomePhotoAdapter(Activity context, ArrayList<MySendModel.listalbumsModel> list) {
         this.context = context;
@@ -76,6 +78,9 @@ public class HomePhotoAdapter extends RecyclerView.Adapter<HomePhotoAdapter.View
 
         holder.tvShare.setOnClickListener(v -> {
             pid = model.getId();
+            title=model.getTitle();
+            subTitile=model.getRemark();
+
             SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                     {SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE/*,
                             SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE*/
@@ -98,8 +103,8 @@ public class HomePhotoAdapter extends RecyclerView.Adapter<HomePhotoAdapter.View
         public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
             UMImage image = new UMImage(context, R.mipmap.ic_launcher);//网络图片
             UMWeb web = new UMWeb(StatickUtil.INSTANCE.getShareUrl() + pid);
-            web.setTitle("速享直播");
-            web.setDescription("我的相册");
+            web.setTitle(title);
+            web.setDescription(subTitile);
             web.setThumb(image);
             new ShareAction(context).setPlatform(share_media).setCallback(umShareListener)
                     .withMedia(web)
