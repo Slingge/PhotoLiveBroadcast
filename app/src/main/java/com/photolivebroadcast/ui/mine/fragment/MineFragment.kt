@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 import com.photolivebroadcast.util.AbStrUtil.setText
 import android.content.Context.CLIPBOARD_SERVICE
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import kotlinx.android.synthetic.main.dialog_progress.view.*
 
 
 /**
@@ -57,7 +58,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        ImageLoader.getInstance().displayImage(StatickUtil.userModel.imgurl, iv_header)
+        ImageLoader.getInstance().displayImage(StatickUtil.headerUrl, iv_header)
         tv_name.text = StatickUtil.userModel.nickname
         tv_id.text = StatickUtil.uid
         if (StatickUtil.userModel.iscompany == "N") {
@@ -65,6 +66,12 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         } else {
             tv_authentication.text = "已认证"
         }
+        if (StatickUtil.sex == "男") {
+            iv_sex.setImageResource(R.drawable.ic_boy)
+        } else {
+            iv_sex.setImageResource(R.drawable.ic_girl)
+        }
+
     }
 
     private fun init() {

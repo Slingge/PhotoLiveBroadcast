@@ -46,7 +46,7 @@ class VerificationActivity : BaseActivity() {
 
         Vcode = intent.getStringExtra("code")
         phone = intent.getStringExtra("phone")
-
+        tv_phone.text="验证码已通过短信发送至"+phone
         tv_verification.setOnClickListener { v ->
             timerUtil!!.timersStart()
             SendMSMrHttp.regist(phone, "", object : SendMSMrHttp.SendMsmCallBack {

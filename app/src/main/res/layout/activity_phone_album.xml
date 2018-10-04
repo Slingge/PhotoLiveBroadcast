@@ -16,69 +16,58 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_classification"
-        app:layout_constraintTop_toTopOf="@+id/tv_upType" />
+        app:layout_constraintBottom_toBottomOf="@+id/sp_classification"
+        app:layout_constraintTop_toTopOf="@+id/sp_upType" />
 
-    <TextView
-        android:id="@+id/tv_upType"
+
+    <Spinner
+        android:id="@+id/sp_upType"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_downsanjiao"
-        android:paddingBottom="12dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:text="上传方式"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/main_fant"
+        android:layout_height="40dp"
+        android:dropDownSelector="@drawable/touch_bg"
+        android:overlapAnchor="false"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <TextView
-        android:id="@+id/tv_classification"
+
+    <Spinner
+        android:id="@+id/sp_classification"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_downsanjiao"
-        android:paddingBottom="12dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:text="照片分类"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/main_fant"
-        app:layout_constraintEnd_toStartOf="@+id/tv_upType"
+        android:layout_height="40dp"
+        android:dropDownSelector="@drawable/touch_bg"
+        android:overlapAnchor="false"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toStartOf="@+id/sp_upType"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <TextView
-        android:id="@+id/tv_size"
+
+    <Spinner
+        android:id="@+id/sp_size"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_downsanjiao"
-        android:paddingBottom="12dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:text="照片大小设置"
-        android:textColor="@color/colorTabText"
-        android:textSize="@dimen/main_fant"
+        android:layout_height="40dp"
+        android:dropDownSelector="@drawable/touch_bg"
+        android:overlapAnchor="false"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_upType"
+        app:layout_constraintStart_toEndOf="@+id/sp_upType"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
     <TextView
         android:id="@+id/tv_upSpeed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="12dp"
         android:drawableLeft="@drawable/ic_01"
-        android:text="上传速度："
+        android:text="上传进度："
+        android:gravity="center"
         android:textColor="@color/colorTabText"
         android:textSize="@dimen/sub_fant"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_upType" />
+        app:layout_constraintTop_toBottomOf="@+id/sp_upType" />
 
     <TextView
         android:id="@+id/tv_upFail"
@@ -96,9 +85,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:visibility="gone"
         android:src="@drawable/icon_shebeil"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_upType" />
+        app:layout_constraintTop_toBottomOf="@+id/sp_upType" />
 
 
     <ImageView
@@ -110,7 +100,7 @@
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_upFail" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_album"

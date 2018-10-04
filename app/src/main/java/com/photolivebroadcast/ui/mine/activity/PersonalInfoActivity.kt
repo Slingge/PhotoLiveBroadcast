@@ -15,7 +15,7 @@ import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.result.EditUserHttp
-import com.photolivebroadcast.ui.mine.result.Upphoto
+import com.photolivebroadcast.ui.mine.result.UpHeaderPhoto
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.util.StatickUtil
 import kotlinx.android.synthetic.main.activity_personal_info.*
@@ -87,8 +87,10 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
                 if (!TextUtils.isEmpty(headerPath)) {
                     ProgressDialog.showDialog(this)
                     val list = ArrayList<String>()
-                    Upphoto.upPhoto(list, object : Upphoto.UpPhotoCallBack {
+                    list.add(headerPath)
+                    UpHeaderPhoto.upPhoto(list, object : UpHeaderPhoto.UpPhotoCallBack {
                         override fun upHeaderUrl(url: String) {
+                            StatickUtil.headerUrl = url
                             EditUser(name, sex)
                         }
                     })

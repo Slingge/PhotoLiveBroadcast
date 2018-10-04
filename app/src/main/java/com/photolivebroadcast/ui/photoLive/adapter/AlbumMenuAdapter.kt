@@ -16,7 +16,7 @@ import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
  */
 class AlbumMenuAdapter(val context: Context, val menuList: ArrayList<AlbumsClassificationModel.dataModel>) : RecyclerView.Adapter<AlbumMenuAdapter.ViewHolder>() {
 
-    private var flag = 0
+    private var flag = -1
 
     override fun getItemCount(): Int {
         return menuList.size
@@ -27,10 +27,10 @@ class AlbumMenuAdapter(val context: Context, val menuList: ArrayList<AlbumsClass
         holder.tv_name.text = menuList[position].menu_name
 
         if (flag == position) {
-            holder.tv_name.setTextColor(context.resources.getColor(R.color.black))
+            holder.tv_name.setTextColor(context.resources.getColor(R.color.colorTheme))
             holder.iv_down.visibility = View.VISIBLE
         } else {
-            holder.tv_name.setTextColor(context.resources.getColor(R.color.colorTheme))
+            holder.tv_name.setTextColor(context.resources.getColor(R.color.black))
             holder.iv_down.visibility = View.INVISIBLE
         }
 

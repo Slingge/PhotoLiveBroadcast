@@ -8,12 +8,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
-import android.view.View;
-
 import com.lixin.amuseadjacent.app.util.abLog;
 import com.photolivebroadcast.util.ImageLoaderUtil;
 import com.photolivebroadcast.util.SharedPreferencesUtil;
 import com.photolivebroadcast.util.StatickUtil;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.https.HttpsUtils;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -57,11 +66,14 @@ public class MyApplication extends MultiDexApplication {
 
         ImageLoaderUtil.configImageLoader(CONTEXT);
         com.nostra13.universalimageloader.utils.L.disableLogging();
+
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx0d0b4d8b589ef4e6", "ee455dc7b28cbf41f9370d53acd6bbb0");
+        PlatformConfig.setQQZone("1106693507", "ns8Zb9Eid2yVXFFs");
     }
 
     /**
      * 分割 Dex 支持
-     *
      * @param base
      */
     @Override

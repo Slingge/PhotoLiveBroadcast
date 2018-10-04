@@ -53,9 +53,8 @@ public class MTPService {
         if (Constant.mtpDevice != null) {
             mMtpDevice = Constant.mtpDevice;
             startScanPic();
-
         } else
-            showToast(context, "请重新插拔连接设备");
+            showToast(context, "未连接到设备");
         registerReceiverMtp();
     }
 

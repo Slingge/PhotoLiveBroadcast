@@ -13,6 +13,8 @@ class AlbumsClassificationModel : Serializable {
 
     var data = ArrayList<dataModel>()
 
+    var model=dataModel()
+
     class dataModel : Serializable {
         var id = ""
         var menu_name = ""

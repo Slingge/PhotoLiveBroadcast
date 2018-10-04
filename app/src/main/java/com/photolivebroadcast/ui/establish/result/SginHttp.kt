@@ -30,6 +30,8 @@ object SginHttp {
                         val model = Gson().fromJson(response, SginModel::class.java)
                         if (model.code == 200) {
                             StatickUtil.uid = model.data.id
+                            StatickUtil.sex=model.data.sex
+                            StatickUtil.headerUrl=model.data.imgurl
 
                             StatickUtil.userModel=model.data
 

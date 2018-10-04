@@ -13,6 +13,7 @@ import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.DatePop
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.model.MySendModel
+import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp
 import com.photolivebroadcast.ui.photoLive.http.ShotImageHttp
 import com.photolivebroadcast.util.AbStrUtil
 import kotlinx.android.synthetic.main.activity_shot_image.*
@@ -31,6 +32,7 @@ class ShotImageActivity : BaseActivity(), View.OnClickListener, DatePop.WheelVie
     private var flag = 0//0 开始时间，1结束时间
 
     private var pid = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,9 @@ class ShotImageActivity : BaseActivity(), View.OnClickListener, DatePop.WheelVie
         tv_detail.setOnClickListener(this)
         tv_process.setOnClickListener(this)
         tv_publicNum.setOnClickListener(this)
+
+        ProgressDialog.showDialog(this)
+        AlbumInfoHttp.albumInfo(pid)
     }
 
     @Subscribe

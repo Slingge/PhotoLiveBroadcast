@@ -12,6 +12,7 @@ import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.newAlbum.result.NewAlbumHttp
+import com.photolivebroadcast.ui.newAlbum.result.UpPublicPhoto
 import kotlinx.android.synthetic.main.activity_new_album.*
 
 /**
@@ -129,7 +130,13 @@ class NewAlbumActivity : BaseActivity(), View.OnClickListener {
             tv_advertisement.visibility = View.VISIBLE
         } else if (requestCode == 0) {// logo
             tv_logo.visibility = View.VISIBLE
-            path3 = PictureSelector.obtainMultipleResult(data)[0].path
+          val  path = PictureSelector.obtainMultipleResult(data)[0].path
+            UpPublicPhoto.upPhoto(path,object : UpPublicPhoto.UpPhotoCallBack{
+                override fun upHeaderUrl(url: String) {
+                    path3=url
+                    tv_logo.visibility = View.VISIBLE
+                }
+            })
         }
 
     }

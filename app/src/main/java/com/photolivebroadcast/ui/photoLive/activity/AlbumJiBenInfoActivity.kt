@@ -14,6 +14,7 @@ import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.model.MySendModel
 import com.photolivebroadcast.ui.newAlbum.AlbumPhotoActivity
 import com.photolivebroadcast.ui.newAlbum.AlbumTitleActivity
+import com.photolivebroadcast.ui.newAlbum.result.UpPublicPhoto
 import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp
 import kotlinx.android.synthetic.main.activity_albumjibeninfo.*
 import kotlinx.android.synthetic.main.include_basetop.*
@@ -69,10 +70,20 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
                 isxiutu = "N"
             }
         }
+        pid=intent.getStringExtra("id")
+        ProgressDialog.showDialog(this)
+        AlbumInfoHttp.albumInfo(pid)
     }
 
     @Subscribe
     fun onEvent(model: MySendModel.listalbumsModel) {
+        title=model.title
+        subtitle=model.remark
+
+        path1=model.bgimage
+        path2=model.share_img
+        path3=model.share_img
+
         tv_titlemain.text = model.title
         tv_subtitle.text = model.remark
         if (model.isxiutu == "N") {
@@ -156,8 +167,13 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
             path2 = data.getStringExtra("path")
             tv_advertisement.visibility = View.VISIBLE
         } else if (requestCode == 0) {// logo
-            tv_logo.visibility = View.VISIBLE
-            path3 = PictureSelector.obtainMultipleResult(data)[0].path
+            val path=PictureSelector.obtainMultipleResult(data)[0].path
+            UpPublicPhoto.upPhoto(path,object : UpPublicPhoto.UpPhotoCallBack{
+                override fun upHeaderUrl(url: String) {
+                    path3=url
+                    tv_logo.visibility = View.VISIBLE
+                }
+            })
         }
 
     }

@@ -81,6 +81,7 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
                         bundle.putString("code", code)
                         bundle.putString("phone", phone)
                         MyApplication.openActivity(this@SginInActivity, VerificationActivity::class.java, bundle)
+                        finish()
                     }
                 })
             }

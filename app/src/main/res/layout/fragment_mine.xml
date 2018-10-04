@@ -81,7 +81,7 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_id" />
 
             <ImageView
-                android:id="@+id/iv_Sex"
+                android:id="@+id/iv_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -105,9 +105,9 @@
                 android:text="是否认证"
                 android:textColor="@color/white"
                 android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_Sex"
-                app:layout_constraintStart_toEndOf="@+id/iv_Sex"
-                app:layout_constraintTop_toTopOf="@+id/iv_Sex" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_sex"
+                app:layout_constraintStart_toEndOf="@+id/iv_sex"
+                app:layout_constraintTop_toTopOf="@+id/iv_sex" />
 
 
             <ImageView

@@ -41,6 +41,8 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     private ImageView ivMessage;
     private ImageView ivSearch;
 
+    private int onRefresh = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,11 +77,33 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         adapter = new HomePhotoAdapter(getActivity(), list);
         rvHome.setAdapter(adapter);
 
+        rvHome.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                if (!list.isEmpty()) {
+                    list.clear();
+                    adapter.notifyDataSetChanged();
+                }
+                onRefresh = 1;
+                MySendHttp.INSTANCE.mySend();
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
+
 
         tvVideo = (TextView) view.findViewById(R.id.tv_video);
         tvPhoto = (TextView) view.findViewById(R.id.tv_photo);
         ivMessage = (ImageView) view.findViewById(R.id.iv_message);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+
+        if(list.isEmpty()){
+            ProgressDialog.INSTANCE.showDialog(getActivity());
+            MySendHttp.INSTANCE.mySend();
+        }
     }
 
     private void initData() {
@@ -95,13 +119,15 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void loadData() {
-        ProgressDialog.INSTANCE.showDialog(getActivity());
-        MySendHttp.INSTANCE.mySend();
+
     }
 
     @Subscribe
     public void onEvent(MySendModel.dataModel moddel) {
         list.addAll(moddel.getListalbums());
+        if (onRefresh == 1) {
+            rvHome.refreshComplete();
+        }
         adapter.notifyDataSetChanged();
     }
 

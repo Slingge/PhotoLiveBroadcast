@@ -1,12 +1,12 @@
 package com.photolivebroadcast.ui.photoLive.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.dialog.EditDialog
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
 import com.photolivebroadcast.ui.photoLive.adapter.ClassifySettingAdapter
@@ -67,8 +67,17 @@ class ClassifySettingActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_submit -> {
-//                val intent = Intent(this, AddColumnActivity::class.java)
-//                startActivity(intent)
+                EditDialog.communityDialog(this, object : EditDialog.EditTextCallBack {
+                    override fun editText(name: String) {
+                        ProgressDialog.showDialog(this@ClassifySettingActivity)
+                        AlbumsClassificationHttp.AddClassification(pid, name, object : AlbumsClassificationHttp.AddClassificationCallBack {
+                            override fun addClassification(moddel: AlbumsClassificationModel.dataModel) {
+                                menuList.add(moddel)
+                                adapter!!.notifyDataSetChanged()
+                            }
+                        })
+                    }
+                })
             }
         }
     }

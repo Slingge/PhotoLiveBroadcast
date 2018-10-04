@@ -7,7 +7,11 @@ import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.mine.result.UpHeaderPhoto
+import com.photolivebroadcast.ui.newAlbum.result.UpPublicPhoto
 import kotlinx.android.synthetic.main.activity_album_photo.*
+import java.util.ArrayList
 
 /**
  * 相册广告图和引导图
@@ -62,16 +66,24 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
         if (requestCode == 0) {
             // 图片、视频、音频选择结果回调
             val path = PictureSelector.obtainMultipleResult(data)[0].path//
-            val bundle = Bundle()
-            bundle.putString("path", path)
-            val intent = Intent()
-            intent.putExtras(bundle)
-            if (flag == 0) {
-                setResult(2, intent)
-            } else {
-                setResult(3, intent)
-            }
-            finish()
+
+            ProgressDialog.showDialog(this)
+
+            UpPublicPhoto.upPhoto(path,object :UpPublicPhoto.UpPhotoCallBack{
+                override fun upHeaderUrl(url: String) {
+                    val bundle = Bundle()
+                    bundle.putString("path", url)
+                    val intent = Intent()
+                    intent.putExtras(bundle)
+                    if (flag == 0) {
+                        setResult(2, intent)
+                    } else {
+                        setResult(3, intent)
+                    }
+                    finish()
+                }
+            })
+
         }
     }
 

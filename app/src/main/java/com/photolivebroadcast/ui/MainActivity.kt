@@ -40,9 +40,7 @@ class MainActivity : BaseActivity() {
     private fun selectStyle(ID: Int) {
         when (ID) {
             R.id.tab_1 -> {
-                if (bFragment1 == null) {
-                    bFragment1 = LiveFragment()
-                }
+                bFragment1 = LiveFragment()
                 switchFragment(bFragment1!!)
             }
             R.id.tab_2 -> {

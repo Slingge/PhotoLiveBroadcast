@@ -49,6 +49,48 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+
+
+
+        <!--友盟-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5bb382a1b465f506360005f1" />
+
+        <!--QQ-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1106806590" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--微信-->
+        <activity
+            android:name="com.photolivebroadcast.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+
+
+
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
@@ -137,7 +179,7 @@
 
         <!--设备相册、上传-->
         <activity
-            android:name=".ui.photoLive.activity.PhoneAlbumActivity"
+            android:name=".ui.photoLive.activity.CloudSeedingActivity"
             android:screenOrientation="portrait" />
 
 

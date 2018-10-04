@@ -6,10 +6,11 @@ import android.view.View
 import android.widget.TextView
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
+import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.model.MySendModel
-import com.photolivebroadcast.ui.photoLive.adapter.ClassifySettingAdapter
 import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp
 
 import org.greenrobot.eventbus.EventBus
@@ -23,7 +24,7 @@ import org.greenrobot.eventbus.Subscribe
 class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
 
     private var model: MySendModel.listalbumsModel? = null
-    private var pid: String? = null
+    private var pid=""
 
     private var tvInformation: TextView? = null
     private var tvShot: TextView? = null
@@ -64,7 +65,7 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         ProgressDialog.showDialog(this)
-        AlbumInfoHttp.albumInfo(pid!!)
+        AlbumInfoHttp.albumInfo(pid)
     }
 
     @Subscribe
@@ -90,57 +91,65 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        var intent: Intent? = null
         when (v.id) {
             //基本信息
             R.id.tv_information -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, AlbumJiBenInfoActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, AlbumJiBenInfoActivity::class.java, bundle)
             }
             //拍摄活动信息
             R.id.tv_shot -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, ShotImageActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, ShotImageActivity::class.java, bundle)
             }
             //相册分类
             R.id.tv_photo_type -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, ClassifySettingActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, ClassifySettingActivity::class.java, bundle)
             }
             //下方自定义广告
             R.id.tv_advertise -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, CustomAdverActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, CustomAdverActivity::class.java, bundle)
             }
 
             //水印功能
             R.id.tv_watermark -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, WaterMarkActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, WaterMarkActivity::class.java, bundle)
             }
             //互动设置
             R.id.tv_interact_setting -> {
             }
             //管理摄影师
-            R.id.tv_admin_cameraman -> intent = Intent(this, AdminCameramanActivity::class.java)
+            R.id.tv_admin_cameraman ->{
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, AdminCameramanActivity::class.java, bundle)
+            }
             //管理审核员
             R.id.tv_admin_examine -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, AdminExamineActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, AdminExamineActivity::class.java, bundle)
             }
             //管理修图师
             R.id.tv_admin_trim -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, AdminTrimActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, AdminTrimActivity::class.java, bundle)
             }
             //观看设置
             R.id.tv_watch_setting -> {
-                intent!!.putExtra("id", pid)
-                intent = Intent(this, WatchSettingActivity::class.java)
+                val bundle = Bundle()
+                bundle.putString("id", pid)
+                MyApplication.openActivity(this, WatchSettingActivity::class.java, bundle)
             }
-        }
-        if (intent != null) {
-            startActivity(intent)
         }
     }
 

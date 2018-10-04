@@ -21,7 +21,7 @@ class MySendModel : Serializable {
 
 
     class listalbumsModel : Serializable {
-        var id = ""
+        var id = 0
         var title = ""
         var country = ""
 
@@ -31,17 +31,17 @@ class MySendModel : Serializable {
 
         var share_title = ""
         var share_remark = ""
-        var readnum = ""
+        var readnum = 0
 
         var createtime = ""
         var isvalid = ""
         var userid = ""
 
         var isopen = ""
-        var bgimage = ""
-        var share_img = ""
+        var bgimage = ""//广告图
+        var share_img = ""//logo，分享图
 
-        var yindao_img = ""
+        var yindao_img = ""//引导图
         var isxiutu = ""
         var event_title = ""
 
