@@ -46,6 +46,8 @@ public class MTPService {
     private StringBuilder filePath = new StringBuilder();
     private Context mContext;
 
+    public String DeviceName;
+
     public MTPService(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         mContext = context;
@@ -143,6 +145,7 @@ public class MTPService {
                         Log.d(TAG, "start1===" + aLong);
                         List list = new ArrayList();
                         if (mMtpDevice != null) {
+                            DeviceName=mMtpDevice.getDeviceName();
                             MtpDeviceInfo mtpDeviceInfo = mMtpDevice.getDeviceInfo();
                             String deviceSeriNumber = null;
                             if (mtpDeviceInfo != null)

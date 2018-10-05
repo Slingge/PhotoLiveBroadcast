@@ -46,7 +46,7 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun init() {
-        inittitle("新建相册")
+        inittitle("相册基本信息")
         StatusBarWhiteColor()
 
         tv_enter.visibility = View.GONE
@@ -80,8 +80,8 @@ class AlbumJiBenInfoActivity : BaseActivity(), View.OnClickListener {
         title=model.title
         subtitle=model.remark
 
-        path1=model.bgimage
-        path2=model.share_img
+        path1=model.yindao_img
+        path2=model.bgimage
         path3=model.share_img
 
         tv_titlemain.text = model.title

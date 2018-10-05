@@ -57,8 +57,13 @@ object AlbumsClassificationHttp {
     }
 
 
+    interface ClassificationPhotoCallBack{
+        fun alnumPhoto(model: ClassificationPhotoModel.pageDataModel)
+    }
+
+
     //分类下的图片
-    fun ClassificationAlbum(pid: String, mid: String) {
+    fun ClassificationAlbum(pid: String, mid: String,classificationPhotoCallBack: ClassificationPhotoCallBack) {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxgetlistimgs/1/$pid/$mid")
                 .addParams("pid", pid).addParams("mid", mid).addParams("pageNumber", "1")
                 .build().execute(object : StrCallback() {
@@ -67,7 +72,7 @@ object AlbumsClassificationHttp {
                         abLog.e("获取相册图片", response)
                         val model = Gson().fromJson(response, ClassificationPhotoModel::class.java)
                         if (model.code == 200) {
-                            EventBus.getDefault().post(model.data.pageData)
+                            classificationPhotoCallBack.alnumPhoto(model.data.pageData)
                         } else {
                             ToastUtil.showToast(model.msg)
                         }

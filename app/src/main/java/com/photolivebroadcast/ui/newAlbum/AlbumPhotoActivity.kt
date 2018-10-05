@@ -40,7 +40,7 @@ class AlbumPhotoActivity : BaseActivity(), View.OnClickListener {
         } else {
             inittitle("上传广告图")
             text1.text="广告图"
-            tv_text2.text="建议尺寸：9000*300"
+            tv_text2.text="建议尺寸：900*300"
             tv_text3.text="提示：上传后将应用于分享页面；此图片可用于宣传活动举办方宣传广告。"
             image.setImageResource(R.drawable.imag_02)
         }

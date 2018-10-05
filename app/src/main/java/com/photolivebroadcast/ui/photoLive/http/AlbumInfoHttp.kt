@@ -45,7 +45,7 @@ object AlbumInfoHttp {
                         super.onResponse(response, id)
                         val obj = JSONObject(response)
                         if (obj.getInt("code") == 200) {
-                            ToastUtil.showToast("创建成功")
+                            ToastUtil.showToast("修改成功")
                             context.finish()
                         } else {
                             ToastUtil.showToast(obj.getString("msg"))

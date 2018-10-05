@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
@@ -22,6 +23,7 @@ import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.MTPService
 import com.photolivebroadcast.util.PermissionUtil
+import com.photolivebroadcast.util.RecyclerItemTouchListener
 import kotlinx.android.synthetic.main.activity_phone_album.*
 import io.reactivex.functions.Consumer
 
@@ -29,10 +31,11 @@ import io.reactivex.functions.Consumer
  * Created by Slingge on 2018/9/29.
  */
 class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp.UpResultCallBack
-,View.OnClickListener{
+        , View.OnClickListener {
 
     private var phoneAlbumAdapter: PhoneAlbumAdapter? = null
     private var phoneList = ArrayList<UpAlbunmModel>()
+    private var linearLayoutManager: LinearLayoutManager? = null
 
     var mService: MTPService? = null
 
@@ -49,7 +52,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
     private var isUp = false//是否在上传
 
-    private var adoptNum=0//设置通过、不通过的照片下标
+    private var adoptNum = 0//设置通过、不通过的照片下标
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,12 +65,20 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         inittitle("云直播")
         StatusBarWhiteColor()
         pid = intent.getStringExtra("id")
-        val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager!!.orientation = LinearLayoutManager.HORIZONTAL
 
         rv_album.layoutManager = linearLayoutManager
         phoneAlbumAdapter = PhoneAlbumAdapter(this, phoneList)
         rv_album.adapter = phoneAlbumAdapter
+
+        rv_album.addOnItemTouchListener(object : RecyclerItemTouchListener(rv_album) {
+            override fun onItemClick(vh: RecyclerView.ViewHolder?) {
+                adoptNum = vh!!.adapterPosition
+                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
+                linearLayoutManager!!.stackFromEnd = true
+            }
+        })
 
         sp_classification.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -75,18 +86,21 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 classificationId = classificationList[position].id
+               /* if(phoneList.isEmpty()){
+                    return
+                }
                 if (!isUp) {
                     val message = Message()
                     message.what = 0
                     hander.sendMessage(message)
-                }
+                }*/
             }
         }
 
 
-        if (PermissionUtil.ApplyPermissionAlbum(this, 0)) {
+
             mService = MTPService(this)
-        }
+
 
         ProgressDialog.showDialog(this)
         AlbumsClassificationHttp.Classification2(pid, object : AlbumsClassificationHttp.ClassificationCallBack {
@@ -144,6 +158,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     @Throws(Exception::class)
     override fun accept(list: List<*>) {
         imageView4.visibility = View.VISIBLE
+        tv_deviceName.text=mService!!.DeviceName
         for (i in 0 until list.size) {
             if (!phoneList.contains(list[i])) {
                 val album = UpAlbunmModel(list[i] as String, -1)
@@ -203,9 +218,29 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
 
     override fun onClick(v: View?) {
-
+        when (v!!.id) {
+            R.id.tv_adopt -> {
+                if(phoneList.isEmpty()){
+                    return
+                }
+                phoneList[adoptNum].isAdopt = 0
+                phoneAlbumAdapter!!.notifyDataSetChanged()
+                adoptNum++
+                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
+                linearLayoutManager!!.stackFromEnd = true
+            }
+            R.id.tv_through -> {
+                if(phoneList.isEmpty()){
+                    return
+                }
+                phoneList[adoptNum].isAdopt = 1
+                phoneAlbumAdapter!!.notifyDataSetChanged()
+                adoptNum++
+                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
+                linearLayoutManager!!.stackFromEnd = true
+            }
+        }
     }
-
 
 
     /**

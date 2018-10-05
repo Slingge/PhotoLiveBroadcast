@@ -16,6 +16,7 @@ import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import com.nostra13.universalimageloader.core.ImageLoader
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
@@ -38,7 +39,9 @@ import org.greenrobot.eventbus.Subscribe
  * Created by zhf on 2018/9/11.
  */
 
-class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHttp.UpResultCallBack {
+class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHttp.UpResultCallBack
+,AlbumsClassificationHttp.ClassificationCallBack,AlbumsClassificationHttp.ClassificationPhotoCallBack{
+
 
     private var pid = ""
 
@@ -60,7 +63,6 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_detail)
-        EventBus.getDefault().register(this)
         init()
     }
 
@@ -72,6 +74,7 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         model = intent.getSerializableExtra("model") as MySendModel.listalbumsModel
         inittitle(model!!.title)
         pid = model!!.id.toString()
+        ImageLoader.getInstance().displayImage(model!!.bgimage,bg_view)
 
         tv_time.text = model!!.start_time + "-" + model!!.end_time
         tv_address.text = model!!.address
@@ -96,36 +99,36 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
                 }
                 albumMenuAdapter!!.setFlag(i)
                 if (i != 0) {
-                    if (menuPhotoList.isNotEmpty()) {
-                        menuPhotoList.clear()
-                        albumMenuAdapter!!.notifyDataSetChanged()
-                    }
+
+                    menuPhotoList.clear()
+                    albumMenuAdapter!!.notifyDataSetChanged()
+
                     nowPage = 1
                     menuId = menuList[i].id
                     ProgressDialog.showDialog(this@LiveDetailActivity)
-                    AlbumsClassificationHttp.ClassificationAlbum(pid, menuId)
+                    AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
                     cv_1.visibility = View.GONE
                     cv_2.visibility = View.GONE
                     cv_3.visibility = View.GONE
-                    rv_photo.visibility=View.VISIBLE
+                    rv_photo.visibility = View.VISIBLE
                     iv_fenlan.visibility = View.VISIBLE
                     iv_phoneAlbum.visibility = View.VISIBLE
                 } else {
                     cv_1.visibility = View.VISIBLE
                     cv_2.visibility = View.VISIBLE
                     cv_3.visibility = View.VISIBLE
-                    rv_photo.visibility=View.GONE
+                    rv_photo.visibility = View.GONE
                     iv_fenlan.visibility = View.GONE
                     iv_phoneAlbum.visibility = View.GONE
                 }
             }
         })
 
-        val linearLayoutManager2 = GridLayoutManager(this,3)
+        val linearLayoutManager2 = GridLayoutManager(this, 3)
         rv_photo.layoutManager = linearLayoutManager2
         menuPhotoAdapter = ClassificationPhotoAdapter(this, menuPhotoList)
         rv_photo.adapter = menuPhotoAdapter
-        rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
+       /* rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
             override fun onRefresh() {
                 if (menuPhotoList.isNotEmpty()) {
                     menuPhotoList.clear()
@@ -133,32 +136,25 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
                 }
                 nowPage = 1
                 onRefresh = 1
-                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId)
+                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
             }
 
             override fun onLoadMore() {
-                 nowPage++
+                nowPage++
                 if (totalPage >= menuPhotoList.size) {
-                    rv_photo.noMoreLoading()
                     return
                 }
                 onRefresh = 2
-                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId)
+                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
             }
-        })
-    }
+        })*/
 
-    override fun onStart() {
-        super.onStart()
-        if (menuList.isEmpty()) {
-            ProgressDialog.showDialog(this)
-            AlbumsClassificationHttp.Classification(pid)
-        }
+        ProgressDialog.showDialog(this)
+        AlbumsClassificationHttp.Classification2(pid,this)
     }
 
 
-    @Subscribe
-    fun onEvent(moddel: AlbumsClassificationModel) {
+    override fun classifi(model: AlbumsClassificationModel) {
         if (menuList.isEmpty()) {
             val moddel = AlbumsClassificationModel.dataModel()
             moddel.id = ""
@@ -167,29 +163,29 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
             moddel.pid = pid
             menuList.add(moddel)
         }
-        menuList.addAll(moddel.data)
+        menuList.addAll(model.data)
         albumMenuAdapter!!.notifyDataSetChanged()
         albumMenuAdapter!!.setFlag(0)
     }
 
     //分类下相册
-    @Subscribe
-    fun onEvent(moddel: ClassificationPhotoModel.pageDataModel) {
-        totalPage = moddel.total
-        menuPhotoList.addAll(moddel.records)
-        if (onRefresh == 1) {
+    override fun alnumPhoto(model: ClassificationPhotoModel.pageDataModel) {
+        totalPage = model.total
+        menuPhotoList.addAll(model.records)
+      /*  if (onRefresh == 1) {
             rv_photo.refreshComplete()
         } else if (onRefresh == 2) {
             rv_photo.loadMoreComplete()
-        }
+        }*/
 
-        if (totalPage >= menuPhotoList.size) {
+      /*  if (totalPage >= menuPhotoList.size) {
             rv_photo.noMoreLoading()
-            return
-        }
+        }*/
 
         menuPhotoAdapter!!.notifyDataSetChanged()
     }
+
+
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -224,9 +220,10 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
     //上传相册图片
     override fun result(url: String) {
         if (!TextUtils.isEmpty(url)) {
-            val model=ClassificationPhotoModel.recordsModel()
-            model.imgurl=url
+            val model = ClassificationPhotoModel.recordsModel()
+            model.imgurl = url
             menuPhotoList.add(model)
+            menuPhotoAdapter!!.notifyDataSetChanged()
 
             upNow++
             val message = Message()
@@ -254,9 +251,5 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         }
     }
 
-    public override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-    }
 
 }
