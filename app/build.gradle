@@ -85,4 +85,6 @@ dependencies {
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_tool.jar')
     implementation files('libs/umeng-common-1.4.4.jar')
+
+    implementation 'com.squareup.picasso:picasso:2+'
 }

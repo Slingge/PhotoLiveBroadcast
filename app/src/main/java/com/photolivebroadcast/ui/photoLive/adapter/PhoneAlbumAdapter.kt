@@ -9,7 +9,9 @@ import android.widget.ImageView
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.util.ImageFileUtil
+import com.squareup.picasso.Picasso
 import com.yalantis.ucrop.util.FileUtils
+import java.io.File
 
 /**
  * Created by Slingge on 2018/9/29.
@@ -27,15 +29,15 @@ class PhoneAlbumAdapter(val context: Context, val list: ArrayList<UpAlbunmModel>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.image.setImageBitmap(ImageFileUtil.getBitmapFromPath(list[position].path))
-        if(list[position].isAdopt==0){
-            holder.image.setImageResource(R.drawable.ic_adopt)
-            holder.image.visibility=View.VISIBLE
-        }else if(list[position].isAdopt==1){
-            holder.image.setImageResource(R.drawable.ic_adopt_not)
-            holder.image.visibility=View.VISIBLE
-        }else{
-            holder.image.visibility=View.GONE
+        Picasso.get().load(File(list[position].path)).into(holder.image)
+        if (list[position].isAdopt == 0) {
+            holder.iv_isadopt.setImageResource(R.drawable.ic_adopt)
+            holder.iv_isadopt.visibility = View.VISIBLE
+        } else if (list[position].isAdopt == 1) {
+            holder.iv_isadopt.setImageResource(R.drawable.ic_adopt_not)
+            holder.iv_isadopt.visibility = View.VISIBLE
+        } else {
+            holder.iv_isadopt.visibility = View.GONE
         }
     }
 
@@ -43,6 +45,7 @@ class PhoneAlbumAdapter(val context: Context, val list: ArrayList<UpAlbunmModel>
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val image = view.findViewById<ImageView>(R.id.image)
+        val iv_isadopt = view.findViewById<ImageView>(R.id.iv_isadopt)
 
     }
 

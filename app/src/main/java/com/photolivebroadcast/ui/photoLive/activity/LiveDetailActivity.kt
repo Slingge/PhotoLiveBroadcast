@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import com.example.xrecyclerview.XRecyclerView
+import com.google.gson.Gson
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
+import com.lixin.amuseadjacent.app.util.abLog
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
@@ -40,7 +42,7 @@ import org.greenrobot.eventbus.Subscribe
  */
 
 class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHttp.UpResultCallBack
-,AlbumsClassificationHttp.ClassificationCallBack,AlbumsClassificationHttp.ClassificationPhotoCallBack{
+        , AlbumsClassificationHttp.ClassificationCallBack, AlbumsClassificationHttp.ClassificationPhotoCallBack {
 
 
     private var pid = ""
@@ -74,7 +76,7 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         model = intent.getSerializableExtra("model") as MySendModel.listalbumsModel
         inittitle(model!!.title)
         pid = model!!.id.toString()
-        ImageLoader.getInstance().displayImage(model!!.bgimage,bg_view)
+        ImageLoader.getInstance().displayImage(model!!.bgimage, bg_view)
 
         tv_time.text = model!!.start_time + "-" + model!!.end_time
         tv_address.text = model!!.address
@@ -106,7 +108,7 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
                     nowPage = 1
                     menuId = menuList[i].id
                     ProgressDialog.showDialog(this@LiveDetailActivity)
-                    AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
+                    AlbumsClassificationHttp.ClassificationAlbum(pid, menuId, this@LiveDetailActivity)
                     cv_1.visibility = View.GONE
                     cv_2.visibility = View.GONE
                     cv_3.visibility = View.GONE
@@ -128,29 +130,29 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         rv_photo.layoutManager = linearLayoutManager2
         menuPhotoAdapter = ClassificationPhotoAdapter(this, menuPhotoList)
         rv_photo.adapter = menuPhotoAdapter
-       /* rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
-            override fun onRefresh() {
-                if (menuPhotoList.isNotEmpty()) {
-                    menuPhotoList.clear()
-                    menuPhotoAdapter!!.notifyDataSetChanged()
-                }
-                nowPage = 1
-                onRefresh = 1
-                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
-            }
+        /* rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
+             override fun onRefresh() {
+                 if (menuPhotoList.isNotEmpty()) {
+                     menuPhotoList.clear()
+                     menuPhotoAdapter!!.notifyDataSetChanged()
+                 }
+                 nowPage = 1
+                 onRefresh = 1
+                 AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
+             }
 
-            override fun onLoadMore() {
-                nowPage++
-                if (totalPage >= menuPhotoList.size) {
-                    return
-                }
-                onRefresh = 2
-                AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
-            }
-        })*/
+             override fun onLoadMore() {
+                 nowPage++
+                 if (totalPage >= menuPhotoList.size) {
+                     return
+                 }
+                 onRefresh = 2
+                 AlbumsClassificationHttp.ClassificationAlbum(pid, menuId,this@LiveDetailActivity)
+             }
+         })*/
 
         ProgressDialog.showDialog(this)
-        AlbumsClassificationHttp.Classification2(pid,this)
+        AlbumsClassificationHttp.Classification2(pid, this)
     }
 
 
@@ -172,19 +174,18 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
     override fun alnumPhoto(model: ClassificationPhotoModel.pageDataModel) {
         totalPage = model.total
         menuPhotoList.addAll(model.records)
-      /*  if (onRefresh == 1) {
-            rv_photo.refreshComplete()
-        } else if (onRefresh == 2) {
-            rv_photo.loadMoreComplete()
-        }*/
+        /*  if (onRefresh == 1) {
+              rv_photo.refreshComplete()
+          } else if (onRefresh == 2) {
+              rv_photo.loadMoreComplete()
+          }*/
 
-      /*  if (totalPage >= menuPhotoList.size) {
-            rv_photo.noMoreLoading()
-        }*/
+        /*  if (totalPage >= menuPhotoList.size) {
+              rv_photo.noMoreLoading()
+          }*/
 
         menuPhotoAdapter!!.notifyDataSetChanged()
     }
-
 
 
     override fun onClick(p0: View?) {
@@ -210,7 +211,7 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
             for (i in 0 until PictureSelector.obtainMultipleResult(data).size) {
                 upimageList.add((PictureSelector.obtainMultipleResult(data)[i].path))
             }
-
+            abLog.e("路径...........", Gson().toJson(upimageList))
             val message = Message()
             message.what = 0
             hander.sendMessage(message)
