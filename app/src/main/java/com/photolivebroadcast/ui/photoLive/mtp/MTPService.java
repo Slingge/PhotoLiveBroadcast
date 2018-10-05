@@ -18,6 +18,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,16 +138,15 @@ public class MTPService {
 
     }
 
-    public void startScanPic() {
+    public void startScanPic(){
         disposable = interval(8, TimeUnit.SECONDS)
                 .onBackpressureDrop()
                 .map(new Function<Long, List>() {
                     @Override
                     public List apply(Long aLong) throws Exception {
-                        Log.d(TAG, "start1===" + aLong);
-                        List list = new ArrayList();
+                        Log.d(TAG,"start1===" + aLong);
+                        List list = new ArrayList<PicInfo>();
                         if (mMtpDevice != null) {
-                            DeviceName=mMtpDevice.getDeviceName();
                             MtpDeviceInfo mtpDeviceInfo = mMtpDevice.getDeviceInfo();
                             String deviceSeriNumber = null;
                             if (mtpDeviceInfo != null)
@@ -154,13 +155,13 @@ public class MTPService {
                                 deviceSeriNumber = "xx";
                             int[] storageIds = mMtpDevice.getStorageIds();
                             if (storageIds == null) {
-                                showToast(mContext, "获取相机存储空间失败");
+                                showToast(mContext,"获取相机存储空间失败");
                                 return list;
                             }
                             for (int storageId : storageIds) {
                                 int[] objectHandles = mMtpDevice.getObjectHandles(storageId, MtpConstants.FORMAT_EXIF_JPEG, 0);
-                                if (objectHandles == null) {
-                                    showToast(mContext, "获取照片失败");
+                                if(objectHandles==null){
+                                    showToast(mContext,"获取照片失败");
                                     return list;
                                 }
                                 for (int objectHandle : objectHandles) {
@@ -168,7 +169,7 @@ public class MTPService {
                                     if (mtpobj == null) {
                                         continue;
                                     }
-                                    long dateCreated = mtpobj.getDateCreated();
+                                    long dateCreated=mtpobj.getDateCreated();
 
 
                                     byte[] bytes = mMtpDevice.getThumbnail(objectHandle);
@@ -202,6 +203,7 @@ public class MTPService {
                                 }
                             }
                         }
+                        EventBus.getDefault().post(list);
                         return list;
                     }
                 }).subscribeOn(Schedulers.io())               //线程调度器,将发送者运行在子线程

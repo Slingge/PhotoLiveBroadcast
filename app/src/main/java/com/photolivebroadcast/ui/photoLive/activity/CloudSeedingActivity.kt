@@ -22,10 +22,13 @@ import com.photolivebroadcast.ui.photoLive.http.AlbumsClassificationHttp
 import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.MTPService
+import com.photolivebroadcast.ui.photoLive.mtp.PicInfo
 import com.photolivebroadcast.util.PermissionUtil
 import com.photolivebroadcast.util.RecyclerItemTouchListener
 import kotlinx.android.synthetic.main.activity_phone_album.*
 import io.reactivex.functions.Consumer
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Created by Slingge on 2018/9/29.
@@ -57,6 +60,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_phone_album)
+        EventBus.getDefault().register(this)
         init()
     }
 
@@ -86,20 +90,20 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 classificationId = classificationList[position].id
-               /* if(phoneList.isEmpty()){
-                    return
-                }
-                if (!isUp) {
-                    val message = Message()
-                    message.what = 0
-                    hander.sendMessage(message)
-                }*/
+                /* if(phoneList.isEmpty()){
+                     return
+                 }
+                 if (!isUp) {
+                     val message = Message()
+                     message.what = 0
+                     hander.sendMessage(message)
+                 }*/
             }
         }
 
 
 
-            mService = MTPService(this)
+        mService = MTPService(this)
 
 
         ProgressDialog.showDialog(this)
@@ -155,13 +159,13 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     }
 
 
-    @Throws(Exception::class)
-    override fun accept(list: List<*>) {
+    @Subscribe
+    fun onEvent(list: List<PicInfo>){
         imageView4.visibility = View.VISIBLE
-        tv_deviceName.text=mService!!.DeviceName
+        tv_deviceName.text = mService!!.DeviceName
         for (i in 0 until list.size) {
-            if (!phoneList.contains(list[i])) {
-                val album = UpAlbunmModel(list[i] as String, -1)
+            if (phoneList[i].path != (list[i].getmThumbnailPath())) {
+                val album = UpAlbunmModel(list[i].getmThumbnailPath(), -1)
                 phoneList.add(album)
             }
         }
@@ -172,6 +176,11 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         val message = Message()
         message.what = 0
         hander.sendMessage(message)
+    }
+
+    @Throws(Exception::class)
+    override fun accept(t: List<*>?) {
+
     }
 
 
@@ -220,7 +229,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tv_adopt -> {
-                if(phoneList.isEmpty()){
+                if (phoneList.isEmpty()) {
                     return
                 }
                 phoneList[adoptNum].isAdopt = 0
@@ -230,7 +239,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                 linearLayoutManager!!.stackFromEnd = true
             }
             R.id.tv_through -> {
-                if(phoneList.isEmpty()){
+                if (phoneList.isEmpty()) {
                     return
                 }
                 phoneList[adoptNum].isAdopt = 1
@@ -259,6 +268,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onDestroy() {
         super.onDestroy()
         mService!!.close()
+        EventBus.getDefault().unregister(this)
     }
 
 

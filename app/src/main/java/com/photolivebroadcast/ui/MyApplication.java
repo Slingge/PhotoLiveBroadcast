@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+
 import com.lixin.amuseadjacent.app.util.abLog;
 import com.photolivebroadcast.util.ImageLoaderUtil;
 import com.photolivebroadcast.util.SharedPreferencesUtil;
@@ -63,17 +64,20 @@ public class MyApplication extends MultiDexApplication {
         StatickUtil.INSTANCE.setPass(SharedPreferencesUtil.getSharePreStr(CONTEXT, "phone"));
 
         abLog.INSTANCE.setE(true);
+        CrashHandler catchExcep = new CrashHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
 
         ImageLoaderUtil.configImageLoader(CONTEXT);
         com.nostra13.universalimageloader.utils.L.disableLogging();
 
         UMShareAPI.get(this);
         PlatformConfig.setWeixin("wx0d0b4d8b589ef4e6", "ee455dc7b28cbf41f9370d53acd6bbb0");
-        PlatformConfig.setQQZone("1106693507", "ns8Zb9Eid2yVXFFs");
+//        PlatformConfig.setQQZone("1106693507", "ns8Zb9Eid2yVXFFs");
     }
 
     /**
      * 分割 Dex 支持
+     *
      * @param base
      */
     @Override
