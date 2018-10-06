@@ -170,14 +170,14 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
             val album = UpAlbunmModel(list[i].getmThumbnailPath(), -1)
             phoneList.add(album)
         }
-        ToastUtil.showToast(Gson().toJson(phoneList))
+
         phoneAlbumAdapter!!.notifyDataSetChanged()
         tv_upSpeed.text = "上传进度：" + upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = "上传失败：" + upfailNum.toString() + "/" + phoneList.size
 
-//        val message = Message()
-//        message.what = 0
-//        hander.sendMessage(message)
+        val message = Message()
+        message.what = 0
+        hander.sendMessage(message)
     }
 
 

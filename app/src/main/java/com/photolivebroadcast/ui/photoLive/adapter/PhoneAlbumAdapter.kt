@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
-import com.photolivebroadcast.util.ImageFileUtil
 import com.squareup.picasso.Picasso
-import com.yalantis.ucrop.util.FileUtils
 import java.io.File
 
 /**

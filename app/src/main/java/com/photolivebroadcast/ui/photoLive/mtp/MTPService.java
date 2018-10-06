@@ -39,7 +39,7 @@ import static io.reactivex.Flowable.interval;
 
 public class MTPService {
 
-    private static String TAG = "MTPService";
+    private static String TAG="MTPService";
 
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 
@@ -52,19 +52,21 @@ public class MTPService {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         mContext = context;
         mAlert = builder.create();
-        if (Constant.mtpDevice != null) {
-            mMtpDevice = Constant.mtpDevice;
+        if(Constant.mtpDevice!=null) {
+            mMtpDevice=Constant.mtpDevice;
             startScanPic();
-        } else
-            showToast(context, "未连接到设备");
+
+        }
+        else
+            showToast(context,"请重新插拔连接设备");
         registerReceiverMtp();
     }
 
     private void showToast(Context context, String s) {
-        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
     }
 
-    boolean isRegister = false;
+    boolean isRegister=false;
 
     void registerReceiverMtp() {
         IntentFilter intentFilter = new IntentFilter();
@@ -72,7 +74,7 @@ public class MTPService {
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         intentFilter.addAction(ACTION_USB_PERMISSION);
         mContext.registerReceiver(mtpReceiver, intentFilter);
-        isRegister = true;
+        isRegister=true;
     }
 
     UsbDevice mUsbDevice;
@@ -92,7 +94,7 @@ public class MTPService {
                     break;
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
                     Constant.usbDeviceName = "";
-                    Constant.mtpDevice = null;
+                    Constant.mtpDevice=null;
                     if (mMtpDevice != null) {
                         mMtpDevice.close();
                         disposable.dispose();
@@ -123,14 +125,14 @@ public class MTPService {
             return;
         }
 
-        Log.d("", "isOpenMtp===" + isOpenMtp + usbDevice.getDeviceName());
+        Log.d("","isOpenMtp===" + isOpenMtp + usbDevice.getDeviceName());
         if (isOpenMtp) {
             Constant.mtpDevice = mMtpDevice;
             mAlert.hide();
             startScanPic();
         } else {
             //            handleMtpDevice(usbDevice, 3);
-            mAlert.setMessage("与MTP建立连接失败，请重新插入MTP设备" + key);
+            mAlert.setMessage("与MTP建立连接失败，请重新插入MTP设备" + key );
             mAlert.show();
         }
 
@@ -141,9 +143,9 @@ public class MTPService {
                 .onBackpressureDrop()
                 .map(new Function<Long, List>() {
                     @Override
-                    public ArrayList<PicInfo> apply(Long aLong) throws Exception {
+                    public List apply(Long aLong) throws Exception {
                         Log.d(TAG,"start1===" + aLong);
-                        ArrayList<PicInfo> list = new ArrayList<>();
+                        List list = new ArrayList();
                         if (mMtpDevice != null) {
                             MtpDeviceInfo mtpDeviceInfo = mMtpDevice.getDeviceInfo();
                             String deviceSeriNumber = null;
@@ -168,6 +170,7 @@ public class MTPService {
                                         continue;
                                     }
                                     long dateCreated=mtpobj.getDateCreated();
+
 
                                     byte[] bytes = mMtpDevice.getThumbnail(objectHandle);
                                     filePath.setLength(0);
@@ -208,9 +211,9 @@ public class MTPService {
     }
 
     public void close() {
-        if (isRegister) {
+        if(isRegister) {
             mContext.unregisterReceiver(mtpReceiver);
-            isRegister = false;
+            isRegister=false;
         }
         if (mMtpDevice != null) {
 //            mMtpDevice.close();
@@ -218,6 +221,8 @@ public class MTPService {
         if (disposable != null)
             disposable.dispose();
     }
+
+
 
 
 }
