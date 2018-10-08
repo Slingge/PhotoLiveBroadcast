@@ -10,15 +10,13 @@ import android.text.TextWatcher
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.constant.LoginConstant
 import com.photolivebroadcast.ui.MainActivity
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.establish.result.SendMSMrHttp
 import com.photolivebroadcast.ui.establish.result.SginHttp
-import com.photolivebroadcast.util.AbStrUtil
-import com.photolivebroadcast.util.AppManager
-import com.photolivebroadcast.util.GetCodeUtil
-import com.photolivebroadcast.util.TimerUtil
+import com.photolivebroadcast.util.*
 import kotlinx.android.synthetic.main.activity_verification.*
 
 /**
@@ -73,6 +71,7 @@ class VerificationActivity : BaseActivity() {
                 override fun send() {
                     AppManager.finishAllActivity()
                     MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
+                    SharePreferencesTools.saveObjectToSharePreferences(this@VerificationActivity,LoginConstant.LOGIN_TAG_FILE_NAME,LoginConstant.LOGIN_TAG_FILE_KEY,SmartEncryTools.encodeMD5String(phone+Vcode+System.currentTimeMillis()))
                 }
             })
         }

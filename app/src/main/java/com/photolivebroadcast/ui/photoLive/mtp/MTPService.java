@@ -171,7 +171,6 @@ public class MTPService {
                                     }
                                     long dateCreated=mtpobj.getDateCreated();
 
-
                                     byte[] bytes = mMtpDevice.getThumbnail(objectHandle);
                                     filePath.setLength(0);
                                     filePath.append(Environment.getExternalStorageDirectory().getAbsolutePath())

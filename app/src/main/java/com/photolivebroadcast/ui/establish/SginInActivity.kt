@@ -14,13 +14,12 @@ import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.constant.LoginConstant
+import com.photolivebroadcast.ui.MainActivity
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.establish.result.SendMSMrHttp
-import com.photolivebroadcast.util.AbStrUtil
-import com.photolivebroadcast.util.GetCodeUtil
-import com.photolivebroadcast.util.ImageFileUtil
-import com.photolivebroadcast.util.TimerUtil
+import com.photolivebroadcast.util.*
 import kotlinx.android.synthetic.main.activity_enterprise_authentication1.*
 import kotlinx.android.synthetic.main.activity_sginin.*
 
@@ -33,6 +32,11 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sginin)
+        val loginKey = SharePreferencesTools.readObjectFromSharePreferences(this@SginInActivity,LoginConstant.LOGIN_TAG_FILE_NAME,LoginConstant.LOGIN_TAG_FILE_KEY)
+        if(loginKey!=null){
+            AppManager.finishAllActivity()
+            MyApplication.openActivity(this@SginInActivity, MainActivity::class.java)
+        }
         init()
     }
 

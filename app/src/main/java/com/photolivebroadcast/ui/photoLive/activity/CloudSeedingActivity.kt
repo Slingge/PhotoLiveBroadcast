@@ -1,11 +1,14 @@
 package com.photolivebroadcast.ui.photoLive.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Message
+import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -110,6 +113,9 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                     strList1.add(model.data[i].menu_name)
                 }
                 classificationList = model.data
+                if(classificationList==null||classificationList.size==0){
+                    return
+                }
                 val spinnerAdapter = ArrayAdapter<String>(this@CloudSeedingActivity,
                         R.layout.item_spinner_text, strList1)
                 sp_classification.adapter = spinnerAdapter
@@ -167,11 +173,20 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         tv_deviceName.text = Constant.usbDeviceName
         bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(list[0].getmThumbnailPath()))
         for (i in 0 until list.size) {
-            val album = UpAlbunmModel(list[i].getmThumbnailPath(), -1)
+            var thumpPicPath=list[i].getmThumbnailPath();
+//            // 指定拍照意图
+//            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            // 加载路径图片路径
+//            Uri mUri = Uri.fromFile(new File(thumpPicPath));
+//            // 指定存储路径，这样就可以保存原图了
+//            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
+//            startActivityForResult(openCameraIntent, TAKE_PICTURE);
+
+            val album = UpAlbunmModel(thumpPicPath, -1)
             phoneList.add(album)
         }
 
-        phoneAlbumAdapter!!.notifyDataSetChanged()
+//        phoneAlbumAdapter!!.notifyDataSetChanged()
         tv_upSpeed.text = "上传进度：" + upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = "上传失败：" + upfailNum.toString() + "/" + phoneList.size
 
