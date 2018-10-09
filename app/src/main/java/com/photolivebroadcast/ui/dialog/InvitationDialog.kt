@@ -9,7 +9,13 @@ import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import com.lxkj.huaihuatransit.app.util.StrCallback
+import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.util.AbStrUtil
+import com.photolivebroadcast.util.StatickUtil
+import com.zhy.http.okhttp.OkHttpUtils
+import org.json.JSONObject
 
 
 /**
@@ -28,13 +34,19 @@ object InvitationDialog {
         val factory = LayoutInflater.from(context)
         val view = factory.inflate(R.layout.dialog_upload_invitation, null)
         builder!!.window.setContentView(view)
+        val et_invitation = view.findViewById<EditText>(R.id.et_invitation)
 
         val tv_enter = view.findViewById<TextView>(R.id.tv_enter)
         tv_enter.setOnClickListener { v ->
-
+            val code = AbStrUtil.etTostr(et_invitation)
+            if (TextUtils.isEmpty(code)) {
+                return@setOnClickListener
+            }
+            ProgressDialog.showDialog(context)
+            ParticipateUploading(code)
         }
 
-        val et_invitation = view.findViewById<EditText>(R.id.et_invitation)
+
         et_invitation.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -64,7 +76,7 @@ object InvitationDialog {
         val d = m.defaultDisplay // 获取屏幕宽、高用
         val p = dialogWindow.attributes // 获取对话框当前的参数值
 //        p.height = (d.getHeight() * 0.5).toInt() // 高度设置为屏幕的0.5
-        p.width = (d.width *0.8).toInt()// 宽度设置为屏幕宽
+        p.width = (d.width * 0.8).toInt()// 宽度设置为屏幕宽
         dialogWindow.attributes = p
 
         builder!!.window.clearFlags(
@@ -77,6 +89,24 @@ object InvitationDialog {
             builder!!.dismiss()
             builder = null
         }
+    }
+
+//参与上传
+    private fun ParticipateUploading(incode: String) {
+        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxcheckincode")
+                .addParams("incode", incode).addParams("userid", StatickUtil.uid)
+                .build().execute(object : StrCallback() {
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val obj = JSONObject(response)
+                        if (obj.getInt("code") == 200) {
+                            ToastUtil.showToast("加入成功")
+                            dismiss()
+                        } else {
+                            ToastUtil.showToast(obj.getString("msg"))
+                        }
+                    }
+                })
     }
 
 
