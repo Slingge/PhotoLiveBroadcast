@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_toucan01" />
+
+        <TextView
+            android:id="@+id/tv_album5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/tv_pay5"
+            android:layout_marginLeft="10dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/image"
+            android:text="照片直播相册10个"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_fant" />
+
+        <TextView
+            android:id="@+id/tv_money5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_album5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/image"
+            android:text="￥ 1980.00"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sub_fant" />
+
+        <TextView
+            android:id="@+id/tv_pay5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_red5"
+            android:padding="5dp"
+            android:text="立即购买"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_fant" />
+
+        <include
+            android:id="@+id/line2"
+            layout="@layout/include_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/image"
+            android:layout_marginTop="12dp" />
+    </RelativeLayout>
+
+</FrameLayout>

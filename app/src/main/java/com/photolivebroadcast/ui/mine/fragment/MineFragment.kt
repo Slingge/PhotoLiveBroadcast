@@ -16,10 +16,7 @@ import com.photolivebroadcast.util.StatickUtil
 import com.photolivebroadcast.util.StatusBarBlackWordUtil
 import com.photolivebroadcast.util.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_mine.*
-import com.photolivebroadcast.util.AbStrUtil.setText
-import android.content.Context.CLIPBOARD_SERVICE
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
-import kotlinx.android.synthetic.main.dialog_progress.view.*
 
 
 /**
@@ -95,7 +92,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 MyApplication.openActivity(activity!!, MySendActivity::class.java)
             }
             R.id.tv_setmeal -> {//我的套餐
-                MyApplication.openActivity(activity!!, MySetMealActivity::class.java)
+                MyApplication.openActivity(activity!!, SetMealAllActivity::class.java)
             }
             R.id.tv_trimming -> {//修图服务
                 MyApplication.openActivity(activity!!, MappingServiceActivity1::class.java)

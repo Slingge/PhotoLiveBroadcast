@@ -257,7 +257,11 @@
 
         <!--我的套餐-->
         <activity
-            android:name=".ui.mine.activity.MySetMealActivity"
+            android:name=".ui.mine.activity.SetMealMyActivity"
+            android:screenOrientation="portrait" />
+        <!--全部套餐-->
+        <activity
+            android:name=".ui.mine.activity.SetMealAllActivity"
             android:screenOrientation="portrait" />
         <!--我发出的-->
         <activity

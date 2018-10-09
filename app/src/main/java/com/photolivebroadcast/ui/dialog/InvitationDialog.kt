@@ -80,7 +80,7 @@ object InvitationDialog {
         dialogWindow.attributes = p
 
         builder!!.window.clearFlags(
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
 
