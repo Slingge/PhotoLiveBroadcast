@@ -3,6 +3,7 @@ package com.photolivebroadcast.ui.photoLive.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
@@ -24,7 +25,7 @@ import org.greenrobot.eventbus.Subscribe
 class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
 
     private var model: MySendModel.listalbumsModel? = null
-    private var pid=""
+    private var pid = ""
 
     private var tvInformation: TextView? = null
     private var tvShot: TextView? = null
@@ -36,6 +37,7 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
     private var tvAdminExamine: TextView? = null
     private var tvAdminTrim: TextView? = null
     private var tvWatchSetting: TextView? = null
+    private var ivBegin: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
         tvAdminExamine = findViewById<View>(R.id.tv_admin_examine) as TextView
         tvAdminTrim = findViewById<View>(R.id.tv_admin_trim) as TextView
         tvWatchSetting = findViewById<View>(R.id.tv_watch_setting) as TextView
+        ivBegin = findViewById<ImageView>(R.id.iv_begin) as ImageView
         pid = intent.getStringExtra("id")
     }
 
@@ -71,6 +74,11 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
     @Subscribe
     fun onEvent(model: MySendModel.listalbumsModel) {
         this.model = model
+        if (model.isopen != null && model.isopen.equals("Y")) {
+            ivBegin!!.setImageResource(R.mipmap.icon_fun_pen)
+        } else {
+            ivBegin!!.setImageResource(R.mipmap.icon_fun_close)
+        }
     }
 
     private fun initData() {
@@ -88,67 +96,82 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
         tvAdminExamine!!.setOnClickListener(this)
         tvAdminTrim!!.setOnClickListener(this)
         tvWatchSetting!!.setOnClickListener(this)
+        ivBegin!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            //基本信息
+        //基本信息
             R.id.tv_information -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, AlbumJiBenInfoActivity::class.java, bundle)
             }
-            //拍摄活动信息
+        //拍摄活动信息
             R.id.tv_shot -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, ShotImageActivity::class.java, bundle)
             }
-            //相册分类
+        //相册分类
             R.id.tv_photo_type -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, ClassifySettingActivity::class.java, bundle)
             }
-            //下方自定义广告
+        //下方自定义广告
             R.id.tv_advertise -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, CustomAdverActivity::class.java, bundle)
             }
 
-            //水印功能
+        //水印功能
             R.id.tv_watermark -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, WaterMarkActivity::class.java, bundle)
             }
-            //互动设置
+        //互动设置
             R.id.tv_interact_setting -> {
             }
-            //管理摄影师
-            R.id.tv_admin_cameraman ->{
+        //管理摄影师
+            R.id.tv_admin_cameraman -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, AdminCameramanActivity::class.java, bundle)
             }
-            //管理审核员
+        //管理审核员
             R.id.tv_admin_examine -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, AdminExamineActivity::class.java, bundle)
             }
-            //管理修图师
+        //管理修图师
             R.id.tv_admin_trim -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, AdminTrimActivity::class.java, bundle)
             }
-            //观看设置
+        //观看设置
             R.id.tv_watch_setting -> {
                 val bundle = Bundle()
                 bundle.putString("id", pid)
                 MyApplication.openActivity(this, WatchSettingActivity::class.java, bundle)
+            }
+        //开播按钮
+            R.id.iv_begin -> {
+                if (model == null) {
+                    ToastUtil.showToast("数据获取失败")
+                    return
+                }
+                if(model!!.isopen!=null&&model!!.isopen.equals("Y")){
+                    ivBegin!!.setImageResource(R.mipmap.icon_fun_close)
+                    model!!.isopen="N"
+                }else{
+                    ivBegin!!.setImageResource(R.mipmap.icon_fun_pen)
+                    model!!.isopen="Y"
+                }
             }
         }
     }
