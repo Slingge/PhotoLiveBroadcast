@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.gson.Gson
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
+import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.model.MySendModel
 import com.photolivebroadcast.ui.photoLive.http.AlbumInfoHttp
+import com.umeng.socialize.utils.DeviceConfig.context
+import com.zhy.http.okhttp.OkHttpUtils
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -166,16 +170,39 @@ class EditorPhotoActivity : BaseActivity(), View.OnClickListener {
                     return
                 }
                 if(model!!.isopen!=null&&model!!.isopen.equals("Y")){
-                    ivBegin!!.setImageResource(R.mipmap.icon_fun_close)
-                    model!!.isopen="N"
+                    open("N")
                 }else{
-                    ivBegin!!.setImageResource(R.mipmap.icon_fun_pen)
-                    model!!.isopen="Y"
+                    open("Y")
                 }
             }
         }
     }
 
+    /**
+     * 开播
+     */
+    private fun open(open:String){
+        ProgressDialog.showDialog(this)
+        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxeditphotoopen")
+                .addParams("pid", pid)
+                .addParams("isopen", open).build().execute(object : StrCallback() {
+            override fun onResponse(response: String, id: Int) {
+                super.onResponse(response, id)
+                val model2 = Gson().fromJson(response, MySendModel::class.java)
+                if (model2.code == 200) {
+                    if(open.equals("Y")){
+                        ivBegin!!.setImageResource(R.mipmap.icon_fun_pen)
+                        model!!.isopen="Y"
+                    }else{
+                        ivBegin!!.setImageResource(R.mipmap.icon_fun_close)
+                        model!!.isopen="N"
+                    }
+                } else {
+                    ToastUtil.showToast(model2.msg)
+                }
+            }
+        })
+    }
 
     override fun onDestroy() {
         super.onDestroy()
