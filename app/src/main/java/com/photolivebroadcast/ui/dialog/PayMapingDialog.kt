@@ -39,6 +39,11 @@ object PayMapingDialog {
         val tv_pay = view.findViewById<TextView>(R.id.tv_pay)
         tv_pay.setOnClickListener { v ->
             payMapingCallBack.payMapping()
+            builder!!.dismiss()
+        }
+        val tv_cancel2 = view.findViewById<TextView>(R.id.tv_cancel2)
+        tv_cancel2.setOnClickListener { v ->
+            builder!!.dismiss()
         }
     }
 

@@ -29,6 +29,11 @@ class MappingServiceActivity1 : BaseActivity() {
         inittitle("预约修图")
         StatusBarWhiteColor()
 
+        PayMapingDialog.showDialog(this, object : PayMapingCallBack {
+            override fun payMapping() {
+
+            }
+        })
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -38,11 +43,7 @@ class MappingServiceActivity1 : BaseActivity() {
         rv_service.adapter = mappingAdapter
 
         tv_next.setOnClickListener { v ->
-            PayMapingDialog.showDialog(this, object : PayMapingCallBack {
-                override fun payMapping() {
-                    MyApplication.openActivity(this@MappingServiceActivity1, MappingServiceActivity2::class.java)
-                }
-            })
+            MyApplication.openActivity(this@MappingServiceActivity1, MappingServiceActivity2::class.java)
         }
     }
 

@@ -23,7 +23,7 @@ class SetMealMyActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setmeal_all)
+        setContentView(R.layout.activity_setmeal_my)
         EventBus.getDefault().register(this)
         init()
     }
