@@ -36,6 +36,8 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
 
     var popPay: PopPay? = null
 
+    var orderId: String? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_setmeal, parent, false)
         return ViewHolder(view)
@@ -71,7 +73,8 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
                     val gson = Gson()
                     val model = gson!!.fromJson(response, OrderNumModel::class.java)
                     if (model!!.code == 200) {
-                        popPay = PopPay(context, onClickListener)
+                        orderId = ""+model!!.data.id
+                        popPay = PopPay(context, onclick)
                         popPay!!.showAtLocation(holder!!.tv_pay5, Gravity.BOTTOM, 0, 0)
                     } else {
 
@@ -81,17 +84,29 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
         }
     }
 
-    internal var onClickListener: View.OnClickListener = View.OnClickListener {
-
+    private val onclick = object : View.OnClickListener {
+        override fun onClick(p0: View?) {
+            when (p0!!.id) {
+                R.id.rel_alipay -> {
+                    alipay()
+                }
+                R.id.rel_wx_pay -> {
+                    wxPay()
+                }
+                R.id.tv_submit -> {
+                    popPay!!.dismiss()
+                }
+            }
+        }
     }
 
     /**
      * 支付宝支付
      */
-    private fun alipay(orderNum: String) {
+    private fun alipay() {
         ProgressDialog.showDialog(context)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/alipay/appPayRequest")
-                .addParams("orderid", orderNum).build().execute(object : StrCallback() {
+                .addParams("orderid", orderId).build().execute(object : StrCallback() {
             override fun onResponse(response: String, id: Int) {
                 super.onResponse(response, id)
                 orderInfo = response
@@ -133,10 +148,10 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
     /**
      * 微信支付
      */
-    private fun wxPay(orderNum: String) {
+    private fun wxPay() {
         ProgressDialog.showDialog(context)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/tc/wxPrePay")
-                .addParams("orderid", "" + orderNum).build().execute(object : StrCallback() {
+                .addParams("orderid", "" + orderId).build().execute(object : StrCallback() {
             override fun onError(call: Call, e: Exception, id: Int) {
                 super.onError(call, e, id)
             }
