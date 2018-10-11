@@ -1,5 +1,7 @@
 package com.photolivebroadcast.ui.photoLive.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -9,76 +11,103 @@ import java.io.Serializable;
 public class WXpayBean implements Serializable{
 
     /**
-     * appId : wxd22294479b1ff72a
-     * nonceStr : 1530862401491
-     * packageValue : Sign=WXPay
-     * partnerId : 1403625402
-     * prepayId : wx06153321671241a33ec1e4892529605495
-     * sign : 8A3635C204273FDCF0286BDD386311BD
-     * timeStamp : 1530862401
+     * msg : {"appid":"wx0d0b4d8b589ef4e6","noncestr":"yZnDZXY3IXEl8xGy","package":"Sign=WXPay","partnerid":"1516429591","prepayid":null,"sign":"19322ECB5A3CC92B9987C08580FBA74E","timestamp":1539226351}
+     * code : 200
      */
 
-    private String appId;
-    private String nonceStr;
-    private String packageValue;
-    private String partnerId;
-    private String prepayId;
-    private String sign;
-    private String timeStamp;
+    private MsgBean msg;
+    private String code;
 
-    public String getAppId() {
-        return appId;
+    public MsgBean getMsg() {
+        return msg;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
+    public void setMsg(MsgBean msg) {
+        this.msg = msg;
     }
 
-    public String getNonceStr() {
-        return nonceStr;
+    public String getCode() {
+        return code;
     }
 
-    public void setNonceStr(String nonceStr) {
-        this.nonceStr = nonceStr;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getPackageValue() {
-        return packageValue;
-    }
+    public static class MsgBean {
+        /**
+         * appid : wx0d0b4d8b589ef4e6
+         * noncestr : yZnDZXY3IXEl8xGy
+         * package : Sign=WXPay
+         * partnerid : 1516429591
+         * prepayid : null
+         * sign : 19322ECB5A3CC92B9987C08580FBA74E
+         * timestamp : 1539226351
+         */
 
-    public void setPackageValue(String packageValue) {
-        this.packageValue = packageValue;
-    }
+        private String appid;
+        private String noncestr;
+        @SerializedName("package")
+        private String packageX;
+        private String partnerid;
+        private String prepayid;
+        private String sign;
+        private String timestamp;
 
-    public String getPartnerId() {
-        return partnerId;
-    }
+        public String getAppid() {
+            return appid;
+        }
 
-    public void setPartnerId(String partnerId) {
-        this.partnerId = partnerId;
-    }
+        public void setAppid(String appid) {
+            this.appid = appid;
+        }
 
-    public String getPrepayId() {
-        return prepayId;
-    }
+        public String getNoncestr() {
+            return noncestr;
+        }
 
-    public void setPrepayId(String prepayId) {
-        this.prepayId = prepayId;
-    }
+        public void setNoncestr(String noncestr) {
+            this.noncestr = noncestr;
+        }
 
-    public String getSign() {
-        return sign;
-    }
+        public String getPackageX() {
+            return packageX;
+        }
 
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
+        public void setPackageX(String packageX) {
+            this.packageX = packageX;
+        }
 
-    public String getTimeStamp() {
-        return timeStamp;
-    }
+        public String getPartnerid() {
+            return partnerid;
+        }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+        public void setPartnerid(String partnerid) {
+            this.partnerid = partnerid;
+        }
+
+        public String getPrepayid() {
+            return prepayid;
+        }
+
+        public void setPrepayid(String prepayid) {
+            this.prepayid = prepayid;
+        }
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(String timestamp) {
+            this.timestamp = timestamp;
+        }
     }
 }

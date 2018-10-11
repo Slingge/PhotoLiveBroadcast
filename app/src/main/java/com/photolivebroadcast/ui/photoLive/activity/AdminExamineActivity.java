@@ -58,7 +58,7 @@ public class AdminExamineActivity extends BaseActivity implements View.OnClickLi
      */
     private void wxPay() {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/tc/wxPrePay")
-                .build().execute(new StrCallback() {
+                .addParams("orderid", "123654799").build().execute(new StrCallback() {
             @Override
             public void onError(@NotNull Call call, @NotNull Exception e, int id) {
                 super.onError(call, e, id);
@@ -70,18 +70,16 @@ public class AdminExamineActivity extends BaseActivity implements View.OnClickLi
                 Gson gson = new Gson();
                 WXpayBean bean = gson.fromJson(response, WXpayBean.class);
                 PayReq request = new PayReq();
-                request.appId = bean.getAppId();
-                request.partnerId = bean.getPartnerId();
-                request.prepayId = bean.getPrepayId();
-                request.packageValue = bean.getPackageValue();
-                request.nonceStr = bean.getNonceStr();
-                request.timeStamp = bean.getTimeStamp();
-                request.sign = bean.getSign();
-                msgApi.sendReq(request);
+//                request.appId = bean.getAppId();
+//                request.partnerId = bean.getPartnerId();
+//                request.prepayId = bean.getPrepayId();
+//                request.packageValue = bean.getPackageValue();
+//                request.nonceStr = bean.getNonceStr();
+//                request.timeStamp = bean.getTimeStamp();
+//                request.sign = bean.getSign();
+//                msgApi.sendReq(request);
             }
         });
-
-
     }
 
 
@@ -90,7 +88,7 @@ public class AdminExamineActivity extends BaseActivity implements View.OnClickLi
      */
     private void alipay() {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/alipay/appPayRequest")
-                .addParams("orderNo", "12345678999").build().execute(new StrCallback() {
+                .addParams("orderid", "12345678999").build().execute(new StrCallback() {
             @Override
             public void onResponse(@NotNull String response, int id) {
                 super.onResponse(response, id);
@@ -131,6 +129,8 @@ public class AdminExamineActivity extends BaseActivity implements View.OnClickLi
             }
         }
     };
+
+
 
     @Override
     public void onClick(View v) {
