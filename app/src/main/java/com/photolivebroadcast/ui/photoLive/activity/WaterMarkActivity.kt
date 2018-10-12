@@ -1,11 +1,16 @@
 package com.photolivebroadcast.ui.photoLive.activity
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
+import android.widget.RelativeLayout
 
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
+import com.photolivebroadcast.util.FileUtils
 import kotlinx.android.synthetic.main.include_basetop.*
 
 /**
@@ -30,6 +35,21 @@ class WaterMarkActivity : BaseActivity() {
         tv_right.setOnClickListener { v ->
             MyApplication.openActivity(this, WaterMarkActivity2::class.java)
         }
+    }
+
+    private var mContentRootView: RelativeLayout? = null
+
+    private fun generateBitmap() {
+
+        val bitmap = Bitmap.createBitmap(mContentRootView!!.getWidth(),
+                mContentRootView!!.getHeight(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        mContentRootView!!.draw(canvas)
+
+        val iamgePath = FileUtils.saveBitmapToLocal(bitmap, this)
+//        val intent = Intent(this, DisplayActivity::class.java)
+        intent.putExtra("image", iamgePath)
+        startActivity(intent)
     }
 
 }
