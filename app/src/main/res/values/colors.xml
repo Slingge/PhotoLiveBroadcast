@@ -100,4 +100,5 @@
     <color name="grey_ecebf1">#ecebf1</color>
     <color name="grey_dedde1">#dedde1</color>
     <color name="grey_e4e4e4">#e4e4e4</color>
+    <color name="black_alpha_95">#f3000000</color>
 </resources>
