@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import com.google.gson.Gson
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
@@ -14,9 +15,11 @@ import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.establish.SginModel
 import com.photolivebroadcast.ui.mine.result.EditUserHttp
 import com.photolivebroadcast.ui.mine.result.UpHeaderPhoto
 import com.photolivebroadcast.util.ImageFileUtil
+import com.photolivebroadcast.util.SharedPreferencesUtil
 import com.photolivebroadcast.util.StatickUtil
 import kotlinx.android.synthetic.main.activity_personal_info.*
 import kotlinx.android.synthetic.main.include_basetop.*
@@ -90,6 +93,15 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
                     list.add(headerPath)
                     UpHeaderPhoto.upPhoto(list, object : UpHeaderPhoto.UpPhotoCallBack {
                         override fun upHeaderUrl(url: String) {
+                            SharedPreferencesUtil.putSharePre(this@PersonalInfoActivity, "headerUrl", url)
+                            StatickUtil.sex = sex
+                            StatickUtil.userModel.nickname = name
+                            StatickUtil.userModel.sex = sex
+                            StatickUtil.userModel.imgurl=headerUrl
+                            val userStr = SharedPreferencesUtil.getSharePreStr(this@PersonalInfoActivity, "model")
+                            if (!TextUtils.isEmpty(userStr)) {
+                                StatickUtil.userModel = Gson().fromJson(userStr, SginModel::class.java).data
+                            }
                             StatickUtil.headerUrl = url
                             EditUser(name, sex)
                         }

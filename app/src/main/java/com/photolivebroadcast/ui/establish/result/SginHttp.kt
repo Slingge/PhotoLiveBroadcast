@@ -30,13 +30,15 @@ object SginHttp {
                         val model = Gson().fromJson(response, SginModel::class.java)
                         if (model.code == 200) {
                             StatickUtil.uid = model.data.id
-                            StatickUtil.sex=model.data.sex
-                            StatickUtil.headerUrl=model.data.imgurl
+                            StatickUtil.sex = model.data.sex
+                            StatickUtil.headerUrl = model.data.imgurl
 
-                            StatickUtil.userModel=model.data
+                            StatickUtil.userModel = model.data
 
                             SharedPreferencesUtil.putSharePre(context, "uid", model.data.id)
                             SharedPreferencesUtil.putSharePre(context, "phone", model.data.phone)
+                            SharedPreferencesUtil.putSharePre(context, "headerUrl", model.data.imgurl)
+                            SharedPreferencesUtil.putSharePre(context, "modek", Gson().toJson(model))
 
                             abLog.e("登录......", response)
                             ToastUtil.showToast("登录成功")

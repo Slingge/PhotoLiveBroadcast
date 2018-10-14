@@ -57,7 +57,7 @@
 
 
             <ImageView
-                android:id="@+id/iv_Sex"
+                android:id="@+id/iv_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -81,6 +81,7 @@
                 android:text="是否认证"
                 android:textColor="@color/white"
                 android:textSize="11sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_Sex"
                 app:layout_constraintStart_toEndOf="@+id/iv_Sex"
                 app:layout_constraintTop_toTopOf="@+id/iv_Sex" />
@@ -102,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="视频直播"
+                android:text=" "
                 android:textColor="#8C8C8C"
                 android:textSize="@dimen/sub_fant"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_header"
@@ -124,12 +125,18 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintTop_toBottomOf="@+id/view_bg"
-                android:layout_height="wrap_content" />
+                app:layout_constraintTop_toBottomOf="@+id/view_bg" />
 
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/view_bg" />
         </android.support.constraint.ConstraintLayout>
 
 

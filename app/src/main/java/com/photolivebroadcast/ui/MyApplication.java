@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.lixin.amuseadjacent.app.util.abLog;
+import com.photolivebroadcast.ui.establish.SginModel;
 import com.photolivebroadcast.util.ImageLoaderUtil;
 import com.photolivebroadcast.util.SharedPreferencesUtil;
 import com.photolivebroadcast.util.StatickUtil;
@@ -62,6 +65,12 @@ public class MyApplication extends MultiDexApplication {
 
         StatickUtil.INSTANCE.setUid(SharedPreferencesUtil.getSharePreStr(CONTEXT, "uid"));
         StatickUtil.INSTANCE.setPass(SharedPreferencesUtil.getSharePreStr(CONTEXT, "phone"));
+        StatickUtil.INSTANCE.setHeaderUrl(SharedPreferencesUtil.getSharePreStr(CONTEXT, "headerUrl"));
+        String userStr = SharedPreferencesUtil.getSharePreStr(CONTEXT, "model");
+        if (!TextUtils.isEmpty(userStr)) {
+            StatickUtil.INSTANCE.setUserModel(new Gson().fromJson(userStr, SginModel.class).getData());
+        }
+
 
         abLog.INSTANCE.setE(true);
         CrashHandler catchExcep = new CrashHandler(this);

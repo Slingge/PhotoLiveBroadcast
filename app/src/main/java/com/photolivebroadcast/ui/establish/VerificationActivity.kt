@@ -71,7 +71,6 @@ class VerificationActivity : BaseActivity() {
                 override fun send() {
                     AppManager.finishAllActivity()
                     MyApplication.openActivity(this@VerificationActivity, MainActivity::class.java)
-                    SharePreferencesTools.saveObjectToSharePreferences(this@VerificationActivity,LoginConstant.LOGIN_TAG_FILE_NAME,LoginConstant.LOGIN_TAG_FILE_KEY,SmartEncryTools.encodeMD5String(phone+Vcode+System.currentTimeMillis()))
                 }
             })
         }

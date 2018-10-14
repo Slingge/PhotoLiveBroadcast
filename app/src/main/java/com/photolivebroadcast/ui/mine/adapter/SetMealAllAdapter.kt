@@ -24,6 +24,7 @@ import com.photolivebroadcast.ui.mine.model.OrderNumModel
 import com.photolivebroadcast.ui.mine.model.SetMealaAllModel
 import com.photolivebroadcast.ui.mine.pop.PopPay
 import com.photolivebroadcast.ui.photoLive.model.WXpayBean
+import com.photolivebroadcast.util.StatickUtil
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.zhy.http.okhttp.OkHttpUtils
@@ -44,7 +45,6 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
     }
 
     override fun getItemCount(): Int {
-        ToastUtil.showToast(setMealList.size.toString())
         return setMealList.size
     }
 
@@ -65,22 +65,22 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
             // 将该app注册到微信
             msgApi.registerApp("wx0d0b4d8b589ef4e6")
             OkHttpUtils.post().url("http://112.74.169.87/videoCloud/tc/ajaxtoinorder")
-                    .addParams("userid", "" + setMealList!!.get(position).userid)
+                    .addParams("userid", "" + StatickUtil.uid)
                     .addParams("tid", "" + setMealList!!.get(position).id)
                     .build().execute(object : StrCallback() {
-                override fun onResponse(response: String, id: Int) {
-                    super.onResponse(response, id)
-                    val gson = Gson()
-                    val model = gson!!.fromJson(response, OrderNumModel::class.java)
-                    if (model!!.code == 200) {
-                        orderId = ""+model!!.data.id
-                        popPay = PopPay(context, onclick)
-                        popPay!!.showAtLocation(holder!!.tv_pay5, Gravity.BOTTOM, 0, 0)
-                    } else {
+                        override fun onResponse(response: String, id: Int) {
+                            super.onResponse(response, id)
+                            val gson = Gson()
+                            val model = gson!!.fromJson(response, OrderNumModel::class.java)
+                            if (model!!.code == 200) {
+                                orderId = "" + model!!.data.id
+                                popPay = PopPay(context, onclick)
+                                popPay!!.showAtLocation(holder!!.tv_pay5, Gravity.BOTTOM, 0, 0)
+                            } else {
 
-                    }
-                }
-            })
+                            }
+                        }
+                    })
         }
     }
 
@@ -107,14 +107,14 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
         ProgressDialog.showDialog(context)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/alipay/appPayRequest")
                 .addParams("orderid", orderId).build().execute(object : StrCallback() {
-            override fun onResponse(response: String, id: Int) {
-                super.onResponse(response, id)
-                orderInfo = response
-                // 必须异步调用
-                val payThread = Thread(payRunnable)
-                payThread.start()
-            }
-        })
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        orderInfo = response
+                        // 必须异步调用
+                        val payThread = Thread(payRunnable)
+                        payThread.start()
+                    }
+                })
     }
 
     internal var orderInfo = ""   // 订单信息
@@ -152,29 +152,29 @@ class SetMealAllAdapter(val context: Activity, val setMealList: ArrayList<SetMea
         ProgressDialog.showDialog(context)
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/tc/wxPrePay")
                 .addParams("orderid", "" + orderId).build().execute(object : StrCallback() {
-            override fun onError(call: Call, e: Exception, id: Int) {
-                super.onError(call, e, id)
-            }
+                    override fun onError(call: Call, e: Exception, id: Int) {
+                        super.onError(call, e, id)
+                    }
 
-            override fun onResponse(response: String, id: Int) {
-                super.onResponse(response, id)
-                val gson = Gson()
-                val bean = gson.fromJson(response, WXpayBean::class.java)
-                if (bean!!.code.equals("200")) {
-                    val request = PayReq()
-                    request.appId = bean!!.msg.appid
-                    request.partnerId = bean!!.msg.partnerid
-                    request.prepayId = bean!!.msg.prepayid
-                    request.packageValue = bean!!.msg.packageX
-                    request.nonceStr = bean!!.msg.noncestr
-                    request.timeStamp = bean!!.msg.timestamp
-                    request.sign = bean!!.msg.sign
-                    msgApi.sendReq(request)
-                } else {
-                    ToastUtil.showToast("请求失败")
-                }
-            }
-        })
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val gson = Gson()
+                        val bean = gson.fromJson(response, WXpayBean::class.java)
+                        if (bean!!.code.equals("200")) {
+                            val request = PayReq()
+                            request.appId = bean!!.msg.appid
+                            request.partnerId = bean!!.msg.partnerid
+                            request.prepayId = bean!!.msg.prepayid
+                            request.packageValue = bean!!.msg.packageX
+                            request.nonceStr = bean!!.msg.noncestr
+                            request.timeStamp = bean!!.msg.timestamp
+                            request.sign = bean!!.msg.sign
+                            msgApi.sendReq(request)
+                        } else {
+                            ToastUtil.showToast("请求失败")
+                        }
+                    }
+                })
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

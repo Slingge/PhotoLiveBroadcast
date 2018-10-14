@@ -32,10 +32,10 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sginin)
-        val loginKey = SharePreferencesTools.readObjectFromSharePreferences(this@SginInActivity,LoginConstant.LOGIN_TAG_FILE_NAME,LoginConstant.LOGIN_TAG_FILE_KEY)
-        if(loginKey!=null){
+        if (!TextUtils.isEmpty(StatickUtil.uid)) {
             AppManager.finishAllActivity()
             MyApplication.openActivity(this@SginInActivity, MainActivity::class.java)
+            return
         }
         init()
     }
@@ -80,7 +80,7 @@ class SginInActivity : BaseActivity(), View.OnClickListener {
 
                 ProgressDialog.showDialog(this)
                 SendMSMrHttp.regist(phone, "", object : SendMSMrHttp.SendMsmCallBack {
-                    override fun send(code:String) {
+                    override fun send(code: String) {
                         val bundle = Bundle()
                         bundle.putString("code", code)
                         bundle.putString("phone", phone)

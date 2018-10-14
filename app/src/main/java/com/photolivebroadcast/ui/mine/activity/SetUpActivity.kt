@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.View
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
+import com.photolivebroadcast.constant.LoginConstant
 import com.photolivebroadcast.ui.MyApplication
+import com.photolivebroadcast.ui.establish.SginInActivity
+import com.photolivebroadcast.util.*
 import kotlinx.android.synthetic.main.activity_setup.*
 
 /**
@@ -25,6 +28,7 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
         StatusBarWhiteColor()
         tv_anout.setOnClickListener(this)
         tv_updata.setOnClickListener(this)
+        tv_sginout.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -34,6 +38,12 @@ class SetUpActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.tv_anout -> {
                 MyApplication.openActivity(this, AboutActivity::class.java)
+            }
+            R.id.tv_sginout -> {
+                SharedPreferencesUtil.putSharePre(this, "uid", "")
+                StatickUtil.uid = ""
+                AppManager.finishAllActivity()
+                MyApplication.openActivity(this, SginInActivity::class.java)
             }
         }
     }

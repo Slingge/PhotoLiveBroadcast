@@ -1,6 +1,7 @@
 package com.photolivebroadcast.ui.mine.result
 
 import com.google.gson.Gson
+import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.ui.mine.model.SetMealaAllModel
@@ -33,7 +34,8 @@ object SetMealHttp {
 
 
     fun myMeal() {
-        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/user/user/ajaxlistmymenus")
+        abLog.e("uid",StatickUtil.uid)
+        OkHttpUtils.post().url("http://www.suxianglive.com/videoCloud/user/user/ajaxlistmymenus")
                 .addParams("userid", StatickUtil.uid)
                 .build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
@@ -43,7 +45,6 @@ object SetMealHttp {
                             if (model.data != null) {
                                 EventBus.getDefault().post(model.data.listbuys)
                             }
-
                         } else {
                             ToastUtil.showToast(model.msg)
                         }

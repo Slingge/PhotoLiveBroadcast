@@ -65,8 +65,10 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         }
         if (StatickUtil.sex == "男") {
             iv_sex.setImageResource(R.drawable.ic_boy)
+            iv_sex.setBackgroundColor(resources.getColor(R.color.boy))
         } else {
             iv_sex.setImageResource(R.drawable.ic_girl)
+            iv_sex.setBackgroundColor(resources.getColor(R.color.girl))
         }
 
     }
@@ -89,6 +91,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 MyApplication.openActivity(activity!!, MyAccountActivity::class.java)
             }
             R.id.tv_send -> {//我发出的
+                return
                 MyApplication.openActivity(activity!!, MySendActivity::class.java)
             }
             R.id.tv_setmeal -> {//我的套餐
