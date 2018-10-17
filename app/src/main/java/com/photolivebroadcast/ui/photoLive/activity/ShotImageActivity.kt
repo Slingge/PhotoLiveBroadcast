@@ -176,7 +176,6 @@ class ShotImageActivity : BaseActivity(), View.OnClickListener, DatePop.WheelVie
         } else {
             tv_end_time.text = "$position1-$position2-$position3"
         }
-
     }
 
     override fun onDestroy() {

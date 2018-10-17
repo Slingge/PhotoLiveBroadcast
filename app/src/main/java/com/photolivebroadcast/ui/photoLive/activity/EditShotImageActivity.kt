@@ -2,6 +2,7 @@ package com.photolivebroadcast.ui.photoLive.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
@@ -34,9 +35,11 @@ class EditShotImageActivity : BaseActivity() {
         } else if (flag == 1) {
             inittitle("详情")
             et_title.hint = "详情"
+            et_title.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(500))
         } else if (flag == 2) {
             inittitle("流程")
             et_title.hint = "流程"
+            et_title.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(500))
         } else if (flag == 3) {
             inittitle("公众号")
             et_title.hint = "公众号"

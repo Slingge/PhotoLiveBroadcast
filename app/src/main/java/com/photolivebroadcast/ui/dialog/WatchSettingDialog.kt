@@ -1,10 +1,9 @@
 package com.photolivebroadcast.ui.dialog
 
 import android.app.Activity
+import android.renderscript.ScriptGroup
 import android.support.v7.app.AlertDialog
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -15,6 +14,7 @@ import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
 import com.photolivebroadcast.util.AbStrUtil
+import com.photolivebroadcast.util.CashierInputFilter
 import com.photolivebroadcast.util.StatickUtil
 import com.umeng.socialize.utils.DeviceConfig.context
 import com.zhy.http.okhttp.OkHttpUtils
@@ -28,7 +28,13 @@ object WatchSettingDialog {
 
     private var builder: AlertDialog? = null
 
-    fun dialogEducation(context: Activity, type: String, pId: String) {
+    interface WatchCallBack {
+        fun watch(code: String)
+    }
+
+
+
+    fun dialogEducation(context: Activity, type: String, pId: String, watchCallBack: WatchCallBack) {
         if (builder == null) {
             builder = AlertDialog.Builder(context, R.style.Dialog).create() // 先得到构造器
         }
@@ -42,8 +48,14 @@ object WatchSettingDialog {
 
         val tvTitle = view.findViewById<TextView>(R.id.title)
 
-        if (type.equals("1")) {
+        if (type == "1") {
             tvTitle!!.text = "请输入收费价格"
+            val filter = arrayOf<InputFilter>(CashierInputFilter())
+            et_invitation.filters = filter
+            et_invitation.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_CLASS_NUMBER
+        }
+        if (type == "-1") {//输入视频观看地址
+            tvTitle!!.text = "视频观看地址"
         } else {
             tvTitle!!.text = "请输入密码"
         }
@@ -53,12 +65,14 @@ object WatchSettingDialog {
             if (TextUtils.isEmpty(code)) {
                 return@setOnClickListener
             }
-            ProgressDialog.showDialog(context)
-            if (type!!.equals("1")) {
-                ParticipateUploading(code, "收费观看", pId)
-            } else {
-                ParticipateUploading(code, "密码观看", pId)
-            }
+            watchCallBack.watch(code)
+            builder!!.dismiss()
+            /* ProgressDialog.showDialog(context)
+             if (type == "1") {
+                 ParticipateUploading(code, "收费观看", pId)
+             } else {
+                 ParticipateUploading(code, "密码观看", pId)
+             }*/
         }
 
 
@@ -122,17 +136,17 @@ object WatchSettingDialog {
                 .addParams("looktype", type)
                 .addParams(lookKey, incode)
                 .build().execute(object : StrCallback() {
-            override fun onResponse(response: String, id: Int) {
-                super.onResponse(response, id)
-                val obj = JSONObject(response)
-                if (obj.getInt("code") == 200) {
-                    ToastUtil.showToast("设置成功")
-                    dismiss()
-                } else {
-                    ToastUtil.showToast(obj.getString("msg"))
-                }
-            }
-        })
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val obj = JSONObject(response)
+                        if (obj.getInt("code") == 200) {
+                            ToastUtil.showToast("设置成功")
+                            dismiss()
+                        } else {
+                            ToastUtil.showToast(obj.getString("msg"))
+                        }
+                    }
+                })
     }
 
 

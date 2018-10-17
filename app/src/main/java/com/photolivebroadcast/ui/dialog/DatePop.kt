@@ -12,8 +12,7 @@ import com.photolivebroadcast.R
 import com.photolivebroadcast.util.GetDateTimeUtil
 
 import com.weigan.loopview.LoopView
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * 选择日期
@@ -25,6 +24,10 @@ class DatePop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Pop
     internal var position = 0
     internal var position2 = 0
     internal var position3 = 0
+
+    private var month = 0//当前月份
+    private var day = 0//当天
+    private var year = 0//当天
 
     private val yearList = ArrayList<String>()
     private val monthList = ArrayList<String>()
@@ -46,9 +49,9 @@ class DatePop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Pop
         loopview2.setTextSize(16f)
         loopview3.setTextSize(16f)
 
-        v.findViewById<View>(R.id.year).visibility=View.VISIBLE
-        v.findViewById<View>(R.id.month).visibility=View.VISIBLE
-        v.findViewById<View>(R.id.day).visibility=View.VISIBLE
+        v.findViewById<View>(R.id.year).visibility = View.VISIBLE
+        v.findViewById<View>(R.id.month).visibility = View.VISIBLE
+        v.findViewById<View>(R.id.day).visibility = View.VISIBLE
 
 
         //设置是否循环播放
@@ -57,23 +60,30 @@ class DatePop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Pop
         //设置原始数据
 
         if (yearList.isEmpty()) {
+            val c = Calendar.getInstance()
+            year = c.get(Calendar.YEAR)// 获取当前年份
+            month = c.get(Calendar.MONTH) + 1// 获取当前月份
+            day = c.get(Calendar.DAY_OF_MONTH)
+
             getYear()
             getMonth()
-            getDay("2018", "1")
+            getDay(year.toString(), month.toString())
         }
 
-//        loopview.setNotLoop()
+        loopview.setNotLoop()
         loopview.setItems(yearList)
-        loopview.setInitPosition(yearList.size - 1)
+        loopview.setCurrentPosition(0)
 
         loopview2.setNotLoop()
         loopview2.setItems(monthList)
-        loopview2.setInitPosition(0)
+        position2 = month - 1
+        loopview2.setCurrentPosition(position2)
 
         loopview3.setNotLoop()
         loopview3.setItems(dayList)
-        loopview3.setInitPosition(0)
-        wheelViewCallBack.position(yearList[0], monthList[0], dayList[0])
+        position3 = day - 1
+        loopview3.setCurrentPosition(position3)
+        wheelViewCallBack.position(yearList[0], monthList[month - 1], dayList[day - 1])
 
         loopview.setListener { index ->
             position = index
@@ -127,7 +137,7 @@ class DatePop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Pop
 
     private fun getYear() {
         yearList.clear()
-        for (i in 1900..2018) {
+        for (i in year..year + 1) {
             yearList.add(i.toString())
         }
     }

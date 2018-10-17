@@ -21,34 +21,35 @@ object SeeTypeHttp {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxgetlooktype")
                 .addParams("pid", pid)
                 .build().execute(object : StrCallback() {
-            override fun onResponse(response: String, id: Int) {
-                super.onResponse(response, id)
-                val obj = JSONObject(response)
-                if (obj.getInt("code") == 200) {
-                    val data = JSONObject(obj.getString("data"))
-                    seeTypeCallBack.seeType(data.getString("photolook"))
-                } else {
-                    ToastUtil.showToast(obj.getString("msg"))
-                }
-            }
-        })
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val obj = JSONObject(response)
+                        if (obj.getInt("code") == 200) {
+                            val data = JSONObject(obj.getString("data"))
+                            seeTypeCallBack.seeType(data.getString("photolook"))
+                        } else {
+                            ToastUtil.showToast(obj.getString("msg"))
+                        }
+                    }
+                })
     }
 
-    fun seeTypeUpdate(context: Activity, pid: String) {
+    fun seeTypeUpdate(context: Activity, pid: String, looktype: String, lookprice: String, lookcode: String) {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxsavelooktype")
-                .addParams("pid", pid)
+                .addParams("pid", pid).addParams("looktype", looktype)
+                .addParams("lookprice", lookprice) .addParams("lookcode", lookcode)
                 .build().execute(object : StrCallback() {
-            override fun onResponse(response: String, id: Int) {
-                super.onResponse(response, id)
-                val obj = JSONObject(response)
-                if (obj.getInt("code") == 200) {
-                    context.finish()
-                    ToastUtil.showToast("修改成功")
-                } else {
-                    ToastUtil.showToast(obj.getString("msg"))
-                }
-            }
-        })
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val obj = JSONObject(response)
+                        if (obj.getInt("code") == 200) {
+                            context.finish()
+                            ToastUtil.showToast("修改成功")
+                        } else {
+                            ToastUtil.showToast(obj.getString("msg"))
+                        }
+                    }
+                })
 
     }
 

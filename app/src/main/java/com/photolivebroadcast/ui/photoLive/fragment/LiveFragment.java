@@ -1,5 +1,6 @@
 package com.photolivebroadcast.ui.photoLive.fragment;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,15 +15,19 @@ import android.widget.TextView;
 import com.example.xrecyclerview.XRecyclerView;
 import com.lixin.amuseadjacent.app.ui.base.BaseFragment;
 import com.photolivebroadcast.R;
+import com.photolivebroadcast.ui.MyApplication;
 import com.photolivebroadcast.ui.dialog.ProgressDialog;
+import com.photolivebroadcast.ui.dialog.WatchSettingDialog;
 import com.photolivebroadcast.ui.mine.model.MySendModel;
 import com.photolivebroadcast.ui.mine.result.MySendHttp;
+import com.photolivebroadcast.ui.photoLive.activity.WebViewActivity;
 import com.photolivebroadcast.ui.photoLive.adapter.HomePhotoAdapter;
 import com.photolivebroadcast.util.StatusBarBlackWordUtil;
 import com.photolivebroadcast.util.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -100,7 +105,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         ivMessage = (ImageView) view.findViewById(R.id.iv_message);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
 
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             ProgressDialog.INSTANCE.showDialog(getActivity());
             MySendHttp.INSTANCE.mySend();
         }
@@ -113,8 +118,9 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
     private void initEvent() {
         ivMessage.setOnClickListener(this);
         tvPhoto.setOnClickListener(this);
-//        tvVideo.setOnClickListener(this);
+        tvVideo.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
+
     }
 
     @Override
@@ -137,10 +143,17 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()) {
             //视频直播
             case R.id.tv_video:
-                tvVideo.setTextColor(getResources().getColor(R.color.white));
+              /*  tvVideo.setTextColor(getResources().getColor(R.color.white));
                 tvVideo.setBackgroundResource(R.drawable.bg_them6);
                 tvPhoto.setTextColor(getResources().getColor(R.color.tv_home));
-                tvPhoto.setBackgroundResource(R.drawable.bg_white7);
+                tvPhoto.setBackgroundResource(R.drawable.bg_white7);*/
+
+                WatchSettingDialog.INSTANCE.dialogEducation(getActivity(), "-1", "", code -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", code);
+                    MyApplication.openActivity(getActivity(), WebViewActivity.class ,bundle);
+                });
+
                 break;
             //照片直播
             case R.id.tv_photo:
@@ -155,6 +168,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
             //消息
             case R.id.iv_message:
                 break;
+
         }
     }
 
