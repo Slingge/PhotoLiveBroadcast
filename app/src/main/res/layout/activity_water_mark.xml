@@ -19,12 +19,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_img"
+            <RelativeLayout
+                android:id="@+id/rel_img"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg032" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg032" />
+
+                <include
+                    layout="@layout/content_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_centerInParent="true" />
+
+            </RelativeLayout>
 
 
             <View
@@ -32,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="83dp"
                 android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+                app:layout_constraintTop_toBottomOf="@+id/rel_img" />
 
             <ImageView
                 android:id="@+id/iv_add"
@@ -42,7 +55,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/icon_shangchuanshuiyin"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+                app:layout_constraintTop_toBottomOf="@+id/rel_img" />
 
             <ImageView
                 android:id="@+id/iv_eshi"
@@ -54,7 +67,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/cesdhi"
                 app:layout_constraintStart_toEndOf="@+id/iv_add"
-                app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+                app:layout_constraintTop_toBottomOf="@+id/rel_img" />
 
 
             <TextView
@@ -94,6 +107,5 @@
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
-    <include layout="@layout/content_main" />
 
 </LinearLayout>

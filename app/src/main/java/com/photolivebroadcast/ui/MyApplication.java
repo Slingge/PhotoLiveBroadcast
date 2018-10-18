@@ -73,8 +73,8 @@ public class MyApplication extends MultiDexApplication {
 
 
         abLog.INSTANCE.setE(true);
-        CrashHandler catchExcep = new CrashHandler(this);
-        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
+//        CrashHandler catchExcep = new CrashHandler(this);
+//        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
 
         ImageLoaderUtil.configImageLoader(CONTEXT);
         com.nostra13.universalimageloader.utils.L.disableLogging();
