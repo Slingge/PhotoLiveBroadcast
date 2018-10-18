@@ -13,13 +13,11 @@ import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.photolivebroadcast.R
-import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
-import com.photolivebroadcast.util.FileUtils
+import com.photolivebroadcast.util.FileUtilsFeng
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.view.BubbleTextView
 import com.photolivebroadcast.view.StickerView
-import kotlinx.android.synthetic.main.activity_personal_info.*
 import kotlinx.android.synthetic.main.include_basetop.*
 import java.util.ArrayList
 
@@ -118,7 +116,7 @@ class WaterMarkActivity : BaseActivity() {
         val canvas = Canvas(bitmap)
         mContentRootView!!.draw(canvas)
 
-        val iamgePath = FileUtils.saveBitmapToLocal(bitmap, this)
+        val iamgePath = FileUtilsFeng.saveBitmapToLocal(bitmap, this)
         val intent = Intent(this, WaterMarkActivity2::class.java)
         intent.putExtra("image", "" + iamgePath)
         startActivity(intent)

@@ -15,9 +15,9 @@ import java.io.IOException;
  * Email nimengbo@gmail.com
  * github https://github.com/nimengbo
  */
-public class FileUtils {
+public class FileUtilsFeng {
 
-    private static FileUtils instance = null;
+    private static FileUtilsFeng instance = null;
 
     private static Context mContext;
 
@@ -25,12 +25,12 @@ public class FileUtils {
 
     private static final String TEMP_DIR = "Abner/.TEMP";
 
-    public static FileUtils getInstance(Context context) {
+    public static FileUtilsFeng getInstance(Context context) {
         if (instance == null) {
-            synchronized (FileUtils.class) {
+            synchronized (FileUtilsFeng.class) {
                 if (instance == null) {
                     mContext = context.getApplicationContext();
-                    instance = new FileUtils();
+                    instance = new FileUtilsFeng();
                 }
             }
         }
@@ -46,7 +46,7 @@ public class FileUtils {
     public static String saveBitmapToLocal(Bitmap bm, Context context) {
         String path = null;
         try {
-            File file = FileUtils.getInstance(context).createTempFile("IMG_", ".jpg");
+            File file = FileUtilsFeng.getInstance(context).createTempFile("IMG_", ".jpg");
             FileOutputStream fos = new FileOutputStream(file);
             bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
@@ -117,7 +117,7 @@ public class FileUtils {
         }
     }
 
-    private FileUtils() {
+    private FileUtilsFeng() {
         // 创建应用内容目录
         if (isSDCanWrite()) {
             creatSDDir(APP_DIR);

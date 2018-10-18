@@ -2,7 +2,9 @@ package com.photolivebroadcast.ui.photoLive.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.hardware.usb.UsbManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -17,8 +19,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.google.gson.Gson
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
+import com.lixin.amuseadjacent.app.util.abLog
+import com.luck.picture.lib.PictureSelector
+import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.constant.USBReceiverConstant.READ_USB_DEVICE_PERMISSION
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
@@ -29,11 +35,13 @@ import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.Constant
 import com.photolivebroadcast.ui.photoLive.mtp.MTPService
 import com.photolivebroadcast.ui.photoLive.mtp.PicInfo
+import com.photolivebroadcast.ui.photoLive.mtp.USBMTPReceiver
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.util.PermissionUtil
 import com.photolivebroadcast.util.RecyclerItemTouchListener
 import kotlinx.android.synthetic.main.activity_phone_album.*
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.activity_personal_info.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.File
@@ -49,7 +57,10 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     private var phoneList = ArrayList<UpAlbunmModel>()
     private var linearLayoutManager: LinearLayoutManager? = null
 
-    private var mService: MTPService? = null
+//    private var mService: MTPService? = null
+
+    //USB MTP 设备监控广播
+    private var usbmtpReceiver: USBMTPReceiver? = null;
 
     private var upSuccessNum = 0//上传成功数量
     private var upfailNum = 0//上传失败数量
@@ -69,6 +80,11 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_phone_album)
+        //注册USB设备广播
+        registerUSBReceiver()
+
+        sendUSBBroadcast()
+
         EventBus.getDefault().register(this)
         init()
     }
@@ -103,7 +119,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
             }
         }
 
-        mService = MTPService(this)
+//        mService = MTPService(this)
 
         ProgressDialog.showDialog(this)
         AlbumsClassificationHttp.Classification2(pid, object : AlbumsClassificationHttp.ClassificationCallBack {
@@ -113,7 +129,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                     strList1.add(model.data[i].menu_name)
                 }
                 classificationList = model.data
-                if(classificationList==null||classificationList.size==0){
+                if (classificationList == null || classificationList.size == 0) {
                     return
                 }
                 val spinnerAdapter = ArrayAdapter<String>(this@CloudSeedingActivity,
@@ -173,7 +189,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         tv_deviceName.text = Constant.usbDeviceName
         bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(list[0].getmThumbnailPath()))
         for (i in 0 until list.size) {
-            var thumpPicPath=list[i].getmThumbnailPath();
+            var thumpPicPath = list[i].getmThumbnailPath();
 //            // 指定拍照意图
 //            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //            // 加载路径图片路径
@@ -241,14 +257,15 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tv_adopt -> {
-                if (phoneList.isEmpty()) {
-                    return
-                }
-                phoneList[adoptNum].isAdopt = 0
-                phoneAlbumAdapter!!.notifyDataSetChanged()
-                adoptNum++
-                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
-                linearLayoutManager!!.stackFromEnd = true
+//                if (phoneList.isEmpty()) {
+//                    return
+//                }
+//                phoneList[adoptNum].isAdopt = 0
+//                phoneAlbumAdapter!!.notifyDataSetChanged()
+//                adoptNum++
+//                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
+//                linearLayoutManager!!.stackFromEnd = true
+                SelectPictureUtil.selectPictureHide(this, 9, 0, false)
             }
             R.id.tv_through -> {
                 if (phoneList.isEmpty()) {
@@ -270,7 +287,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && requestCode == 0) {//询问结果
-            mService = MTPService(this)
+//            mService = MTPService(this)
         } else {//禁止使用权限，询问是否设置允许
             PermissionsDialog.dialog(this, "需要访问内存卡权限")
         }
@@ -279,9 +296,52 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
     override fun onDestroy() {
         super.onDestroy()
-        mService!!.close()
+//        mService!!.close()
         EventBus.getDefault().unregister(this)
+        if (usbmtpReceiver != null) {
+            //取消注册USB设备广播
+            unregisterReceiver(usbmtpReceiver)
+        }
     }
 
+    //发送USB广播
+    private fun sendUSBBroadcast() {
+        //发送广播
+        val intent = Intent(READ_USB_DEVICE_PERMISSION)
+        //发送标准广播
+        sendBroadcast(intent)
+    }
+
+    /*****
+     * 动态注册USB 设备监听
+     */
+    private fun registerUSBReceiver() {
+        val intentFilter = IntentFilter()
+        //自定义USB设备读取照片
+        intentFilter.addAction(READ_USB_DEVICE_PERMISSION)
+        //USB连接状态发生变化时产生的广播
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
+        val usbmtpReceiver = USBMTPReceiver()
+        registerReceiver(usbmtpReceiver, intentFilter)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) {
+            return
+        }
+        if (requestCode == 0) {
+            // 图片、视频、音频选择结果回调
+            for (i in 0 until PictureSelector.obtainMultipleResult(data).size) {
+                val album = UpAlbunmModel((PictureSelector.obtainMultipleResult(data)[i].path), -1)
+                phoneList.add(album)
+            }
+            phoneAlbumAdapter!!.notifyDataSetChanged()
+            val message = Message()
+            message.what = 0
+            hander.sendMessage(message)
+        }
+    }
 
 }

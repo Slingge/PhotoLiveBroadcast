@@ -18,8 +18,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +179,7 @@ public class MTPService {
                                             .append(".jpg");
                                     File fileJpg = new File(filePath.toString());
                                     if (!fileJpg.exists() && bytes != null)
-                                        FileUtils.bytes2File(bytes, filePath.toString());
+                                        FileUtilsOld.bytes2File(bytes, filePath.toString());
 
                                     PicInfo info = new PicInfo();
                                     info.setObjectHandler(objectHandle);

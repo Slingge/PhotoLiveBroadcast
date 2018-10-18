@@ -23,6 +23,8 @@
     <!-- the access as below only for system app -->
     <!--<uses-permission android:name="android.permission.READ_LOGS" />-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 部分手机上是没有otg的所以需要加入特性-->
+    <uses-feature android:name="android.hardware.usb.host" android:required="true" />
 
     <application
         android:name=".ui.MyApplication"
