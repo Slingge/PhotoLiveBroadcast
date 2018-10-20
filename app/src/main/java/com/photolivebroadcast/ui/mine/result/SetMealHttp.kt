@@ -35,7 +35,7 @@ object SetMealHttp {
 
     fun myMeal() {
         abLog.e("uid",StatickUtil.uid)
-        OkHttpUtils.post().url("http://www.suxianglive.com/videoCloud/user/user/ajaxlistmymenus")
+        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/user/user/ajaxlistmymenus")
                 .addParams("userid", StatickUtil.uid)
                 .build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {

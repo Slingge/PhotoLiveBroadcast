@@ -21,11 +21,18 @@ class SetMealaMyModel : Serializable {
 
     class listbuysModel : Serializable {
         var id = 0
-        var tcid = ""//
-        var userid = 0//
+        var tcid = -1//
+        var userid = ""//
 
-        var createtime =0//
-        var ordernumber = 0.0//
+        var tcname =""//
+
+        var createtime =""//
+        var total_money = 0.0//
+
+        var ordernumber =""//
+        var paytype =""//
+        var paystatus =""//
+
     }
 
 }

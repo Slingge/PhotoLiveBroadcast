@@ -19,7 +19,7 @@ class SetMealMyAdapter(val context: Context, val setMealList: ArrayList<SetMeala
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_setmeal, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_setmeal_my, parent, false)
         return ViewHolder(view)
     }
 
@@ -31,19 +31,19 @@ class SetMealMyAdapter(val context: Context, val setMealList: ArrayList<SetMeala
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model=setMealList[position]
 
+        holder.tv_album.text=model.tcname
+        holder.tv_date.text="创建时间："+model.createtime
 
 
-//        holder.tv_album5.text=model.remark
-//        holder.tv_money5.text="￥"+model.price
 
     }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image = view.findViewById<ImageView>(R.id.image)
-        val tv_album5 = view.findViewById<TextView>(R.id.tv_album5)
-        val tv_money5 = view.findViewById<TextView>(R.id.tv_money5)
-        val tv_pay5 = view.findViewById<TextView>(R.id.tv_pay5)
+        val tv_album = view.findViewById<TextView>(R.id.tv_album)
+        val tv_date = view.findViewById<TextView>(R.id.tv_date)
+        val tv_surplus = view.findViewById<TextView>(R.id.tv_surplus)
     }
 
 

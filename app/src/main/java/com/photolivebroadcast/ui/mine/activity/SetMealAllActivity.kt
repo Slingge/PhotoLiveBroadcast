@@ -60,6 +60,7 @@ class SetMealAllActivity : BaseActivity() {
         ProgressDialog.showDialog(this)
         SetMealHttp.SetMealAll()
         MappingServiceHttp.getServiceNum()
+
     }
 
 
@@ -72,7 +73,7 @@ class SetMealAllActivity : BaseActivity() {
 
     @Subscribe
     fun onEvent(model: ServiceNumModel) {
-        tv_livevideo.text = "修图次数：" + model.data.usenum + "/" + model.data.allnumber
+        tv_album.text = "相册数量：" + model.data.usenum + "/" + model.data.allnumber
     }
 
     override fun onDestroy() {

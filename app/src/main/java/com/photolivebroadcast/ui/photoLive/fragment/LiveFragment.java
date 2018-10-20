@@ -168,7 +168,6 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
             //消息
             case R.id.iv_message:
                 break;
-
         }
     }
 

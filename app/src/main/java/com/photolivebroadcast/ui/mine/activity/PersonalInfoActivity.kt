@@ -55,6 +55,9 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
         sex = StatickUtil.userModel.sex
         headerUrl = StatickUtil.userModel.imgurl
 
+        tv_name.text = name
+        tv_sex.text = sex
+
         ImageLoader.getInstance().displayImage(headerUrl, iv_header)
 
         iv_header.setOnClickListener(this)
@@ -97,7 +100,7 @@ class PersonalInfoActivity : BaseActivity(), View.OnClickListener {
                             StatickUtil.sex = sex
                             StatickUtil.userModel.nickname = name
                             StatickUtil.userModel.sex = sex
-                            StatickUtil.userModel.imgurl=headerUrl
+                            StatickUtil.userModel.imgurl = headerUrl
                             val userStr = SharedPreferencesUtil.getSharePreStr(this@PersonalInfoActivity, "model")
                             if (!TextUtils.isEmpty(userStr)) {
                                 StatickUtil.userModel = Gson().fromJson(userStr, SginModel::class.java).data

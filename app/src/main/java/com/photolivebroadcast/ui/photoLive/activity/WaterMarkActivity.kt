@@ -16,6 +16,7 @@ import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.util.FileUtilsFeng
 import com.photolivebroadcast.util.ImageFileUtil
+import com.photolivebroadcast.util.PermissionUtil
 import com.photolivebroadcast.view.BubbleTextView
 import com.photolivebroadcast.view.StickerView
 import kotlinx.android.synthetic.main.include_basetop.*
@@ -57,9 +58,11 @@ class WaterMarkActivity : BaseActivity() {
         }
         mViews = ArrayList()
         ivAdd = findViewById(R.id.iv_add)
-        ivAdd!!.setOnClickListener(View.OnClickListener {
-            SelectPictureUtil.selectPicture(this, 1, 0, true)
-        })
+        ivAdd!!.setOnClickListener {
+            if (PermissionUtil.ApplyPermissionAlbum(this, 0)) {
+                SelectPictureUtil.selectPicture(this, 1, 0, false)
+            }
+        }
     }
 
     //添加表情
@@ -128,7 +131,7 @@ class WaterMarkActivity : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED && requestCode == 0) {//询问结果
-            SelectPictureUtil.selectPicture(this, 1, 0, true)
+            SelectPictureUtil.selectPicture(this, 1, 0, false)
         } else {//禁止使用权限，询问是否设置允许
             PermissionsDialog.dialog(this, "需要访问内存卡和拍照权限")
         }
@@ -143,8 +146,8 @@ class WaterMarkActivity : BaseActivity() {
         }
         if (requestCode == 0) {
             // 图片、视频、音频选择结果回调
-            path = PictureSelector.obtainMultipleResult(data)[0].cutPath
-            val bitmap = ImageFileUtil.getBitmapFromPath(path)//压缩的路径
+            path = PictureSelector.obtainMultipleResult(data)[0].path
+            val bitmap = ImageFileUtil.getBitmapFromPath(PictureSelector.obtainMultipleResult(data)[0].compressPath)//压缩的路径
             addStickerView(bitmap)
         }
     }

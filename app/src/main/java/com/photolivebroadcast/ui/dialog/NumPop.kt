@@ -9,7 +9,6 @@ import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.photolivebroadcast.R
-import com.photolivebroadcast.util.GetDateTimeUtil
 
 import com.weigan.loopview.LoopView
 
@@ -20,15 +19,12 @@ import java.util.ArrayList
  * Created by Slingge on 2018/1/17 0017.
  */
 
-class NumPop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : PopupWindow(context) {
+class NumPop(context: Context, numList: ArrayList<String>, var wheelViewCallBack: WheelViewCallBack2) : PopupWindow(context) {
 
     internal var position = 0
 
-
-    private val numList = ArrayList<String>()
-
     interface WheelViewCallBack2 {
-        fun position(position1: String)
+        fun position(position1: Int)
     }
 
 
@@ -49,21 +45,17 @@ class NumPop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Popu
 
 
         //设置是否循环播放
-        loopview.setNotLoop();
+        loopview.setNotLoop()
         //滚动监听
         //设置原始数据
-
-        if (numList.isEmpty()) {
-            getYear()
-        }
 
         loopview.setItems(numList)
         loopview.setInitPosition(0)
 
-        wheelViewCallBack.position(numList[0])
+        wheelViewCallBack.position(0)
 
         loopview.setListener { index ->
-            wheelViewCallBack.position(numList[index])
+            wheelViewCallBack.position(index)
         }
 
 
@@ -84,16 +76,6 @@ class NumPop(context: Context, var wheelViewCallBack: WheelViewCallBack2) : Popu
         //		this.setOutsideTouchable(true);
         this.setBackgroundDrawable(BitmapDrawable())
         this.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-    }
-
-
-    private fun getYear() {
-        numList.clear()
-
-        numList.add("300以内")
-        numList.add("300-600")
-        numList.add("600-900")
-
     }
 
 

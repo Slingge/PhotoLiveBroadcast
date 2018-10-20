@@ -21,6 +21,8 @@ class SetMealMyActivity : BaseActivity() {
     private var setMealList = ArrayList<SetMealaMyModel.listbuysModel>()
     private var setMealAdapter: SetMealMyAdapter? = null
 
+    private var setMealList2 = ArrayList<SetMealaMyModel.listbuysModel>()//使用完毕
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setmeal_my)
@@ -44,6 +46,7 @@ class SetMealMyActivity : BaseActivity() {
 
     @Subscribe
     fun onEvent(list: ArrayList<SetMealaMyModel.listbuysModel>) {
+
         setMealList = list
         setMealAdapter = SetMealMyAdapter(this, setMealList)
         recyclerView.adapter = setMealAdapter

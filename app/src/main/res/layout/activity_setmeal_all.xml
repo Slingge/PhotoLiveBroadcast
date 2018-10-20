@@ -82,9 +82,9 @@
                 android:textColor="@color/white"
                 android:textSize="11sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_Sex"
-                app:layout_constraintStart_toEndOf="@+id/iv_Sex"
-                app:layout_constraintTop_toTopOf="@+id/iv_Sex" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_sex"
+                app:layout_constraintStart_toEndOf="@+id/iv_sex"
+                app:layout_constraintTop_toTopOf="@+id/iv_sex" />
 
             <TextView
                 android:id="@+id/tv_album"
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text=" "
+                android:text="视频直播：至"
                 android:textColor="#8C8C8C"
                 android:textSize="@dimen/sub_fant"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_header"
@@ -131,7 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/view_bg" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

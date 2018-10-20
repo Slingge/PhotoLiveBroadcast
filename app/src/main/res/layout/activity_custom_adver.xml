@@ -7,10 +7,40 @@
 
     <include layout="@layout/include_basetop" />
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="13dp"
+            android:text="自定义广告功能"
+            android:textColor="@color/black"
+            android:textSize="@dimen/main_fant" />
+
+
+        <ImageView
+            android:id="@+id/ic_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/icon_fun_close" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -23,6 +53,7 @@
             android:text="广告文字提示"
             android:textColor="@color/black"
             android:textSize="@dimen/main_fant" />
+
 
         <EditText
             android:id="@+id/et_title"
@@ -44,7 +75,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -97,57 +128,64 @@
                 android:drawableLeft="@drawable/tab_check"
                 android:drawablePadding="8dp"
                 android:padding="10dp"
-                android:text="拨打电话"
+                android:text="预约"
                 android:textColor="#999999"
                 android:textSize="15sp" />
         </RadioGroup>
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传跳转后展示的图片"
+            android:textColor="@color/colorTabText"
+            android:textSize="@dimen/sub_fant" />
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_below="@+id/tv_image"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_add" />
+
+    </RelativeLayout>
+
 
     <EditText
         android:id="@+id/et_link"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:gravity="top"
         android:hint="请输入跳转链接"
         android:padding="13dp"
         android:textColor="@color/tv_home"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="gone" />
 
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal"
-        android:paddingLeft="35dp"
-        android:paddingRight="35dp">
+        android:layout_margin="30dp"
+        android:background="@drawable/bg_them11"
+        android:text="新增分类"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_them11"
-            android:text="新增分类"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
-
-        <Button
-            android:id="@+id/btn_keep"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_blue12"
-            android:text="保存设置"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
-
-    </LinearLayout>
 
 </LinearLayout>

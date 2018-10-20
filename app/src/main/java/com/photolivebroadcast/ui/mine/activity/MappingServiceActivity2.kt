@@ -10,9 +10,12 @@ import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.dialog.DatePop
 import com.photolivebroadcast.ui.dialog.NumPop
 import com.photolivebroadcast.ui.dialog.ProgressDialog
+import com.photolivebroadcast.ui.mine.model.MappingServicePriceModel
 import com.photolivebroadcast.ui.mine.result.MappingServiceHttp
 import com.photolivebroadcast.util.AbStrUtil
 import kotlinx.android.synthetic.main.activity_mapping_service2.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * 修图服务
@@ -21,13 +24,18 @@ import kotlinx.android.synthetic.main.activity_mapping_service2.*
 class MappingServiceActivity2 : BaseActivity(), View.OnClickListener, DatePop.WheelViewCallBack2
         , NumPop.WheelViewCallBack2 {
 
+    private var photoNumList = ArrayList<String>()
+    private var listxiutuprices = ArrayList<MappingServicePriceModel.listxiutupricesModel>()
+
 
     private var datePop: DatePop? = null
     private var numPop: NumPop? = null
+    private var photoNumPrice = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mapping_service2)
+        EventBus.getDefault().register(this)
         init()
     }
 
@@ -50,11 +58,21 @@ class MappingServiceActivity2 : BaseActivity(), View.OnClickListener, DatePop.Wh
                 return@setOnClickListener
             }
             ProgressDialog.showDialog(this)
-            MappingServiceHttp.SendMappingService(content, time)
+            MappingServiceHttp.SendMappingService(this, tv_next, photoNumPrice, content, time)
         }
 
         ProgressDialog.showDialog(this)
         MappingServiceHttp.getServiceNum()
+        MappingServiceHttp.MappingServicePrice()
+    }
+
+
+    @Subscribe
+    fun onEvent(listxiutuprices: ArrayList<MappingServicePriceModel.listxiutupricesModel>) {
+        this.listxiutuprices = listxiutuprices
+        for (model in listxiutuprices) {
+            photoNumList.add(model.tcname + " 价格：" + model.price)
+        }
     }
 
 
@@ -70,7 +88,7 @@ class MappingServiceActivity2 : BaseActivity(), View.OnClickListener, DatePop.Wh
             }
             R.id.tv_num -> {
                 if (numPop == null) {
-                    numPop = NumPop(this, this)
+                    numPop = NumPop(this, photoNumList, this)
                 }
                 if (!numPop!!.isShowing) {
                     numPop!!.showAtLocation(cl_main, Gravity.CENTER or Gravity.BOTTOM, 0, 0)
@@ -83,8 +101,16 @@ class MappingServiceActivity2 : BaseActivity(), View.OnClickListener, DatePop.Wh
         tv_time.text = "$position1-$position2-$position3"
     }
 
-    override fun position(position1: String) {
-        tv_num.text = position1
+    override fun position(position1: Int) {
+        tv_num.text = listxiutuprices[position1].tcname
+        photoNumPrice = listxiutuprices[position1].price.toString()
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
 
 }
