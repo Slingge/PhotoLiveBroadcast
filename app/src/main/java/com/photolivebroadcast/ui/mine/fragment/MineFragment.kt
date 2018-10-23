@@ -17,6 +17,7 @@ import com.photolivebroadcast.util.StatusBarBlackWordUtil
 import com.photolivebroadcast.util.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_mine.*
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import com.photolivebroadcast.ui.mine.result.PersonInfoHttp
 
 
 /**
@@ -74,7 +75,6 @@ class MineFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun init() {
-
 
     }
 

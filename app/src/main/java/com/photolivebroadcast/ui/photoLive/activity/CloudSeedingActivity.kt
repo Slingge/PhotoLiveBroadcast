@@ -5,21 +5,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.hardware.usb.UsbManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Message
-import android.provider.MediaStore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.google.gson.Gson
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
-import com.lixin.amuseadjacent.app.util.abLog
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
@@ -33,19 +28,14 @@ import com.photolivebroadcast.ui.photoLive.http.AlbumsClassificationHttp
 import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.Constant
-import com.photolivebroadcast.ui.photoLive.mtp.MTPService
 import com.photolivebroadcast.ui.photoLive.mtp.PicInfo
 import com.photolivebroadcast.ui.photoLive.mtp.USBMTPReceiver
 import com.photolivebroadcast.util.ImageFileUtil
-import com.photolivebroadcast.util.PermissionUtil
 import com.photolivebroadcast.util.RecyclerItemTouchListener
 import kotlinx.android.synthetic.main.activity_phone_album.*
 import io.reactivex.functions.Consumer
-import kotlinx.android.synthetic.main.activity_personal_info.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.io.File
-import java.io.FileOutputStream
 
 /**
  * Created by Slingge on 2018/9/29.

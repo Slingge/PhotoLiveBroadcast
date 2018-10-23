@@ -6,6 +6,7 @@ import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.dialog.NewAlbumDialog
 import com.photolivebroadcast.ui.mine.fragment.MineFragment
+import com.photolivebroadcast.ui.mine.result.PersonInfoHttp
 import com.photolivebroadcast.ui.photoLive.fragment.LiveFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,10 +24,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun init() {
+        PersonInfoHttp.Person()
         tab_1.isChecked = true
         bFragment1 = LiveFragment()
         switchFragment(bFragment1!!)
-
         rl_bottom.setOnCheckedChangeListener { _, i -> selectStyle(i) }
 
         establish.setOnClickListener { v ->
