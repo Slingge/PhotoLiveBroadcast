@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.xrecyclerview.XRecyclerView;
 import com.lixin.amuseadjacent.app.ui.base.BaseFragment;
+import com.lxkj.huaihuatransit.app.util.StrCallback;
 import com.photolivebroadcast.R;
 import com.photolivebroadcast.ui.MyApplication;
 import com.photolivebroadcast.ui.dialog.ProgressDialog;
@@ -22,14 +23,18 @@ import com.photolivebroadcast.ui.mine.model.MySendModel;
 import com.photolivebroadcast.ui.mine.result.MySendHttp;
 import com.photolivebroadcast.ui.photoLive.activity.WebViewActivity;
 import com.photolivebroadcast.ui.photoLive.adapter.HomePhotoAdapter;
+import com.photolivebroadcast.util.StatickUtil;
 import com.photolivebroadcast.util.StatusBarBlackWordUtil;
 import com.photolivebroadcast.util.StatusBarUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import okhttp3.Call;
 
 /**
  * Created by zhf on 2018/9/11.
@@ -151,7 +156,7 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 WatchSettingDialog.INSTANCE.dialogEducation(getActivity(), "-1", "", code -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("url", code);
-                    MyApplication.openActivity(getActivity(), WebViewActivity.class ,bundle);
+                    MyApplication.openActivity(getActivity(), WebViewActivity.class, bundle);
                 });
 
                 break;
@@ -164,13 +169,47 @@ public class LiveFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //搜索
             case R.id.iv_search:
+                search();
                 break;
             //消息
             case R.id.iv_message:
+                message();
                 break;
         }
     }
 
+    private void search() {
+        ProgressDialog.INSTANCE.showDialog(getActivity());
+        OkHttpUtils.post().addParams("userid", "" + StatickUtil.INSTANCE.getUid())
+                .addParams("keywords", "测试")
+                .url("http://112.74.169.87/videoCloud/user/user/ajaxsearchalbum").build().execute(new StrCallback() {
+            @Override
+            public void onError(@NotNull Call call, @NotNull Exception e, int id) {
+                super.onError(call, e, id);
+            }
+
+            @Override
+            public void onResponse(@NotNull String response, int id) {
+                super.onResponse(response, id);
+            }
+        });
+    }
+
+    private void message() {
+        ProgressDialog.INSTANCE.showDialog(getActivity());
+        OkHttpUtils.post().addParams("userid", "" + StatickUtil.INSTANCE.getUid())
+                .url("http://www.suxianglive.com/videoCloud/msg/ajaxlistmymessages").build().execute(new StrCallback() {
+            @Override
+            public void onError(@NotNull Call call, @NotNull Exception e, int id) {
+                super.onError(call, e, id);
+            }
+
+            @Override
+            public void onResponse(@NotNull String response, int id) {
+                super.onResponse(response, id);
+            }
+        });
+    }
 
     @Override
     public void onDestroy() {
