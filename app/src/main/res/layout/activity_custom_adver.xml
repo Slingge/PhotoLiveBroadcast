@@ -157,8 +157,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_below="@+id/tv_image"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_add" />
+            android:layout_marginTop="12dp" />
 
     </RelativeLayout>
 

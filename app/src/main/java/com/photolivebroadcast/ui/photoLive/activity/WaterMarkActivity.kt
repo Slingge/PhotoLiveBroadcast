@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -12,11 +13,13 @@ import android.widget.RelativeLayout
 import com.lixin.amuseadjacent.app.ui.base.BaseActivity
 import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
+import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.util.FileUtilsFeng
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.util.PermissionUtil
+import com.photolivebroadcast.view.BubbleInputDialog
 import com.photolivebroadcast.view.BubbleTextView
 import com.photolivebroadcast.view.StickerView
 import kotlinx.android.synthetic.main.include_basetop.*
@@ -39,9 +42,18 @@ class WaterMarkActivity : BaseActivity() {
 
     private var ivAdd: ImageView? = null
 
+    //气泡输入框
+    private var mBubbleInputDialog: BubbleInputDialog? = null
+
+    private var content = ""
+    private var pId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_water_mark)
+
+        pId = intent!!.getStringExtra("id")
+
         init()
     }
 
@@ -49,71 +61,90 @@ class WaterMarkActivity : BaseActivity() {
         inittitle("水印设置")
         StatusBarWhiteColor()
         mContentRootView = findViewById<View>(R.id.rl_content_root) as RelativeLayout
-
+        mBubbleInputDialog = BubbleInputDialog(this)
+        mBubbleInputDialog!!.setCompleteCallBack(object : BubbleInputDialog.CompleteCallBack {
+            override fun onComplete(bubbleTextView: View, str: String) {
+                (bubbleTextView as BubbleTextView).setText(str)
+                content = str
+            }
+        })
         tv_right.visibility = View.VISIBLE
         tv_right.text = "预览"
         tv_right.setOnClickListener { v ->
-            mCurrentView!!.setInEdit(false)
+            if (mCurrentView != null) {
+                mCurrentView!!.setInEdit(false)
+            }
             generateBitmap()
         }
         mViews = ArrayList()
         ivAdd = findViewById(R.id.iv_add)
         ivAdd!!.setOnClickListener {
-            if (PermissionUtil.ApplyPermissionAlbum(this, 0)) {
-                SelectPictureUtil.selectPicture(this, 1, 0, false)
-            }
+            addBubble()
+            ivAdd!!.visibility = View.GONE
         }
     }
 
-    //添加表情
-    private fun addStickerView(bitmap: Bitmap) {
-        val stickerView = StickerView(this)
-        stickerView.setBitmap(bitmap)
-        stickerView.setOperationListener(object : StickerView.OperationListener {
+    //添加气泡
+    private fun addBubble() {
+        val bubbleTextView = BubbleTextView(this,
+                Color.WHITE, 0)
+        bubbleTextView.setImageResource(R.mipmap.bubble_7_rb)
+        bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
             override fun onDeleteClick() {
-                mViews!!.remove(stickerView)
-                mContentRootView!!.removeView(stickerView)
+                mViews!!.remove(bubbleTextView)
+                mContentRootView!!.removeView(bubbleTextView)
             }
 
-            override fun onEdit(stickerView: StickerView) {
-                if (mCurrentEditTextView != null) {
-                    mCurrentEditTextView!!.setInEdit(false)
+            override fun onEdit(bubbleTextView: BubbleTextView) {
+                if (mCurrentView != null) {
+                    mCurrentView!!.setInEdit(false)
                 }
-                mCurrentView!!.setInEdit(false)
-                mCurrentView = stickerView
-                mCurrentView!!.setInEdit(true)
+                mCurrentEditTextView!!.setInEdit(false)
+                mCurrentEditTextView = bubbleTextView
+                mCurrentEditTextView!!.setInEdit(true)
             }
 
-            override fun onTop(stickerView: StickerView) {
-                val position = mViews!!.indexOf(stickerView)
+            override fun onClick(bubbleTextView: BubbleTextView) {
+                mBubbleInputDialog!!.setBubbleTextView(bubbleTextView)
+                mBubbleInputDialog!!.show()
+            }
+
+            override fun onTop(bubbleTextView: BubbleTextView) {
+                val position = mViews!!.indexOf(bubbleTextView)
                 if (position == mViews!!.size - 1) {
                     return
                 }
-                val stickerTemp = mViews!!.removeAt(position) as StickerView
-                mViews!!.add(mViews!!.size, stickerTemp)
+                val textView = mViews!!.removeAt(position) as BubbleTextView
+                mViews!!.add(mViews!!.size, textView)
             }
         })
         val lp = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
-        mContentRootView!!.addView(stickerView, lp)
-        mViews!!.add(stickerView)
-        setCurrentEdit(stickerView)
+        mContentRootView!!.addView(bubbleTextView, lp)
+        mViews!!.add(bubbleTextView)
+        setCurrentEdit(bubbleTextView)
     }
 
     /**
-     * 设置当前处于编辑模式的贴纸
+     * 设置当前处于编辑模式的气泡
      */
-    private fun setCurrentEdit(stickerView: StickerView) {
+    private fun setCurrentEdit(bubbleTextView: BubbleTextView) {
         if (mCurrentView != null) {
             mCurrentView!!.setInEdit(false)
         }
         if (mCurrentEditTextView != null) {
             mCurrentEditTextView!!.setInEdit(false)
         }
-        mCurrentView = stickerView
-        stickerView.setInEdit(true)
+        mCurrentEditTextView = bubbleTextView
+        mCurrentEditTextView!!.setInEdit(true)
     }
 
     private fun generateBitmap() {
+
+        if (content.equals("")) {
+            ToastUtil.showToast("请输入内容")
+            return
+        }
+
         val bitmap = Bitmap.createBitmap(mContentRootView!!.getWidth(),
                 mContentRootView!!.getHeight(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -122,6 +153,8 @@ class WaterMarkActivity : BaseActivity() {
         val iamgePath = FileUtilsFeng.saveBitmapToLocal(bitmap, this)
         val intent = Intent(this, WaterMarkActivity2::class.java)
         intent.putExtra("image", "" + iamgePath)
+        intent.putExtra("content", "" + content)
+        intent.putExtra("id", "" + pId)
         startActivity(intent)
     }
 
@@ -137,19 +170,17 @@ class WaterMarkActivity : BaseActivity() {
         }
     }
 
-    private var path = ""//水印路径
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
             return
         }
-        if (requestCode == 0) {
-            // 图片、视频、音频选择结果回调
-            path = PictureSelector.obtainMultipleResult(data)[0].path
-            val bitmap = ImageFileUtil.getBitmapFromPath(PictureSelector.obtainMultipleResult(data)[0].compressPath)//压缩的路径
-            addStickerView(bitmap)
-        }
+//        if (requestCode == 0) {
+//            // 图片、视频、音频选择结果回调
+//            path = PictureSelector.obtainMultipleResult(data)[0].path
+//            val bitmap = ImageFileUtil.getBitmapFromPath(PictureSelector.obtainMultipleResult(data)[0].compressPath)//压缩的路径
+//            addStickerView(bitmap)
+//        }
     }
 
 }

@@ -27,6 +27,7 @@ import com.photolivebroadcast.ui.photoLive.adapter.PhoneAlbumAdapter
 import com.photolivebroadcast.ui.photoLive.http.AlbumsClassificationHttp
 import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
+import com.photolivebroadcast.ui.photoLive.mtp.CompressUtils
 import com.photolivebroadcast.ui.photoLive.mtp.Constant
 import com.photolivebroadcast.ui.photoLive.mtp.PicInfo
 import com.photolivebroadcast.ui.photoLive.mtp.USBMTPReceiver
@@ -61,7 +62,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
     private var classificationList = ArrayList<AlbumsClassificationModel.dataModel>()
 
     private var upType = ""//上传方式
-    private var upSize = ""//上传大小
+    private var upSize = "原图"//上传大小
 
     private var isUp = false//是否在上传
 
@@ -93,7 +94,9 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
         rv_album.addOnItemTouchListener(object : RecyclerItemTouchListener(rv_album) {
             override fun onItemClick(vh: RecyclerView.ViewHolder?) {
+
                 adoptNum = vh!!.adapterPosition
+
                 bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[adoptNum].path))
                 linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
                 linearLayoutManager!!.stackFromEnd = true
@@ -192,13 +195,12 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
             phoneList.add(album)
         }
 
-//        phoneAlbumAdapter!!.notifyDataSetChanged()
         tv_upSpeed.text = "上传进度：" + upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = "上传失败：" + upfailNum.toString() + "/" + phoneList.size
 
-        val message = Message()
-        message.what = 0
-        hander.sendMessage(message)
+//        val message = Message()
+//        message.what = 0
+//        hander.sendMessage(message)
     }
 
 
@@ -237,28 +239,46 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
         tv_upSpeed.text = "上传进度：" + upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = "上传失败：" + upfailNum.toString() + "/" + phoneList.size
-
-        val message = Message()
-        message.what = 0
-        hander.sendMessage(message)
     }
 
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tv_adopt -> {
-//                if (phoneList.isEmpty()) {
-//                    return
-//                }
-//                phoneList[adoptNum].isAdopt = 0
-//                phoneAlbumAdapter!!.notifyDataSetChanged()
-//                adoptNum++
-//                linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
-//                linearLayoutManager!!.stackFromEnd = true
-                SelectPictureUtil.selectPictureHide(this, 9, 0, false)
+                if (phoneList.isEmpty()) {
+                    return
+                }
+                if (phoneList[adoptNum].isAdopt == 1) {
+                    ToastUtil.showToast("已经不通过")
+                    return
+                }
+                if (phoneList[adoptNum].isAdopt == 0) {
+                    ToastUtil.showToast("已通过")
+                    return
+                }
+                phoneList[adoptNum].isAdopt = 0
+                phoneAlbumAdapter!!.notifyDataSetChanged()
+                ProgressDialog.showDialog(this@CloudSeedingActivity)
+                var img = ""
+                if (upSize.equals("原图")) {
+                    img = phoneList[subscript].path
+                } else if (upSize.equals("3-5M")) {
+                    img = CompressUtils.compressImage(this@CloudSeedingActivity, ImageFileUtil.getBitmapFromPath(phoneList[subscript].path), 4000)
+                } else if (upSize.equals("1M")) {
+                    img = CompressUtils.compressImage(this@CloudSeedingActivity, ImageFileUtil.getBitmapFromPath(phoneList[subscript].path), 1000)
+                }
+                UpAlbumPhotoHttp.upPhoto(pid, classificationId, img, this@CloudSeedingActivity)
             }
             R.id.tv_through -> {
                 if (phoneList.isEmpty()) {
+                    return
+                }
+                if (phoneList[adoptNum].isAdopt == 1) {
+                    ToastUtil.showToast("已经不通过")
+                    return
+                }
+                if (phoneList[adoptNum].isAdopt == 0) {
+                    ToastUtil.showToast("已通过")
                     return
                 }
                 phoneList[adoptNum].isAdopt = 1
@@ -328,10 +348,8 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                 phoneList.add(album)
             }
             phoneAlbumAdapter!!.notifyDataSetChanged()
-            val message = Message()
-            message.what = 0
-            hander.sendMessage(message)
         }
     }
+
 
 }

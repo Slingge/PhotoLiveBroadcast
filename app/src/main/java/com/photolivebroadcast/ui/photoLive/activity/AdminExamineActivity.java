@@ -136,10 +136,10 @@ public class AdminExamineActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_copy:
-                alipay();
+//                alipay();
                 break;
             case R.id.btn_add:
-                wxPay();
+//                wxPay();
                 break;
         }
     }
