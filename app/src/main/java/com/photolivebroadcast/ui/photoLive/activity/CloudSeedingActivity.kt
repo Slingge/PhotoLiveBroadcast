@@ -19,6 +19,7 @@ import com.luck.picture.lib.PictureSelector
 import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.photolivebroadcast.R
+import com.photolivebroadcast.constant.USBReceiverConstant
 import com.photolivebroadcast.constant.USBReceiverConstant.READ_USB_DEVICE_PERMISSION
 import com.photolivebroadcast.ui.dialog.PermissionsDialog
 import com.photolivebroadcast.ui.dialog.ProgressDialog
@@ -26,6 +27,7 @@ import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
 import com.photolivebroadcast.ui.photoLive.adapter.PhoneAlbumAdapter
 import com.photolivebroadcast.ui.photoLive.http.AlbumsClassificationHttp
 import com.photolivebroadcast.ui.photoLive.http.UpAlbumPhotoHttp
+import com.photolivebroadcast.ui.photoLive.model.CameraPictureBean
 import com.photolivebroadcast.ui.photoLive.model.UpAlbunmModel
 import com.photolivebroadcast.ui.photoLive.mtp.CompressUtils
 import com.photolivebroadcast.ui.photoLive.mtp.Constant
@@ -33,6 +35,8 @@ import com.photolivebroadcast.ui.photoLive.mtp.PicInfo
 import com.photolivebroadcast.ui.photoLive.mtp.USBMTPReceiver
 import com.photolivebroadcast.util.ImageFileUtil
 import com.photolivebroadcast.util.RecyclerItemTouchListener
+import com.photolivebroadcast.util.SharePreferencesTools
+import com.photolivebroadcast.util.SmartLogUtils
 import kotlinx.android.synthetic.main.activity_phone_album.*
 import io.reactivex.functions.Consumer
 import org.greenrobot.eventbus.EventBus
@@ -78,8 +82,25 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
         EventBus.getDefault().register(this)
         init()
+        loadPhotoList()
     }
 
+    private fun loadPhotoList() {
+
+        //Java Code SDCard 目录下的图片路径集合
+//        List<CameraPictureBean> readPhotoList=(List<CameraPictureBean>)SharePreferencesTools.readObjectFromSharePreferences(EXTERNAL_DEVICE_FILE_NAME, EXTERNAL_DEVICE_FILE_KEY);
+        // how to use Kotlin ?
+        var readPhotoList: List<CameraPictureBean> = SharePreferencesTools.readObjectFromSharePreferences(USBReceiverConstant.EXTERNAL_DEVICE_FILE_NAME, USBReceiverConstant.EXTERNAL_DEVICE_FILE_KEY)
+        if (readPhotoList == null || readPhotoList!!.size == 0) {
+            SmartLogUtils.showError("读取照片为空", true)
+        } else {
+            for (i in 0 until readPhotoList!!.size) {
+                val album = UpAlbunmModel(readPhotoList[0].cameraPicturePath, -1)
+                phoneList.add(album)
+            }
+            phoneAlbumAdapter!!.notifyDataSetChanged()
+        }
+    }
 
     private fun init() {
         inittitle("云直播")
@@ -322,6 +343,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         sendBroadcast(intent)
     }
 
+
     /*****
      * 动态注册USB 设备监听
      */
@@ -332,7 +354,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         //USB连接状态发生变化时产生的广播
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-        val usbmtpReceiver = USBMTPReceiver()
+        usbmtpReceiver = USBMTPReceiver()
         registerReceiver(usbmtpReceiver, intentFilter)
     }
 
@@ -341,14 +363,14 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         if (data == null) {
             return
         }
-        if (requestCode == 0) {
-            // 图片、视频、音频选择结果回调
-            for (i in 0 until PictureSelector.obtainMultipleResult(data).size) {
-                val album = UpAlbunmModel((PictureSelector.obtainMultipleResult(data)[i].path), -1)
-                phoneList.add(album)
-            }
-            phoneAlbumAdapter!!.notifyDataSetChanged()
-        }
+//        if (requestCode == 0) {
+//            // 图片、视频、音频选择结果回调
+//            for (i in 0 until 20) {
+//                val album = UpAlbunmModel("这是放的图片地址", -1)
+//                phoneList.add(album)
+//            }
+//            phoneAlbumAdapter!!.notifyDataSetChanged()
+//        }
     }
 
 
