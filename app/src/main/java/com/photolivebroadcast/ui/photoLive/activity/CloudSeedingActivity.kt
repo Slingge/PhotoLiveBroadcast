@@ -1,5 +1,6 @@
 package com.photolivebroadcast.ui.photoLive.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
@@ -8,6 +9,8 @@ import android.hardware.usb.UsbManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -83,6 +86,10 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         EventBus.getDefault().register(this)
         init()
         loadPhotoList()
+        if (ContextCompat.checkSelfPermission(this!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this!!, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+        }
     }
 
     private fun loadPhotoList() {
@@ -95,9 +102,10 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
             SmartLogUtils.showError("读取照片为空", true)
         } else {
             for (i in 0 until readPhotoList!!.size) {
-                val album = UpAlbunmModel(readPhotoList[0].cameraPicturePath, -1)
+                val album = UpAlbunmModel(readPhotoList[i].cameraPicturePath, -1)
                 phoneList.add(album)
             }
+            bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[0].path))
             phoneAlbumAdapter!!.notifyDataSetChanged()
         }
     }
@@ -108,7 +116,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         pid = intent.getStringExtra("id")
         linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager!!.orientation = LinearLayoutManager.HORIZONTAL
-
+//        bg.setOnClickListener(this)
         rv_album.layoutManager = linearLayoutManager
         phoneAlbumAdapter = PhoneAlbumAdapter(this, phoneList)
         rv_album.adapter = phoneAlbumAdapter
@@ -120,7 +128,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
                 bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[adoptNum].path))
                 linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
-                linearLayoutManager!!.stackFromEnd = true
+                linearLayoutManager!!.stackFromEnd = false
             }
         })
 
@@ -260,6 +268,13 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
 
         tv_upSpeed.text = "上传进度：" + upSuccessNum.toString() + "/" + phoneList.size
         tv_upFail.text = "上传失败：" + upfailNum.toString() + "/" + phoneList.size
+        adoptNum++
+        if (adoptNum < phoneList.size) {
+            bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[adoptNum].path))
+        } else {
+            ToastUtil.showToast("已经全部处理")
+            adoptNum--
+        }
     }
 
 
@@ -269,6 +284,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                 if (phoneList.isEmpty()) {
                     return
                 }
+
                 if (phoneList[adoptNum].isAdopt == 1) {
                     ToastUtil.showToast("已经不通过")
                     return
@@ -289,6 +305,7 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                     img = CompressUtils.compressImage(this@CloudSeedingActivity, ImageFileUtil.getBitmapFromPath(phoneList[subscript].path), 1000)
                 }
                 UpAlbumPhotoHttp.upPhoto(pid, classificationId, img, this@CloudSeedingActivity)
+
             }
             R.id.tv_through -> {
                 if (phoneList.isEmpty()) {
@@ -303,10 +320,19 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
                     return
                 }
                 phoneList[adoptNum].isAdopt = 1
-                phoneAlbumAdapter!!.notifyDataSetChanged()
                 adoptNum++
+                phoneAlbumAdapter!!.notifyDataSetChanged()
                 linearLayoutManager!!.scrollToPositionWithOffset(adoptNum, 0)
-                linearLayoutManager!!.stackFromEnd = true
+                linearLayoutManager!!.stackFromEnd = false
+                if (adoptNum < phoneList.size) {
+                    bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[adoptNum].path))
+                } else {
+                    ToastUtil.showToast("已经全部处理")
+                    adoptNum--
+                }
+            }
+            R.id.bg -> {
+                SelectPictureUtil.selectPicture(this, 999, 0, false)
             }
         }
     }
@@ -363,14 +389,15 @@ class CloudSeedingActivity : BaseActivity(), Consumer<List<*>>, UpAlbumPhotoHttp
         if (data == null) {
             return
         }
-//        if (requestCode == 0) {
-//            // 图片、视频、音频选择结果回调
-//            for (i in 0 until 20) {
-//                val album = UpAlbunmModel("这是放的图片地址", -1)
-//                phoneList.add(album)
-//            }
-//            phoneAlbumAdapter!!.notifyDataSetChanged()
-//        }
+        if (requestCode == 0) {
+            // 图片、视频、音频选择结果回调
+            for (i in 0 until PictureSelector.obtainMultipleResult(data).size) {
+                val album = UpAlbunmModel("" + PictureSelector.obtainMultipleResult(data)[i].path, -1)
+                phoneList.add(album)
+            }
+            bg.setImageBitmap(ImageFileUtil.getBitmapFromPath(phoneList[adoptNum].path))
+            phoneAlbumAdapter!!.notifyDataSetChanged()
+        }
     }
 
 
