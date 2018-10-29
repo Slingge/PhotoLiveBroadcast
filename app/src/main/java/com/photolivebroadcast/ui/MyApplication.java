@@ -82,6 +82,17 @@ public class MyApplication extends MultiDexApplication {
         UMShareAPI.get(this);
         PlatformConfig.setWeixin("wx0d0b4d8b589ef4e6", "ee455dc7b28cbf41f9370d53acd6bbb0");
 //        PlatformConfig.setQQZone("1106693507", "ns8Zb9Eid2yVXFFs");
+
+
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(120000L, TimeUnit.MILLISECONDS)
+                .readTimeout(120000L, TimeUnit.MILLISECONDS)
+                .hostnameVerifier((hostname, session) -> true)
+                .build();
+        OkHttpUtils.initClient(okHttpClient);
+
+
     }
 
     /**

@@ -1,10 +1,13 @@
 package com.photolivebroadcast.ui.photoLive.http
 
+import android.app.Activity
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.lixin.amuseadjacent.app.util.abLog
 import com.lxkj.huaihuatransit.app.util.StrCallback
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
+import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.photoLive.AddClassificationAlbumsModel
 import com.photolivebroadcast.ui.photoLive.AlbumsClassificationModel
 import com.photolivebroadcast.ui.photoLive.model.ClassificationPhotoModel
@@ -17,7 +20,6 @@ import java.util.ArrayList
  * Created by Slingge on 2018/9/28.
  */
 object AlbumsClassificationHttp {
-
 
 
     //获取分类
@@ -36,12 +38,12 @@ object AlbumsClassificationHttp {
                 })
     }
 
-    interface ClassificationCallBack{
+    interface ClassificationCallBack {
         fun classifi(model: AlbumsClassificationModel)
     }
 
     //获取分类
-    fun Classification2(pid: String,classificationCallBack: ClassificationCallBack) {
+    fun Classification2(pid: String, classificationCallBack: ClassificationCallBack) {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxgetlistmens")
                 .addParams("pid", pid).build().execute(object : StrCallback() {
                     override fun onResponse(response: String, id: Int) {
@@ -57,13 +59,13 @@ object AlbumsClassificationHttp {
     }
 
 
-    interface ClassificationPhotoCallBack{
+    interface ClassificationPhotoCallBack {
         fun alnumPhoto(model: ClassificationPhotoModel.pageDataModel)
     }
 
 
     //分类下的图片
-    fun ClassificationAlbum(pid: String, mid: String,classificationPhotoCallBack: ClassificationPhotoCallBack) {
+    fun ClassificationAlbum(pid: String, mid: String, classificationPhotoCallBack: ClassificationPhotoCallBack) {
         OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxgetlistimgs/1/$pid/$mid")
                 .addParams("pid", pid).addParams("mid", mid).addParams("pageNumber", "1")
                 .build().execute(object : StrCallback() {
@@ -143,5 +145,26 @@ object AlbumsClassificationHttp {
                 })
     }
 
+    interface DelAlbumPhotoCallBack {
+        fun del()
+    }
+
+    fun delAlbumPhoto(context: Activity, id: String, delAlbumPhotoCallBack: DelAlbumPhotoCallBack) {
+        ProgressDialog.showDialog(context)
+        OkHttpUtils.post().url("http://112.74.169.87/videoCloud/photolive/ajaxdelimgurl")
+                .addParams("id", id)
+                .build().execute(object : StrCallback() {
+                    override fun onResponse(response: String, id: Int) {
+                        super.onResponse(response, id)
+                        val obj = JSONObject(response)
+                        if (obj.getInt("code") == 200) {
+                            delAlbumPhotoCallBack.del()
+                        } else {
+                            ToastUtil.showToast(obj.getString("msg"))
+                        }
+                    }
+                })
+
+    }
 
 }

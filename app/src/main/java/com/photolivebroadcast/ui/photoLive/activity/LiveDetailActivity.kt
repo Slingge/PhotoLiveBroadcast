@@ -1,7 +1,9 @@
 package com.photolivebroadcast.ui.photoLive.activity
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
+import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -20,6 +22,7 @@ import com.lxkj.linxintechnologylibrary.app.util.SelectPictureUtil
 import com.lxkj.linxintechnologylibrary.app.util.ToastUtil
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.photolivebroadcast.R
+import com.photolivebroadcast.ui.MainActivity
 import com.photolivebroadcast.ui.MyApplication
 import com.photolivebroadcast.ui.dialog.ProgressDialog
 import com.photolivebroadcast.ui.mine.model.MySendModel
@@ -101,7 +104,6 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
                 }
                 albumMenuAdapter!!.setFlag(i)
                 if (i != 0) {
-
                     menuPhotoList.clear()
                     albumMenuAdapter!!.notifyDataSetChanged()
 
@@ -130,6 +132,30 @@ class LiveDetailActivity : BaseActivity(), View.OnClickListener, UpAlbumPhotoHtt
         rv_photo.layoutManager = linearLayoutManager2
         menuPhotoAdapter = ClassificationPhotoAdapter(this, menuPhotoList)
         rv_photo.adapter = menuPhotoAdapter
+        rv_photo.addOnItemTouchListener(object : RecyclerItemTouchListener(rv_photo) {
+            override fun onItemClick(vh: RecyclerView.ViewHolder?) {
+                val i = vh!!.adapterPosition
+                if (i < 0) {
+                    return
+                }
+                val builder = android.support.v7.app.AlertDialog.Builder(this@LiveDetailActivity)
+                builder.setItems(arrayOf("删除"/*, "排序"*/)) { dialog, which ->
+                    dialog!!.dismiss()
+                    if (which == 0) {
+                        AlbumsClassificationHttp.delAlbumPhoto(this@LiveDetailActivity, menuPhotoList[i].id.toString(),
+                                object : AlbumsClassificationHttp.DelAlbumPhotoCallBack {
+                                    override fun del() {
+                                        menuPhotoList.removeAt(i)
+                                        menuPhotoAdapter!!.notifyDataSetChanged()
+                                    }
+                                })
+                    }else if(which == 1){//排序
+
+                    }
+                }
+                builder.show()
+            }
+        })
         /* rv_photo.setLoadingListener(object : XRecyclerView.LoadingListener {
              override fun onRefresh() {
                  if (menuPhotoList.isNotEmpty()) {

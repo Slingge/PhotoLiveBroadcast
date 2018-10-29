@@ -78,8 +78,8 @@ public class HomePhotoAdapter extends RecyclerView.Adapter<HomePhotoAdapter.View
 
         holder.tvShare.setOnClickListener(v -> {
             pid = model.getId();
-            title=model.getTitle();
-            subTitile=model.getRemark();
+            title = model.getTitle();
+            subTitile = model.getRemark();
 
             SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                     {SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE/*,
