@@ -182,7 +182,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:background="@drawable/bg_them11"
-        android:text="新增分类"
+        android:text="保存设置"
         android:textColor="@color/white"
         android:textSize="17sp" />
 
